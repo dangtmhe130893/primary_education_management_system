@@ -1,0 +1,22 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="insert_table_user" author="dangtm">
+        <insert tableName="user">
+            <column name="id" value="1"/>
+            <column name="name" value="SYSTEM_ADMIN"/>
+            <column name="email" value="systemadmin@gmail.com"/>
+            <column name="username" value="systemadmin@gmail.com"/>
+            <column name="password"
+                    value="$2a$10$3wbCusme5oXba/xSw5gQuOT4uzcNKlcttVGkAbd8MaYx7TuM/HLEa"/> <!--admin123456-->
+            <column name="status_user" value="2"/>
+            <column name="is_change_password" valueBoolean="true"/>
+            <column name="role" value="SYSTEM_ADMIN"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

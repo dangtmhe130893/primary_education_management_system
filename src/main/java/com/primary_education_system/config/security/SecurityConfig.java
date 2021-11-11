@@ -54,13 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/api/v1/app/**").permitAll()
-                .antMatchers("/api/v1/cache/").hasAnyRole(Roles.SYSTEM_ADMIN.getName())
+                .antMatchers("/api/v1/cache/").hasAnyRole(Roles.SYSTEM_ADMIN.name())
                 .antMatchers("/api/v1/web/user/forgotPassword").permitAll()
                 .antMatchers("/api/v1/web/user/setPassword").permitAll()
-                .antMatchers("/api/v1/web/**").hasAnyRole(new String[]{Roles.COMPANY_ADMIN.getName(), Roles.SYSTEM_ADMIN.getName()})
-                .antMatchers("/company/**").hasAnyRole(new String[]{Roles.COMPANY_ADMIN.getName(), Roles.SYSTEM_ADMIN.getName()})
-                .antMatchers("/system/**").hasAnyRole(Roles.SYSTEM_ADMIN.getName())
-                .antMatchers("/swagger-ui.html").hasAnyRole(Roles.SYSTEM_ADMIN.getName());
+                .antMatchers("/swagger-ui.html").hasAnyRole(Roles.SYSTEM_ADMIN.name());
         http.formLogin()
                 .loginPage("/login")
                 .usernameParameter("email")

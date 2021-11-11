@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/primary_education_system?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Ho_Chi_Minh
     username: root
-    password: 123456
+    password: vinh123456
     tomcat:
       max-wait: 20000
       max-active: 150
@@ -43,7 +43,7 @@ spring:
 liquibase:
   enabled: true
   change-log: classpath:/liquibase/db-changelog-master.xml
-  drop-first: false
+  drop-first: true
 server:
   port: 8080
 google:
