@@ -1,0 +1,77 @@
+@charset "UTF-8";
+input[type='checkbox'] {
+    width: 15px;
+    height: 15px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 21px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 17px;
+    left: 4px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #187511;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #187511;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(17px);
+    -ms-transform: translateX(17px);
+    transform: translateX(17px);
+}
+
+.input-search {width: 100%;border-radius: 5px;border: solid 1px #cecece;height: 28px;padding-left: 5px;}
+.search-block button {position: absolute;background-color: #337ab7;color: #fff;right: 0px;bottom: 0px;height: 28px;width: 50px;}
+.choose-time{width: 85%; margin-right: 20px;height: 28px; font-size: 13px;}
+.date_start{float: left; width: 23%;}
+.date_end{float: left; width: 23%;}
+.search-block{float: left;width: 23%;position: relative; font-size: 12px; margin-top: 25px;}
+.checkbox-block{float: left; width: 26%; margin-top: 30px; margin-left: 30px}
+.row{width: 103%; margin-right: 0px; padding-right: -15px;padding-left: 0px;}
+.dataTables_length label{margin-top: 10px;}
+.block-filter{position: absolute; margin-left: 150px; margin-top: -13px; width: 73.5%; z-index: 2;}
+
+
+
+
+
+
+
+

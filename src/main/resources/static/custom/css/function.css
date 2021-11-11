@@ -1,0 +1,325 @@
+@CHARSET "UTF-8";
+.switch {
+    position: absolute;
+    bottom: -10px;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+}
+
+.switch input {
+    display:none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #bababa;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #3B4350;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 17px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+
+.head {
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+.title-table {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.number {
+    margin-left: 10px;
+    background-color: #999;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 5px;
+}
+
+.number:hover {
+    cursor: pointer;
+    background-color: #3B4350
+}
+
+.number-active {
+    cursor: pointer;
+    background-color: #3B4350
+}
+
+.table-content td, #table-content th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#result_parent_menu, #result_submenu, #result_bottom_menu,
+#result_head_menu tr {
+    cursor: pointer;
+}
+
+#result_parent_menu tr:hover {
+    background: #999;
+}
+
+#result_submenu tr:hover {
+    background: #999;
+}
+
+#result_bottom_menu tr:hover {
+    background: #999;
+}
+
+#result_head_menu tr:hover {
+    background: #999;
+}
+
+.table-content th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #5B5149;
+    color: white;
+}
+
+.table-content td {
+    text-align: center;
+}
+
+.table-content td .detail{
+    background-color: #3699DB;
+    padding: 6px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.table-content td .add-parent-menu, .back-parent-menu, .add-submenu,
+.add-head-menu, .back-head-menu, .back-submenu, .back-bottom-menu,
+.add-bottom-menu {
+    background-color: #3B4350;
+    padding: 6px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.table-content td .detail, .delete, .add-parent-menu, .back-parent-menu,
+.add-head-menu, .back-head-menu, .add-submenu, .back-submenu.add--bottom-menu.back--bottom-menu:hover
+{
+    cursor: pointer;
+}
+
+.add-item {
+    float: right;
+    margin-top: 15px;
+}
+
+/*.modal-content{width: 40%;}*/
+.modal-header {
+    background-color: #eeeeee;
+    border: none;
+}
+
+#add_new_webview {
+    background-color: #3B4350;
+    color: #ffffff;
+}
+
+.contain-image {
+    width: 30px;
+    height: 30px;
+}
+
+.image-function {
+    width: 100%;
+    height: 100%
+}
+
+.name {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.delete {
+    background-color: #d45151;
+    color: #ffffff;
+    padding: 6px;
+}
+
+.modal-header {
+    background-color: #3B4350;
+}
+
+.modal .file-uploader {
+    width: 97px;
+    height: 67px;
+    margin-top: 6px;
+    margin-right: -2px;
+    margin-left: 1px;
+}
+
+.modal .file-uploader-file {
+    width: 150px;
+    height: 80px;
+    border: 1px solid #e2d9d9;
+    position: relative;
+    margin-right: 15px;
+    box-shadow: inset 0 3px 7px rgba(0, 0, 0, .075);
+}
+
+.modal .image-preview {
+    width: 48px;
+    height: 48px;
+    margin: 8px 0px 0px 20px !important;
+}
+
+.modal .upload-icon, .modal .file-icon {
+    font-size: 30px !important;
+    padding: 8px;
+}
+
+.file-uploader-file .uplod-icon {
+    font-size: 30px !important;
+    padding: 8px 8px 8px 60px;
+}
+
+.modal .lable-upload-image {
+    font-size: 10px;
+}
+
+.modal-body {
+    padding: 3px;
+}
+
+.modal .form-group {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.modal .remove-image-icon {
+    right: -3px;
+    top: -5px;
+}
+
+form#create_webview .lable-upload-file {
+    font-size: 12px;
+}
+
+form
+#create_webview
+.file-uploader {
+    width: 130px;
+}
+
+.upload-image .file-uploader {
+    width: 97px !important;
+}
+
+.pdf-uploader, .detail-pdf-uploader {
+    border: 1px solid #e2d9d9;
+    position: relative;
+    margin-right: 15px;
+    box-shadow: inset 0 3px 7px rgba(0, 0, 0, .075);
+    height: 34px;
+}
+
+.pdf-icon {
+    font-size: 20px;
+    padding: 6px;
+}
+
+.pdf-file-icon {
+    font-size: 20px;
+    padding: 6px;
+}
+
+#name_file {
+    width: 180px;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.pdf-uploader {
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pdf-uploader:hover {
+    background-color: #ccc
+}
+
+.detail-pdf-uploader {
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.detail-pdf-uploader:hover {
+    background-color: #ccc
+}
+
+/*new UI*/
+#list_new_menu_deactivate{padding: 0 16px; font-size: 10px;min-height: 70px;}
+.new-menu{margin-bottom: 2px; position: relative; padding-top: 10px;}
+.content-new-menu{border: solid 1px #cecece; height: 140px;text-align: center;}
+#list_new_menu_deactivate .content-new-menu{width: 99%;}
+.image-new-menu{width: 45px;height: 45px;}
+.action-new-menu{position: absolute; top:2px; right: 4px; font-size: 12px;}
+.action-new-menu .detail {
+    background-color: #3699DB;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 2px;
+    border-radius: 2px;
+}
+.type-function-name {text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
+.function-name {text-overflow: ellipsis;white-space: nowrap;overflow: hidden; display: block}
+.list-row-menu-active .list-new-menu{height: 140px; font-size: 10px;border: #3B4350 solid 1px; width: 100%; margin: 0 0 20px 0;}
+.list-row-menu-active{text-align: center;}
+.list-row-menu-active .content-new-menu{width: 100%;}
+
+@media screen and (max-width: 1500px) {
+    .content-new-menu{border: solid 1px #cecece; height: 150px;text-align: center;}
+    .list-row-menu-active .list-new-menu{height: 150px; font-size: 10px;border: #3B4350 solid 1px; width: 100%; margin: 0 0 20px 0;}
+}
+

@@ -1,0 +1,121 @@
+@CHARSET "UTF-8";
+/* input[type="checkbox"]{width:20px;height: 20px;} */
+.coupon-image{
+	width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 15px;
+}
+.message-add, .message-update, .message-delete{
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+.form-add-coupon .form-group{
+	margin-bottom: 20px;
+}
+.thin-header{
+	padding: 5px !important;
+}
+
+
+/* The container */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-container-tag{
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-container-tag input {
+    position: absolute;
+    left: 10px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    left: 10px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkbox {
+	border-radius: 4px;
+    position: absolute;
+    top: -4px;
+    left: 2px;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border: solid 1px #bababa;
+}
+
+#remove_tag_table .checkbox{
+    top: 7px !important; left: 14px !important;}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkbox {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkbox {
+    background-color: #595149;
+    border-color: white;
+}
+
+/* Create the checkbox/indicator (hidden when not checked) */
+.checkbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkbox when checked */
+.checkbox-container input:checked ~ .checkbox:after {
+    display: block;
+}
+
+/* Style the checkbox/indicator */
+.checkbox-container .checkbox:after {
+    left: 5.5px;
+    top: 2px;
+    width: 7px;
+    height: 11px;
+    border: solid white;
+    border-width: 0px 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#table_head .checkbox {
+	left: 15px;
+}
+
+.dropdown-toggle{width: 120px;}
+.dropdown-menu a{font-size: 13px; cursor: pointer;}

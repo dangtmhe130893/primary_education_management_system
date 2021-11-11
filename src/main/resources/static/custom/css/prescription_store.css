@@ -1,0 +1,129 @@
+.store-import-error {
+    margin-bottom: 15px;
+    font-size: 12px;
+    color: red;
+    font-weight: 600;
+}
+
+.error-message {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.label-store, .value-store {
+    font-size: 12px;
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.label-store {
+    background-color: #3B4350;
+    color: white;
+}
+
+.label-store:last-child, .value-store:last-child {
+    margin-right: 1rem;
+}
+
+.label-store-container, .value-store-container {
+    display: flex;
+}
+
+.printer-container, .working-time-container {
+    font-size: 12px;
+}
+
+.row-label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.row-label > .label-red {
+    background-color: red;
+    color: white;
+    padding: 2px 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.label-blue {
+    background-color: #4852ff;
+    color: white;
+    padding: 2px 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.row-label > .label-note {
+    border: 1px solid red;
+    background-color: #ffd6d6;
+    color: red;
+    padding: 2px 20px;
+    display: inline-block;
+    width: 50%;
+    min-width: 700px;
+}
+
+.row-checkbox {
+    margin-bottom: 10px;
+}
+
+.row-checkbox span {
+    margin-left: 10px;
+}
+
+.row-working {
+    margin-bottom: 10px;
+}
+
+.select_working {
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 6px 13px;
+    -webkit-appearance: none;
+}
+
+.select_apply_config_off_time {
+    margin-right: 20px;
+    padding: 6px 13px;
+    -webkit-appearance: none;
+}
+
+.select_time {
+    display: inline-block;
+}
+
+.select_time > select {
+    padding: 6px 13px;
+    -webkit-appearance: none;
+}
+
+.select_time > .select_end_minute{
+    margin-right: 15px;
+}
+
+.select2-container{
+    min-width: 112px;
+    max-width: 400px;
+}
+
+.label-day {
+    display: inline-block;
+    background-color: #253042;
+    color: white;
+    width: 50px;
+    text-align: center;
+    padding: 6px 13px;
+}
+
+#listWorkingTimeHoliday {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.dataTables_scrollBody {
+    max-height: 500px;
+}

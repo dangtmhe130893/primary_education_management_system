@@ -1,0 +1,292 @@
+@CHARSET "UTF-8";
+
+.fa-user, .fa-trash-o {
+	min-width: 16px !important;
+}
+
+.position-relative-col {
+	position: relative;
+}
+.choose-catalog-btn {
+	position: absolute;
+	right: 6px;
+	top:10%;
+}
+.catalog-url {
+	height: 38px;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.view-store-location {
+	height: 280px;
+	margin-top: 25px;
+	margin-bottom: 17px;
+}
+.add-store-modal .modal-dialog {
+	width: 900px !important;
+}
+.btn-add-store {
+	width: 100%;margin-top: 15px;
+}
+.file-icon {
+	display: block;
+	font-size: 35px;
+	color: green;
+}
+.error-message {
+	color: red;
+	display: block;
+}
+.display-location-modal #store_location_on_map {
+	height: 400px;
+}
+.store-filter {
+	margin: 10px 0px;
+}
+.store-filter .form-group {
+
+}
+
+.store-filter .form-group:nth-child(4) {
+	margin-right: 0px;
+}
+.store-btn-group {
+	margin: 20px 0px;
+}
+
+.first-right { margin-right:0px !important}
+.first-left { margin-left:0px !important}
+.store-btn-group .btn-group { float: right; margin-right: 10px;}
+.store-btn-group .btn-catalog-dropdown,.btn-store-dropdown {
+	color: white;
+    background-color: #D6621C;
+    width: 150px;
+}
+.block-label {
+	display: block;
+	margin: 15px 0px;
+}
+.choose-catalog {
+	margin-bottom: 10px !important;
+}
+.choose-catalog .radio-inline {
+	padding-right: 15px;
+}
+.catalog-file-name {
+	max-width: 45% !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.remove-file {
+	position: absolute;
+	margin-left: 10px;
+	cursor: pointer;
+	font-size: 12px !important;
+	color: #fff !important;
+
+}
+.ms-choice > span{
+	display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+
+}
+.ms-drop.bottom{
+	top: 35px !important;
+    left: 0px;
+ }
+.upload-catalog-modal .catalog-table tbody{  height: 250px; }
+.catalog-table .fa-chevron-circle-down { font-size: 20px;}
+.no-left-padding {
+	padding-left: 0px !important;
+}
+
+.import-store-modal .modal-dialog{ width: 80%;}
+.import-store-modal .import-store-table{ width: 100% !important; }
+.import-store-table .error-cell{ color: red;}
+.import-store-table .status-row { text-align:  center; }
+.import-store-table .action-row { text-align:  center; }
+.import-store-table .status-row i{
+	font-size: 20px;
+    padding: 15px 0px;
+}
+.import-store-table .status-row .fa-chevron-circle-down{ color: green; }
+.import-store-table .status-row .fa-minus-circle{ color: red; }
+.import-store-modal .overflow-scroll { overflow-x: scroll; padding-bottom: 6px;}
+.import-store-modal .dataTables_paginate {margin-top: 15px !important; }
+.id-cell,.code-cell{ width: 100px; text-align: center; }
+.import-store-table input{ width: 90% !important;}
+.catalog-table{ width: 100% !important; }
+.catalog-table .btn { margin: 0px 2px; }
+
+/* The container */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    left: 10px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkbox {
+	border-radius: 4px;
+    position: absolute;
+    top: -4px;
+    left: 7px;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border: solid 1px #bababa;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkbox {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkbox {
+    background-color: #595149;
+    border-color: white;
+}
+
+/* Create the checkbox/indicator (hidden when not checked) */
+.checkbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkbox when checked */
+.checkbox-container input:checked ~ .checkbox:after {
+    display: block;
+}
+
+/* Style the checkbox/indicator */
+.checkbox-container .checkbox:after {
+    left: 5.5px;
+    top: 2px;
+    width: 7px;
+    height: 11px;
+    border: solid white;
+    border-width: 0px 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#table_head .checkbox {
+	left: 29%;
+}
+
+.filter-label {
+	margin: 7px 0px;
+	padding: 0px 10px 0px 0px;
+	text-align: right;
+	float: left
+}
+.store-filter .form-control {
+	width: 100% !important;
+}
+.store-filter div:last-child {
+	padding-right: 0px;
+}
+.store-filter div:first-child {
+	padding-left: 0px;
+}
+.store-filter .form-group .filter-input-wrapper {
+	display: inline-block;
+	float: left;
+}
+.store-filter .form-group:nth-child(4) .filter-input-wrapper,
+	.store-filter .form-group:nth-child(4) .filter-label {
+	float: right;
+}
+@media (min-width: 1191px) {
+	.store-filter .form-group:nth-child(1) .filter-input-wrapper,
+		.store-filter .form-group:nth-child(2) .filter-input-wrapper {
+		width: 71%;
+	}
+	.store-filter .form-group:nth-child(3) .filter-input-wrapper {
+		width: 75%;
+	}
+	.store-filter .form-group:nth-child(4) .filter-input-wrapper {
+		width: 86%;
+	}
+}
+@media (max-width: 1190px) and (min-width: 992px) {
+	.store-filter .form-group:nth-child(1) .filter-input-wrapper {
+		width: 65%;
+	}
+	.store-filter .form-group:nth-child(2) .filter-input-wrapper {
+		width: 60%;
+	}
+	.store-filter .form-group:nth-child(3) .filter-input-wrapper {
+		width: 70%;
+	}
+	.store-filter .form-group:nth-child(4) .filter-input-wrapper {
+		width: 83%;
+	}
+}
+@media (max-width: 992px) {
+	.filter-label {
+		width: 16.66666%;
+	}
+	.filter-input-wrapper {
+		width: 83.33333%;
+	}
+	.store-filter div:nth-child(2) {
+		padding-right: 0px;
+	}
+	.store-filter div:nth-child(1), .store-filter div:nth-child(3) {
+		padding-left: 0px;
+	}
+	.store-filter > div:nth-child(4), .store-filter > div:nth-child(3) {
+		padding-top: 10px;
+	}
+}
+@media (max-width: 960px) {
+	.filter-label {
+		width: 25%;
+	}
+	.filter-input-wrapper {
+		width: 75%;
+	}
+}
+
+input[name ='catalogLink']{
+	margin-top: 10px;
+}
+.upload-catalog-btn{height: 30px;}
+
+.dropdown-menu a{font-size: 13px; cursor: pointer;}
+
+tr:not(last-child)

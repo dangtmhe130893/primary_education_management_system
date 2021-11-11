@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Insert title here</title>
+</head>
+<body>
+<script type="text/x-template" id="file-uploader" th:fragment="file-uploader-template">
+
+    <div class="file-uploader">
+
+        <div class="file-uploader-content" v-bind:class="{ hidden : hasImage}">
+            <input type="file" class="hidden file-input"/>
+            <i class="fa fa-camera upload-icon" v-bind:class="{ hidden : hasFile } "></i>
+            <div class="lable-upload-image" v-bind:class="{ hidden : hasFile } ">写真アップロード</div>
+            <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+               v-on:click="removeFile"></i>
+            <i class="fa fa-file-pdf-o file-icon" v-bind:class="{ hidden : !hasFile }">
+
+            </i>
+        </div>
+
+        <i class="fa fa-times-circle remove-image-icon" v-bind:class="{ hidden : !hasImage }"
+           v-on:click="removeImage">
+        </i>
+        <img src="" class="image-preview" v-bind:class="{ hidden : !hasImage}"
+             id="image_preview"/>
+    </div>
+
+</script>
+
+<script type="text/x-template" id="icon-uploader" th:fragment="icon-uploader-template">
+
+    <li class="file-uploader">
+
+        <div class="file-uploader-content" v-bind:class="{ hidden : hasImage}">
+            <input type="file" class="hidden file-input"/>
+            <i class="fa fa-camera upload-icon" v-bind:class="{ hidden : hasImage } "></i>
+            <div class="lable-upload-image">写真アップロード</div>
+            </i>
+        </div>
+
+        <i class="fa fa-times-circle remove-image-icon" v-bind:class="{ hidden : !hasImage }"
+           v-on:click="removeImage">
+        </i>
+        <img src="" class="image-preview" v-bind:class="{ hidden : !hasImage}"
+             id="image_preview"/>
+    </li>
+
+</script>
+
+<script type="text/x-template" id="image-uploader" th:fragment="image-uploader-template">
+    <div class="file-uploader">
+        <div class="file-uploader-content" v-bind:class="{ hidden : hasImage}">
+            <input type="file" accept=".png, .jpg" class="hidden file-input"/>
+            <i style="margin: 20px 10px 0px 10px" class="fa fa-camera upload-icon"
+               v-bind:class="{ hidden : hasFile } "></i>
+            <div class="lable-upload-image">写真アップロード</div>
+            <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+               v-on:click="removeFile"></i>
+            <i class="fa fa-file-pdf-o file-icon" v-bind:class="{ hidden : !hasFile }">
+
+            </i>
+        </div>
+
+        <i class="fa fa-times-circle fa-lg remove-image-icon" v-bind:class="{ hidden : !hasImage }"
+           v-on:click="removeImage">
+        </i>
+        <img src="" class="image-preview" v-bind:class="{ hidden : !hasImage}"/>
+    </div>
+
+</script>
+
+<script type="text/x-template" id="introducing-uploader" th:fragment="introducing-uploader-template">
+
+    <div class="block">
+
+
+        <div class="image-introducing">
+            <div class="file-uploader-content" v-bind:class="{ hidden : hasImage}">
+                <input type="file" accept=".png, .jpg" class="hidden file-input"/>
+                <i class="fa fa-camera upload-icon introduction-icon" v-bind:class="{ hidden : hasFile } "
+                   style="position: relative;padding-top:60px; padding-right:30px"></i>
+                <div class="lable-upload-image"> 写真アップロード</div>
+
+                <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+                   v-on:click="removeFile"></i>
+                <i class="fa fa-file-pdf-o file-icon" style="padding-left: 25px;" v-bind:class="{ hidden : !hasFile }">
+
+                </i>
+            </div>
+            <i class="fa fa-times-circle fa-lg remove-image-icon" v-bind:class="{ hidden : !hasImage }"
+               v-on:click="removeImage">
+            </i>
+            <img src="" class="image-preview" v-bind:class="{ hidden : !hasImage}"/>
+        </div>
+
+    </div>
+
+</script>
+
+<script type="text/x-template" id="introducing-uploader" th:fragment="introducing-company-template">
+
+    <div class="block">
+
+
+        <div class="image-introducing">
+            <div class="file-uploader-content" v-bind:class="{ hidden : hasImage}">
+                <input type="file" accept=".png, .jpg" class="hidden file-input"/>
+                <i class="fa fa-camera upload-icon introduction-icon" v-bind:class="{ hidden : hasFile } "
+                   style="position: relative;padding-top:60px; padding-right:30px"></i>
+                <div class="lable-upload-image"> 写真アップロード</div>
+
+                <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+                   v-on:click="removeFile"></i>
+                <i class="fa fa-file-pdf-o file-icon" style="padding-left: 25px;" v-bind:class="{ hidden : !hasFile }">
+
+                </i>
+            </div>
+            <i class="fa fa-times-circle fa-lg remove-image-icon" v-bind:class="{ hidden : !hasImage }"
+               v-on:click="removeImage" style="position: relative;padding-top:60px; padding-right:30px">
+            </i>
+            <img src="" class="image-preview" v-bind:class="{ hidden : !hasImage}"/>
+        </div>
+
+    </div>
+
+</script>
+
+<script type="text/x-template" id="image-gallery" th:fragment="image-gallery">
+
+    <div class="file-uploader">
+
+        <div class="file-uploader-content" v-bind:class="{ hidden : hasImage}">
+            <input type="file" accept=".png, .jpg" class="hidden file-input"/>
+            <i style="margin: 20px 10px 0px 0px" class="fa fa-camera upload-icon"
+               v-bind:class="{ hidden : hasFile } "></i>
+            <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+               v-on:click="removeFile"></i>
+            <i class="fa fa-file-pdf-o file-icon" v-bind:class="{ hidden : !hasFile }">
+
+            </i>
+        </div>
+
+        <i class="fa fa-times-circle fa-lg remove-image-icon" v-bind:class="{ hidden : !hasImage }"
+           v-on:click="removeImage">
+        </i>
+        <img src="" class="image-preview" v-bind:class="{ hidden : !hasImage}"/>
+    </div>
+
+</script>
+
+<script type="text/x-template" id="starting-image-uploader" th:fragment="starting-image-uploader-template">
+
+    <div class="block">
+
+
+        <div class="image-introducing">
+            <div class="file-uploader-content" v-bind:class="{ hidden : hasImage}">
+                <input type="file" accept=".png, .jpg" class="hidden file-input"/>
+                <i class="fa fa-camera upload-icon introduction-icon" v-bind:class="{ hidden : hasFile } "
+                   style="position: relative;padding-top:60px; padding-right:30px"></i>
+                <div class="lable-upload-image"> 写真アップロード</div>
+
+                <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+                   v-on:click="removeFile"></i>
+                <i class="fa fa-file-pdf-o file-icon" style="padding-left: 25px;" v-bind:class="{ hidden : !hasFile }">
+
+                </i>
+            </div>
+            <i class="fa fa-times-circle fa-lg remove-image-icon" v-bind:class="{ hidden : !hasImage }"
+               v-on:click="removeImage">
+            </i>
+            <img src="" class="image-preview" v-bind:class="{ hidden : !hasImage}"/>
+        </div>
+
+    </div>
+
+</script>
+
+<script type="text/x-template" id="file-uploader" th:fragment="common-file-uploader-template">
+    <div class="file-uploader">
+
+        <div class="file-uploader-content" v-bind:class="{ hidden : hasImage}">
+            <input type="file" class="hidden file-input"/>
+            <i class="fa fa-paperclip upload-icon" v-bind:class="{ hidden : hasFile } "></i>
+            <div class="lable-upload-file" v-bind:class="{ hidden : hasFile } ">ファイルアップロード</div>
+            <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+               v-on:click="removeFile"></i>
+            <i class="fa fa-file-pdf-o file-icon" v-bind:class="{ hidden : !hasFile }">
+            </i>
+        </div>
+
+        <i class="fa fa-times-circle remove-image-icon" v-bind:class="{ hidden : !hasImage }"
+           v-on:click="removeImage">
+        </i>
+        <img src="" class="image-preview" v-bind:class="{ hidden : !hasImage}"
+             id="image_preview"/>
+        <span id="name_file"></span>
+    </div>
+
+</script>
+
+<script type="text/x-template" id="pdf_uploader" th:fragment="common-pdf-uploader-template">
+    <div class="pdf-uploader">
+
+        <input type="file" class="hidden file-input"/>
+        <i class="fa fa-paperclip pdf-icon" v-bind:class="{ hidden : hasFile } "></i>
+        <span class="lable-upload-file" v-bind:class="{ hidden : hasFile } ">ファイルアップロード</span>
+        <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+           v-on:click="removeFile"></i>
+        <i class="fa fa-file-pdf-o pdf-file-icon" v-bind:class="{ hidden : !hasFile }">
+        </i>
+        <div id="name_file"></div>
+    </div>
+
+</script>
+
+<script type="text/x-template" id="detail_pdf_uploader" th:fragment="detail-common-pdf-uploader-template">
+    <div class="detail-pdf-uploader">
+
+        <input type="file" class="hidden file-input"/>
+        <i class="fa fa-paperclip pdf-icon" v-bind:class="{ hidden : hasFile } "></i>
+        <span class="lable-upload-file" v-bind:class="{ hidden : hasFile } ">ファイルアップロード</span>
+        <i class="fa fa-times-circle remove-file-icon" v-bind:class="{ hidden : !hasFile }"
+           v-on:click="removeFile"></i>
+        <i class="fa fa-file-pdf-o pdf-file-icon" v-bind:class="{ hidden : !hasFile }">
+        </i>
+        <div id="name_file"></div>
+    </div>
+</script>
+</body>
+</html>

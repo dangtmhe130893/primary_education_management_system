@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Insert title here</title>
+</head>
+<body>
+<script type="text/x-template" id="miles_stone_component" th:fragment="miles_stone_component">
+    <div class="miles-stones-component">
+        <div class="content-miles-stone">
+            <p class="error-message" v-bind:class="{ hidden : isValid}">入力したデータが正しくない。</p>
+            <span style="font-size: 12px;">マイルストーン </span><span style="font-weight: bold; margin-right: 10px;">{{prop.milesStone.position}}</span>
+            <input class="start-stamp" type="number" v-model="prop.milesStone.start"
+                   v-on:blur="validateMilesStone();" :disabled="(prop.isActiveEvent || prop.isOldEvent)"
+                   v-on:key-up="validateMilesStone();"/>
+            <i class="fa fa-arrow-right"></i>
+            <input class="end-stamp" type="number" v-model="prop.milesStone.end"
+                   v-on:blur="validateMilesStone();" :disabled="(prop.isActiveEvent || prop.isOldEvent)"
+                   v-on:key-up="validateMilesStone();"/>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="reward_apply_component" th:fragment="reward_apply_component">
+        <div class="content-reward-apply">
+            <!--<i class="fa fa-remove" v-on:click="remove(prop.reward.id)" v-bind:class="{ hidden : prop.isActiveEvent || prop.isOldEvent}"></i>-->
+            <div class="block-reward-apply">
+                <p>応募コード：<span style="color: red">{{prop.reward.applyStampEntity.code}}</span></p>
+                <div class="list-image-apply">
+                    <img v-for="image in prop.reward.applyStampEntity.setCouponApplyStampEntity" v-bind:src="image.imageUrl"/>
+                </div>
+            </div>
+            <div style="position: relative" v-bind:class="{ hidden : prop.isActiveEvent || prop.isOldEvent}">
+                <input v-model="code" type="text" class="form-control" placeholder="応募コードを入力してください。" style="font-size:10px!important;"/>
+                <button class="btn btn-sm btn-primary" style="font-size: 8px; position: absolute;top: 4px; right: 4px;" v-on:click="updateApplyStampComponent()">変更</button>
+            </div>
+
+        </div>
+</script>
+</body>
+</html>

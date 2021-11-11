@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Insert title here</title>
+</head>
+<body>
+<div th:fragment="import_lib_datatable">
+    <link rel="stylesheet" type="text/css" href="/custom/css/new_datatable.css"/>
+    <link rel="stylesheet" type="text/css" href="/libs/new_data_table/css/dataTables.bootstrap4.css"/>
+    <script src="/libs/new_data_table/js/jquery.dataTables.js"></script>
+    <script src="/libs/new_data_table/js/dataTables.bootstrap4.js"></script>
+    <script type="text/javascript" src="/custom/js/config_datatable.js"></script>
+</div>
+<div th:fragment="import_lib_bootstrap_time">
+    <link href="/libs/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <script src="/libs/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <script src="/libs/daterangepicker/locale/ja.js" type="text/javascript"></script>
+</div>
+</body>
+</html>

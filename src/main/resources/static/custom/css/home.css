@@ -1,0 +1,8 @@
+@charset "ISO-8859-1";
+.title-homepage{line-height: 45px; background-color: #3B4350;padding-left: 15px; color: #ffffff; margin-bottom: 30px;}
+.block-menu-homepage{margin-bottom: 20px;}
+.menu-homepage{border: solid 1px #707070; border-radius: 20px; padding: 10px; cursor: pointer;display: inline-block;}
+.menu-homepage a{color: #000000 !important;}
+.menu-homepage:hover{background-color: #A9A9A9;}
+.menu-homepage .name-menu{font-size: 16px; font-weight: bold;text-decoration: underline; margin-bottom: 10px; letter-spacing: 1.5px}
+.menu-homepage .description-menu{font-size: 12px;}

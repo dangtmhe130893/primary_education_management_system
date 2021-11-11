@@ -1,0 +1,45 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="insert_table_user" author="v">
+        <insert tableName="user">
+            <column name="id" value="1"/>
+            <column name="name" value="SYSTEM_ADMIN"/>
+            <column name="email" value="shopappsysad@gmail.com"/>
+            <column name="username" value="shopappsysad@gmail.com"/>
+            <column name="password"
+                    value="$2a$10$Bjk/Z4122LLyMESe2aehZOxjxZYNcQ6bz5gTQx8wTLHiWioI7Sk16"/>
+            <column name="status_user" value="2"/>
+            <column name="is_change_password" valueBoolean="true"/>
+            <column name="user_type" value="1"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+    </changeSet>
+    
+    <changeSet id="insert_table_user" author="toan">
+        <insert tableName="user">
+            <column name="id" value="2"/>
+            <column name="name" value="SYSTEM_ADMIN"/>
+            <column name="email" value="abc@gmail.com"/>
+            <column name="username" value="abc@gmail.com"/>
+            <column name="password"
+                    value="$2a$10$Bjk/Z4122LLyMESe2aehZOxjxZYNcQ6bz5gTQx8wTLHiWioI7Sk16"/>
+            <column name="status_user" value="2"/>
+            <column name="is_change_password" valueBoolean="true"/>
+            <column name="user_type" value="1"/>
+            <column name="code" value="acdefgh"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

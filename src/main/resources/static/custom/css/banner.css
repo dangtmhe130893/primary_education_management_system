@@ -1,0 +1,232 @@
+.container-banner {
+	margin-bottom: 10px;
+	height: 100%;
+	cursor: pointer;
+}
+
+.container-banner .file-uploader {
+	flex: 1;
+}
+
+.btn-delete {
+	float: none;
+}
+
+.banner-image {
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 12px 0px 0px 0px;
+	height: 110px;
+	border: 1px solid #f6f6f6;
+	border-radius: 8px;
+	background-color: #ffffff;
+	text-align: center;
+	border: solid 0.5px #cecece;
+	border-radius: 5px;
+}
+
+.banner-image img {
+	height: 84px !important;
+	width: 150px !important;
+}
+
+.upload-icon{
+    margin: -3px 10px 0px !important;
+}
+
+.new-banner-uploader {
+	text-align: center;
+}
+
+.banner-image-uploader {
+	text-align: center;
+	height: 100%;
+	width: 100%;
+}
+
+.banner-image-uploader .file-uploader {
+	width: 267px;
+	height: 150px;
+	margin: auto;
+}
+
+.banner-content {
+	width: 40%;
+}
+
+.banner-image-url {
+	height: 40px;
+	overflow: hidden;
+}
+
+.banner-button-group {
+	width: 40%;
+	text-align: right;
+	padding-right: 10px;
+}
+
+.banner-content-image {
+	width: 20%;
+	text-align: left;
+	padding-left: 15px
+}
+
+.banner-content-image, .banner-content, .banner-button-group {
+	float: left;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 30px;
+	height: 20px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 15px; width : 15px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+	top: 2px;
+	right: 12px;
+}
+
+
+input:checked+.slider {
+	background-color: #3B4351;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px green;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(10px);
+	-ms-transform: translateX(10px);
+	transform: translateX(10px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+.checkbox-required {
+            width: 20px;
+            height: 20px;
+        }
+
+        td {
+            border: solid 1px #ddd;
+        }
+
+        thead tr {
+            border: solid 1px #ddd;
+        }
+
+        .table > thead > tr > th {
+            border: 1px solid #ddd;
+        }
+
+        /* The container */
+        .checkbox-container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default checkbox */
+        .checkbox-container input {
+            position: absolute;
+            left: 44%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Create a custom checkbox */
+        .checkbox {
+            border-radius: 4px;
+            position: absolute;
+            left: 47%;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border: solid 1px #bababa;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .checkbox-container:hover input ~ .checkbox {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .checkbox-container input:checked ~ .checkbox {
+            background-color: #595149;
+            border-color: white;
+        }
+
+        /* Create the checkbox/indicator (hidden when not checked) */
+        .checkbox:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkbox when checked */
+        .checkbox-container input:checked ~ .checkbox:after {
+            display: block;
+        }
+
+        .checkbox-container .checkbox:after {
+            left: 5.5px;
+            top: 2px;
+            width: 7px;
+            height: 11px;
+            border: solid white;
+            border-width: 0px 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+		.update-config-apply-field {
+            font-weight: bold;
+            margin-left: 30px;
+            width: 100px;
+            margin-bottom: 20px;
+            float: right;
+        }
+        .disabled{cursor: no-drop !important;}
+        .btn-edit, .btn-config, .btn-download, .btn-delete {
+      	  line-height: 10px;
+      	  margin-top: -6px;
+        }

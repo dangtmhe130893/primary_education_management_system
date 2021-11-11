@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Insert title here</title>
+</head>
+
+<body>
+<header th:fragment="header(level,screen)">
+    <div class="header-menu header-mini">
+        <div class="left-menu-header">
+            <nav aria-label="breadcrumb" th:block th:switch="${level}">
+                <ol class="breadcrumb" th:case="'system'" th:if="${isSysAdmin}">
+                    <li class="breadcrumb-item"><a href="/">ホーム</a></li>
+                    <li th:if="${screen} == 'list_company'" class="breadcrumb-item active" aria-current="page">会社一覧</li>
+                    <li th:if="${screen} == 'notification'" class="breadcrumb-item active" aria-current="page">
+                        会社管理者へのお知らせ
+                    </li>
+                    <li th:if="${screen} == 'management_user'" class="breadcrumb-item active" aria-current="page">
+                        会社管理者
+                    </li>
+                    <li th:if="${screen} == 'list_company_admin'" class="breadcrumb-item active" aria-current="page">
+                        会社管理者一覧
+                    </li>
+                    <li th:if="${screen} == 'change_password'" class="breadcrumb-item active" aria-current="page">
+                        パスワード変更
+                    </li>
+                </ol>
+                <ol class="breadcrumb" th:case="'company'">
+                    <li class="breadcrumb-item" th:if="${isSysAdmin}"><a href="/">ホーム</a></li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a th:href="@{'/company/'+${companyId}+'/apps'}" th:text="'会社ホーム (' + ${companyInfo.name} +')'" ></a>
+                    </li>
+                    <li th:if="${screen} == 'statistics'" class="breadcrumb-item active" aria-current="page">
+                        統計
+                    </li>
+                    <li th:if="${screen} == 'information'" class="breadcrumb-item active" aria-current="page">会社情報</li>
+                    <li th:if="${screen} == 'list_app'" class="breadcrumb-item active" aria-current="page">アプリ一覧</li>
+                    <li th:if="${screen} == 'change_password'" class="breadcrumb-item active" aria-current="page">
+                        パスワード変更
+                    </li>
+                </ol>
+                <ol class="breadcrumb" th:case="'app'">
+                    <li class="breadcrumb-item" th:if="${isSysAdmin}"><a href="/">ホーム</a></li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/apps'}" th:text="'会社ホーム (' + ${app.company.name} +')'" ></a>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">
+                            <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/sliderImages'}" th:text="'アプリホーム (' + ${app.name} +')'" ></a>
+                    </li>
+                    <li th:if="${screen} == 'new_store'" class="breadcrumb-item active" aria-current="page">店舗一覧</li>
+                    <li th:if="${screen} == 'slider'" class="breadcrumb-item active" aria-current="page">メインスライド</li>
+                    <li th:if="${screen} == 'video'" class="breadcrumb-item active" aria-current="page">動画</li>
+                    <li th:if="${screen} == 'coupon'" class="breadcrumb-item active" aria-current="page">クーポン</li>
+                    <li th:if="${screen} == 'push_notification'" class="breadcrumb-item active" aria-current="page">プッシュ通知</li>
+                    <li th:if="${screen} == 'app_notification'" class="breadcrumb-item active" aria-current="page">お知らせ</li>
+                    <li th:if="${screen} == 'certificate_image'" class="breadcrumb-item active" aria-current="page">会員証画像</li>
+                    <li th:if="${screen} == 'image_gallery'" class="breadcrumb-item active" aria-current="page">イメージギャラリー</li>
+                    <li th:if="${screen} == 'stamp'" class="breadcrumb-item active" aria-current="page">コーヒースタンプ</li>
+                    <li th:if="${screen} == 'gacha'" class="breadcrumb-item active" aria-current="page">ガチャ</li>
+                    <li th:if="${screen} == 'list_user'" class="breadcrumb-item active" aria-current="page">ユーザー一覧</li>
+                    <li th:if="${screen} == 'list_black_member'" class="breadcrumb-item active" aria-current="page">ブラックリスト会員</li>
+                    <li th:if="${screen} == 'acceptNotification'" class="breadcrumb-item active" aria-current="page">プッシュ通知設定</li>
+                    <li th:if="${screen} == 'app_info'" class="breadcrumb-item active" aria-current="page">アプリ申請情報</li>
+                    <li th:if="${screen} == 'menu'" class="breadcrumb-item active" aria-current="page">メニュー</li>
+                    <li th:if="${screen} == 'tag'" class="breadcrumb-item active" aria-current="page">タグ</li>
+                    <li th:if="${screen} == 'catalog'" class="breadcrumb-item active" aria-current="page">共通チラシ設定</li>
+                    <li th:if="${screen} == 'intro_image'" class="breadcrumb-item active" aria-current="page">紹介写真</li>
+                    <li th:if="${screen} == 'color'" class="breadcrumb-item active" aria-current="page">キーカラー</li>
+                    <li th:if="${screen} == 'app_review'" class="breadcrumb-item active" aria-current="page">ストアレビュー</li>
+                    <li th:if="${screen} == 'term'" class="breadcrumb-item active" aria-current="page">利用規約</li>
+                    <li th:if="${screen} == 'config_register'" class="breadcrumb-item active" aria-current="page">登録設定</li>
+                    <li th:if="${screen} == 'category_coupon'" class="breadcrumb-item active" aria-current="page">クーポンカテゴリー</li>
+                     <li th:if="${screen} == 'history_download_file'" class="breadcrumb-item active" aria-current="page">ダウンロード履歴</li>
+					<li th:if="${screen} == 'group_coupon'" class="breadcrumb-item active" aria-current="page">クーポングルプ</li>
+                    <li th:if="${screen} == 'app_question'" class="breadcrumb-item active" aria-current="page">よくあるご質問</li>
+                    <li th:if="${screen} == 'using_app'" class="breadcrumb-item active" aria-current="page">アプリの使い方</li>
+                    <li th:if="${screen} == 'qr_image'" class="breadcrumb-item active" aria-current="page">QR写真</li>
+                    <li th:if="${screen} == 'banner'" class="breadcrumb-item active" aria-current="page">応募バナー</li>
+                    <li th:if="${screen} == 'big_category'" class="breadcrumb-item active" aria-current="page">グループカテゴリー</li>
+                    <li th:if="${screen} == 'white_list_otp'" class="breadcrumb-item active" aria-current="page">SMS認証ホワイトリスト</li>
+                    <li th:if="${screen} == 'reset_member_info'" class="breadcrumb-item active" aria-current="page">会員番号リセット</li>
+                    <li th:if="${screen} == 'p_kikaku'" class="breadcrumb-item active" aria-current="page">New クーポン</li>
+                    <li th:if="${screen} == 'config_text'" class="breadcrumb-item active" aria-current="page">注意文言</li>
+                    <li th:if="${screen} == 'card_usage_history'" class="breadcrumb-item active" aria-current="page">取引種別マスタ設定</li>
+                </ol>
+            </nav>
+        </div>
+        </a>
+        <div class="right-menu">
+            <div class="info-user-login">
+                <div><b th:text="${user.name}"></b><span th:text="' ('+${role}+')'"></span></div>
+                <div>
+                    <span th:text="'最終ログイン｜'+${year} +'年'+ ${month} +'月'+ ${day} +'日'+ ${hour} +'時'+ ${minute} + '分'"></span>
+                </div>
+            </div>
+            <i class="fa fa-navicon control-menu" style="cursor: pointer;"></i>
+        </div>
+    </div>
+    <style type="text/css">
+        .right-menu-hidden {
+            width: 200px;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+            position: absolute;
+            right: 50px;
+            top: 65px;
+            z-index: 100;
+        }
+
+        .title-right-menu {
+            background-color: #3B4350;
+            color: white;
+            line-height: 45px;
+        }
+
+        .content-menu-right-menu {
+            background-color: white;
+            color: black;
+            line-height: 30px;
+            border: solid 1px black;
+            border-top: none;
+            font-size: 12px;
+        }
+
+        .content-menu-right-menu:hover {
+            background-color: #ddd;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+    <div class="right-menu-hidden" id="hidden_menu">
+        <div class="title-right-menu" th:text="#{menu}"></div>
+        <a th:if="${statusRole}" href="/system/management/companies">
+            <div class="content-menu-right-menu" style="border-bottom: solid 1px;" th:text="#{listcompany}">
+            </div>
+        </a>
+        <a th:if="${statusRole}" href="/system/management/notification">
+            <div class="content-menu-right-menu" style="border-bottom: solid 1px;" th:text="#{notification}">
+            </div>
+        </a>
+        <a href="/change-password">
+            <div class="content-menu-right-menu" style="border-bottom: solid 1px;" th:text="#{change_password}">
+            </div>
+        </a>
+        <a href="/logout" id="logoutLink">
+            <div class="content-menu-right-menu" style="border-bottom: solid 1px;" th:text="#{logout}">
+            </div>
+        </a>
+    </div>
+</header>
+</body>
+</html>

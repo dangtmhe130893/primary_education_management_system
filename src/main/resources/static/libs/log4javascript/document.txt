@@ -1,0 +1,1 @@
+document page : http://log4javascript.org/docs/index.html

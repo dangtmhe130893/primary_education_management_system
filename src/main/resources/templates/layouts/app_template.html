@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title layout:title-pattern="$CONTENT_TITLE"></title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <link href="/libs/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet"/>
+    <link th:href="@{/libs/bootstrap4/css/bootstrap.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/component.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/header.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/left_menu.css}" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="/custom/css/new_datatable.css"/>
+
+    `
+    <script type="text/javascript" src="/libs/jQuery/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="/libs/jQuery/jquery.validate.js"></script>
+    <script src="/libs/jQuery/messages_ja.js" type="text/javascript"></script>
+    <script src="/libs/vuejs/vue.min.js"></script>
+    <script type="text/javascript" src="/custom/js/vue_util_component.js"></script>
+    <script type="text/javascript" src="/custom/js/uploader_component.js"></script>
+    <script src="/libs/bootstrap4/js/tether.js" type="text/javascript"></script>
+    <script src="/libs/bootstrap4/js/popper.js" type="text/javascript"></script>
+    <script src="/libs/bootstrap4/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/libs/momentjs/moment.min.js" type="text/javascript"></script>
+    <script src="/libs/ckeditor/ckeditor.js"></script>
+    <script src="/custom/js/component.js" type="text/javascript"></script>
+    <script src="/custom/js/left_menu.js" type="text/javascript"></script>
+    <script src="/custom/js/logout.js" type="text/javascript"></script>
+    <script src="/custom/js/public_app.js" type="text/javascript"></script>
+    <script src="/custom/js/config_date.js" type="text/javascript"></script>
+    <script src="/custom/js/go_to_list_store.js" type="text/javascript"></script>
+    <th:block layout:fragment="style"></th:block>
+
+
+</head>
+<body>
+<div th:replace="components/i18n-notification :: i18n_notification"></div>
+<div th:replace="components :: loader"></div>
+
+<div th:replace="components :: alert"></div>
+<header th:replace="layouts/header :: header('app',${currentPage})"></header>
+<div class="left-menu left-menu-active">
+    <div class="header-left-menu clearfix">
+        <span id="icon_menu">
+         		<i class="fa fa-arrow-left fa-2x menu-des"></i>
+         		<i class="fa fa-arrow-right fa-2x menu-des d-none"></i>
+    	 </span>
+    </div>
+    <div class="block-menu block-system-menu" th:if="${isSysAdmin}">
+        <div class="control-block-menu"><i class="fa fa-server icon-active"></i><span
+                style="font-size: 12px">システム管理Home</span> <i
+                class="fa fa-angle-double-right block-icon"></i></div>
+        <a href="/system/management/notification">
+            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+                <i class="fa fa-bell-o"></i><span>会社管理者へのお知らせ</span></div>
+        </a>
+        <a href="/system/management/companies">
+            <div th:class=" ${currentPage} == 'list_company' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+                <i class="fa fa-building"></i><span>会社一覧</span></div>
+        </a>
+        <a href="/system/management/admin">
+            <div th:class=" ${currentPage} == 'list_company_admin' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+                <i class="fa fa-building"></i><span>会社管理者一覧</span></div>
+        </a>
+    </div>
+    <div class="block-menu block-company-menu">
+        <div class="control-block-menu"><i class="fa fa-server icon-active"></i><span
+                style="font-size: 12px">アプリ選択</span><i
+                class="fa fa-angle-double-right block-icon"></i></div>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/home'}">
+            <div th:class=" ${currentPage} == 'company_home' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+                <i class="fa fa-home"></i><span>システム管理からのお知らせ</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/information'}" th:if="${isSysAdmin}">
+            <div th:class=" ${currentPage} == 'information' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+                <i class="fa fa-info"></i><span>会社情報</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/apps'}">
+            <div th:class=" ${currentPage} == 'list_app' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+                <i class="fa fa-apple"></i><span>稼働アプリ一覧</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/statistics'}">
+            <div th:class=" ${currentPage} == 'statistics' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+                <i class="fa fa-list-alt"></i><span>インストール分析</span></div>
+        </a>
+    </div>
+    <div class="block-menu block-management-app-menu">
+        <div class="control-block-menu"><i class="fa fa-server icon-active"></i><span
+                style="font-size: 12px">アプリメニュー</span><i
+                class="fa fa-angle-double-down block-icon"></i></div>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/sliderImages'}">
+            <div th:class=" ${currentPage} == 'slider' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-sliders"></i><span>メインスライド</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/banner'}">
+            <div th:class=" ${currentPage} == 'banner' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-image"></i><span>応募バナー</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/notification'}">
+            <div th:class=" ${currentPage} == 'app_notification' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-bell-o"></i><span>お知らせ</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/pushNotification'}">
+            <div th:class=" ${currentPage} == 'push_notification' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-bullhorn"></i><span>プッシュ通知</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/pKikaku'}">
+            <div th:class=" ${currentPage} == 'p_kikaku' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-gift"></i><span>New クーポン</span></div>
+        </a>
+        <div th:class=" ${currentPage} == 'new_store' ?  'menu active-menu' : 'menu not-active-menu' "
+             id="list_store_page"><i
+                class="fa fa-shopping-bag"></i><span>店舗・チラシ</span></div>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/video'}">
+            <div th:class=" ${currentPage} == 'video' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-video-camera"></i><span>動画</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/member'}">
+            <div th:class=" ${currentPage} == 'list_user' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-user"></i><span>生年月日情報インポート</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/listBlackMember'}">
+            <div th:class=" ${currentPage} == 'list_black_member' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-user-times"></i><span> ブラックリスト会員</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/historyDownloadFile'}" class="hidden">
+            <div th:class=" ${currentPage} == 'history_download_file' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i
+                        class="fa fa-gift"></i><span>ダウンロード履歴</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/prescription'}">
+            <div th:class=" ${currentPage} == 'prescription' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-medkit"></i><span>処方せん</span></div>
+        </a>
+
+    </div>
+    <div class="block-menu block-setting-app-menu" th:if="${isSysAdmin}">
+        <div class="control-block-menu"><i class="fa fa-server icon-active"></i><span
+                style="font-size: 12px">システム管理App</span><i
+                class="fa fa-angle-double-down block-icon"></i></div>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/configOTP'}">
+            <div th:class=" ${currentPage} == 'white_list_otp' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-key"></i><span>SMS認証ホワイトリスト</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/resetMemberInfo'}">
+            <div th:class=" ${currentPage} == 'reset_member_info' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-refresh"></i><span>会員番号リセット</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/info'}">
+            <div th:class=" ${currentPage} == 'app_info' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-info"></i><span>アプリ申請情報</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/functions'}">
+            <div th:class=" ${currentPage} == 'menu' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-navicon"></i><span>メニュー</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/tags'}" class="hidden">
+            <div th:class=" ${currentPage} == 'tag' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-tag"></i><span>タグ</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/introducingImages'}">
+            <div th:class=" ${currentPage} == 'intro_image' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-image"></i><span>紹介写真</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/settingColor'}">
+            <div th:class=" ${currentPage} == 'color' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-paint-brush"></i><span>キーカラー</span></div>
+        </a>
+<!--        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/app_review'}">
+            <div th:class=" ${currentPage} == 'app_review' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-star-half-o"></i><span>ストアレビュー</span></div>
+        </a>-->
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/certificateImage'}">
+            <div th:class=" ${currentPage} == 'certificate_image' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-address-card-o"></i><span>会員証画像</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/term'}">
+            <div th:class=" ${currentPage} == 'term' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-rub"></i><span>利用規約</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/configRegister'}"
+           class="hidden">
+            <div th:class=" ${currentPage} == 'config_register' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-registered"></i><span>登録設定</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/acceptNotification'}"
+           class="hidden">
+            <div th:class=" ${currentPage} == 'acceptNotification' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-user"></i><span>プッシュ通知設定</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/appQuestion'}">
+            <div th:class=" ${currentPage} == 'app_question' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-gift"></i><span>よくある質問</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/usingApp'}">
+            <div th:class=" ${currentPage} == 'using_app' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-book"></i><span>アプリの使い方</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/QRImage'}" class="hidden">
+            <div th:class=" ${currentPage} == 'qr_config' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-qrcode"></i><span>QR写真</span></div>
+        </a>
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/imageGallery'}">
+            <div th:class=" ${currentPage} == 'image_gallery' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-image"></i><span>イメージギャラリー</span></div>
+        </a>
+
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/config/text'}">
+            <div th:class=" ${currentPage} == 'config_text' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                    class="fa fa-image"></i><span>注意文言</span></div>
+        </a>
+
+        <a th:href="@{'/company/'+${app.company.companyAuthId}+'/app/'+${appId}+'/cardUsageHistory'}">
+            <div th:class=" ${currentPage} == 'card_usage_history' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-cogs"></i><span>取引種別マスタ設定</span></div>
+        </a>
+    </div>
+</div>
+
+<section class="page-content" layout:fragment="content">
+</section>
+
+<th:block th:fragment="page-scripts">
+
+</th:block>
+</body>
+</html>

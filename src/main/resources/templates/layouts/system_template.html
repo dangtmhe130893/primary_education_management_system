@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title layout:title-pattern="$CONTENT_TITLE"></title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <link href="/libs/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet"/>
+    <link th:href="@{/libs/bootstrap4/css/bootstrap.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/component.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/header.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/left_menu.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/new_datatable.css}" rel="stylesheet" media="screen"/>
+    `
+    <script type="text/javascript" src="/libs/jQuery/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="/libs/jQuery/jquery.validate.js"></script>
+    <script src="/libs/jQuery/messages_ja.js" type="text/javascript"></script>
+    <script src="/libs/vuejs/vue.min.js"></script>
+
+    <script type="text/javascript" src="/custom/js/vue_util_component.js"></script>
+    <script type="text/javascript" src="/custom/js/uploader_component.js"></script>
+    <script src="/libs/bootstrap4/js/tether.js" type="text/javascript"></script>
+    <script src="/libs/bootstrap4/js/popper.js" type="text/javascript"></script>
+    <script src="/libs/bootstrap4/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/libs/momentjs/moment.min.js" type="text/javascript"></script>
+    <script src="/custom/js/component.js" type="text/javascript"></script>
+    <script src="/custom/js/left_menu.js" type="text/javascript"></script>
+    <script src="/custom/js/logout.js" type="text/javascript"></script>
+    <script src="/custom/js/public_app.js" type="text/javascript"></script>
+    <th:block layout:fragment="style"></th:block>
+
+
+</head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142239444-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+        console.log(dataLayer)
+    }
+    gtag('js', new Date());
+    gtag('screenName', "MY_PAGE");
+    gtag('config', 'UA-142239444-1');
+</script>
+
+<body>
+<div th:replace="components/i18n-notification :: i18n_notification"></div>
+<div th:replace="components :: loader"></div>
+
+<div th:replace="components :: alert"></div>
+<header th:replace="layouts/header :: header('system',${currentPage})">
+</header>
+<div class="left-menu left-menu-active">
+    <div class="header-left-menu clearfix">
+        <span id="icon_menu">
+         		<i class="fa fa-arrow-left fa-2x menu-des"></i>
+         		<i class="fa fa-arrow-right fa-2x menu-des d-none"></i>
+    	 </span>
+    </div>
+    <div class="body-left-menu">
+        <div class="block-menu block-system-menu">
+            <div class="control-block-menu"><i class="fa fa-server icon-active"></i><span>システム管理Home</span> <i
+                    class="fa fa-angle-double-down block-icon"></i></div>
+            <!--<a href="/system/home"><div th:class=" ${currentPage} == 'home' ?  'menu active-menu' : 'menu not-active-menu' "><i class="fa fa-home"></i><span>ホーム</span></div></a>-->
+            <a href="/system/management/notification">
+                <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
+                    <i class="fa fa-bell"></i><span>会社管理者へのお知らせ</span></div>
+            </a>
+            <a href="/system/management/companies">
+                <div th:class=" ${currentPage} == 'list_company' ?  'menu active-menu' : 'menu not-active-menu' "><i
+                        class="fa fa-building"></i><span>会社一覧</span></div>
+            </a>
+            <a href="/system/management/admin">
+                <div th:class=" ${currentPage} == 'list_company_admin' ?  'menu active-menu' : 'menu not-active-menu' ">
+                    <i class="fa fa-building"></i><span>会社管理者一覧</span></div>
+            </a>
+        </div>
+    </div>
+</div>
+<section class="page-content" layout:fragment="content">
+</section>
+
+<th:block th:fragment="page-scripts">
+
+</th:block>
+</body>
+</html>

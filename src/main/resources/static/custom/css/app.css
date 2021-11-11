@@ -1,0 +1,22 @@
+ #app_image .file-uploader {
+    width: 52%;
+    height: 160px;
+    top: 0;
+    right: -24%;
+	border-radius: 5px;
+}
+
+.file-uploader .image-preview {
+	width: 100%;height: 100%;border-radius: 5px;margin: 0px;
+}
+
+.block{
+	flex: 0;
+    margin-left: 0px;
+    position: relative;
+}
+
+.image-introducing{
+	width: 168px;
+	border: solid 1px #e2d9d9;
+}

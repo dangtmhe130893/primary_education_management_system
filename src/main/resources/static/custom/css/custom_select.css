@@ -1,0 +1,90 @@
+@CHARSET "UTF-8";
+.custom-select .container-item {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: solid 1px #cecece;
+    background-color: #ffffff;
+    right: 0px;
+    z-index: 1000;
+    position: absolute;
+
+}
+.custom-select .item {
+    background-color: #3B4350;
+    line-height: 25px;
+    padding-left: 10px;
+    opacity: 1;
+    border: solid 1px #3B4350;
+    color: #fff;
+}
+.custom-select .item:hover {
+    background-color: #818fa7;
+    border: solid 1px #818fa7;
+    cursor: pointer;
+}
+.custom-select .item b {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: normal;
+}
+.custom-select .close-select-item {
+    background-color: #3B4350;
+    color: #ffffff;
+    font-weight: bold;
+    margin-left: 50%;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.custom-select .close-select-item:hover {
+    background-color: #3B4350;
+    border: 1px solid #3B4350;
+    color: white;
+}
+.custom-select .total-item-search {
+    font-size: 12px;
+    font-weight: bold;
+}
+.custom-select .list-item {
+    max-height: 290px;
+}
+.select-wrapper {
+    position: relative;
+    height: 30px !important;
+}
+.custom-select .selected-element {
+    padding: 6px 3px !important;
+}
+.custom-select .selected-element strong {
+    background-color: #3B4350;
+    border-radius: 5px;
+    padding: 3px 30px 3px 10px;
+    position: absolute;
+    top: 2px;
+    height: 24px;
+    color: #ffffff;
+    font-size: 12px;
+}
+.custom-select .selected-element strong i {
+    margin-left: 5px;
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+    top: 4px;
+    margin: 0px !important;
+}
+.custom-select .list-item .item input {
+    position: absolute;
+    top: 20%;
+    right: 10px;
+}
+.custom-select .clear-all{
+    position: absolute;
+    right: 100px;
+    cursor: pointer;
+}
+
+/*bs4*/
+.custom-select input{ position: absolute !important; top: -1px; left: 0px;}
+.custom-select .selected-element{height: 30px; position: absolute; top: -1px; left: 0px;}
