@@ -22,7 +22,11 @@ public class UserEntity {
     @JsonIgnore
     private String rawPassword;
 
+    private String name;
     private String username;
+
+    private String email;
+    private String phone;
     private boolean isDeleted;
 
     private Integer statusUser; //1 un_active, 2 active

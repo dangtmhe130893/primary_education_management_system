@@ -7,7 +7,45 @@
 </head>
 <body>
 <div layout:fragment="content">
-ff
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    <div th:fragment="table-admin">
+        <div style="margin-bottom: 10px;">
+            <button data-toggle="modal" data-target="#modal_add_account"
+                    class="btn btn-primary btn-sm col-1" style="float:right" id="btn_add_account"
+                    v-on:click="managerVue.resetForm()">Đăng ký
+            </button>
+        </div>
+
+        <div style="float: right; display: flex; width: 70%; justify-content: flex-end;">
+            <div class="input-group" style="width: 40%; float: right">
+                <input class="form-control" type="text" id="search_account_id"
+                       placeholder="Tìm kiếm theo tên, email, sđt">
+                <div class="input-group-append" id="btn_search_account">
+                    <span class="input-group-text amber lighten-3">
+                        <i style="font-size: 14px; cursor: pointer" class="fa fa-search text-grey"
+                           aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-content">
+            <table class="table responsive" id="account_table">
+                <thead>
+                <th style="width: 10% !important" scope="col" class="text-center">Tên</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Email</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Số điện thoại</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Thời gian đăng ký</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Trạng thái</th>
+                <th style="width: 10% !important" scope="col" class="text-center">
+                </th>
+
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
 </div>
 </body>
 </html>
