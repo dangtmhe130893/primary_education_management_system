@@ -1,16 +1,32 @@
 package com.primary_education_system.config.security;
 
+import com.primary_education_system.entity.user.RoleEntity;
+import com.primary_education_system.entity.user.UserEntity;
+import com.primary_education_system.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
 
@@ -18,10 +34,24 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        return null;
+        LOGGER.info("Validate web user with user name:  {}", username);
+        UserEntity userEntity = userService.findByUsername(username);
+        if (userEntity == null) {
+            throw new BadCredentialsException("Username or password is incorrect!");
+        }
+        if (!passwordEncoder.matches(password, userEntity.getPassword())) {
+            throw new BadCredentialsException("Username or password is incorrect!");
+        }
+        Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
+        for (RoleEntity role : userEntity.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        }
+        UserDetails userDetails = new CustomUserDetails(username, password, userEntity.getId(), authorities);
+        return new UsernamePasswordAuthenticationToken(userDetails, password, authorities);
     }
 
     public boolean supports(Class<?> authentication) {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
+
 }

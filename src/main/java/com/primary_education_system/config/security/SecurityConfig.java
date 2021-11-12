@@ -2,7 +2,7 @@ package com.primary_education_system.config.security;
 
 import com.primary_education_system.config.CustomAuthenticationEntryPoint;
 import com.primary_education_system.filter.ChangePasswordFilter;
-import com.primary_education_system.entity.Roles;
+import com.primary_education_system.enum_type.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/libs/**", "/custom/**", "/js/**", "/icon/**", "/images/**", "/favicon.ico/**"
+        web.ignoring().antMatchers("/libs/**", "/custom/**", "/js/**", "/icon/**", "/images/**"
                 , "libs/**", "custom/**", "js/**", "icon/**", "images/**", "favicon.ico/**");
     }
 
@@ -54,9 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/api/v1/app/**").permitAll()
-                .antMatchers("/api/v1/cache/").hasAnyRole(Roles.SYSTEM_ADMIN.name())
-                .antMatchers("/api/v1/web/user/forgotPassword").permitAll()
-                .antMatchers("/api/v1/web/user/setPassword").permitAll()
+                .antMatchers("/api/user/forgotPassword").permitAll()
+                .antMatchers("/api/setPassword").permitAll()
                 .antMatchers("/swagger-ui.html").hasAnyRole(Roles.SYSTEM_ADMIN.name());
         http.formLogin()
                 .loginPage("/login")
@@ -84,7 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAfter(changePasswordFilter, SecurityContextPersistenceFilter.class);
     }
 
-
     @Bean
     public LogoutSuccessHandler getLogoutSuccessHandler() {
         return new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK);
@@ -98,7 +96,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Configuration
     static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
-
 
         @Bean
         BCryptPasswordEncoder passwordEncoder() {

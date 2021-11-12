@@ -1,4 +1,4 @@
-package com.primary_education_system.entity;
+package com.primary_education_system.enum_type;
 
 public enum Roles {
 

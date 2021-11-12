@@ -6,4 +6,7 @@
     <include file="liquibase/users/schema.xml"/>
     <include file="liquibase/users/data.xml"/>
 
+    <include file="liquibase/role/schema.xml"/>
+    <include file="liquibase/role/data.xml"/>
+
 </databaseChangeLog>

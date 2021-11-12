@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -21,7 +22,15 @@ public class UserEntity {
     @JsonIgnore
     private String rawPassword;
 
+    private String username;
+    private boolean isDeleted;
+
     private Integer statusUser; //1 un_active, 2 active
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roles;
 
     public UserEntity() {
     }

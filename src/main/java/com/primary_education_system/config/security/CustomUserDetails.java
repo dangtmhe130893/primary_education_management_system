@@ -29,7 +29,7 @@ public class CustomUserDetails extends User {
     private Integer minutes;
 
 
-    public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(String username, String password, Long userId, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
 }

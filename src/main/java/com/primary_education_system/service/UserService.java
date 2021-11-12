@@ -1,5 +1,6 @@
 package com.primary_education_system.service;
 
+import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,8 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private TokenService tokenService;
-
+    public UserEntity findByUsername(String username) {
+        return userRepository.findByUsernameAndIsDeletedFalse(username);
+    }
 
 }

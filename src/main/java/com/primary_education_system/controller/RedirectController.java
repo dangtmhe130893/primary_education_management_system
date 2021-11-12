@@ -1,9 +1,8 @@
 package com.primary_education_system.controller;
 
-import com.primary_education_system.service.RedirectService;
 import com.primary_education_system.config.security.CustomUserDetails;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.primary_education_system.service.RedirectService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@Slf4j
 public class RedirectController {
 
     @Autowired
     private RedirectService redirectService;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedirectController.class);
 
     @RequestMapping(value = "/redirectHandler", method = RequestMethod.GET)
     public String redirectHandler(@AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -25,7 +23,7 @@ public class RedirectController {
             return "redirect:/login";
         }
         String uri = redirectService.getDefaultRedirectUri(userDetails);
-        LOGGER.info("Redirect user {} to url {}", userDetails.getUsername(), uri);
+        log.info("Redirect user {} to url {}", userDetails.getUsername(), uri);
         return "redirect:" + uri;
 
     }
@@ -36,7 +34,7 @@ public class RedirectController {
             return "redirect:/login";
         } else {
             String uri = redirectService.getDefaultRedirectUri(userDetails);
-            LOGGER.info("Redirect user {} to url {}", userDetails.getUsername(), uri);
+            log.info("Redirect user {} to url {}", userDetails.getUsername(), uri);
             return "redirect:" + uri;
         }
     }

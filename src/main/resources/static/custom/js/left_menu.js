@@ -63,26 +63,6 @@ $(document).ready(function () {
         toogleLeftMenu();
     });
 
-
-//    $("#icon_menu").hover(function () {
-//        if ($(this).hasClass("icon-hide")) {
-//            setTimeout(function () {
-//                $("#icon_menu .fa-bars").addClass("d-none");
-//                $("#icon_menu .fa-arrow-right").removeClass("d-none");
-//            }, 200);
-//        } else {
-//            setTimeout(function () {
-//                $("#icon_menu .fa-bars").addClass("d-none");
-//                $("#icon_menu .fa-arrow-left").removeClass("d-none");
-//            }, 200);
-//        }
-//    }, function () {
-//        $("#icon_menu .fa-bars").removeClass("d-none");
-//        $("#icon_menu .fa-arrow-left").addClass("d-none");
-//        $("#icon_menu .fa-arrow-right").addClass("d-none");
-//
-//    });
-
     var hideItem = function () {
     	    $("#icon_menu .fa-arrow-left").addClass("d-none");
 	        $("#icon_menu .fa-arrow-right").removeClass("d-none");

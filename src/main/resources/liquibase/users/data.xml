@@ -15,8 +15,14 @@
                     value="$2a$10$3wbCusme5oXba/xSw5gQuOT4uzcNKlcttVGkAbd8MaYx7TuM/HLEa"/> <!--admin123456-->
             <column name="status_user" value="2"/>
             <column name="is_change_password" valueBoolean="true"/>
-            <column name="role" value="SYSTEM_ADMIN"/>
         </insert>
+    </changeSet>
+
+    <changeSet id="create_table_user_role" author="dangtm">
+        <createTable tableName="user_role">
+            <column name="user_id" type="int(11)"/>
+            <column name="role_id" type="int(11)"/>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>
