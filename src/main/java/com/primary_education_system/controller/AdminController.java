@@ -25,4 +25,9 @@ public class AdminController {
         return "admin/class";
     }
 
+    @GetMapping("/time_schedule")
+    public String getTimeSchedule() {
+        return "admin/time_schedule";
+    }
+
 }

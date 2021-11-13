@@ -25,4 +25,14 @@ public class TimeScheduleEntity {
     private boolean isDeleted;
     private Date createdTime;
     private Date updatedTime;
+
+    public TimeScheduleEntity() {
+    }
+
+    public TimeScheduleEntity(DayOfWeek dayOfWeek, Long frameTimeId, String subject, Long classId) {
+        this.dayOfWeek = dayOfWeek;
+        this.frameTimeId = frameTimeId;
+        this.subject = subject;
+        this.classId = classId;
+    }
 }

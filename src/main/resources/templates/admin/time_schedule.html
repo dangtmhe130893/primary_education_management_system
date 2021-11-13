@@ -1,0 +1,145 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/admin_template}"
+      th:with="currentPage='time_schedule'">
+<head>
+    <title>Home</title>
+    <script type="text/javascript" src="/custom/js/admin/time_schedule/time_schedule.js"></script>
+    <link href="/libs/select2/dist/css/select2.css" rel="stylesheet"/>
+    <script src="/libs/select2/dist/js/select2.full.js" type="text/javascript"></script>
+    <style>
+        .list_col_time{
+            display: flex;
+            flex-direction: column;
+            width: 12.5%;
+        }
+        .col_time{
+            height: 50px;
+            width: 100%;
+            border: 1px solid #ccc;
+            text-align: center;
+            line-height: 50px;
+        }
+        .col_time:first-child {
+            border: none;
+        }
+        .list-subject {
+            display: flex;
+            flex-direction: column;
+            width: 12.5%;
+        }
+        .subject-item {
+            height: 50px;
+            width: 100%;
+            border: 1px solid #ccc;
+            text-align: center;
+            line-height: 50px;
+        }
+        .btn-end-col {
+            margin-top: 16px;
+            border: none;
+            height: 32px;
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    <div th:fragment="table-admin">
+        
+        <div id="time_schedule">
+            <div style="display: flex; align-items: center; margin-bottom: 16px">
+                <label style="margin-bottom: 0">Chọn lớp: </label>
+                <select id="select-class" style="width: 160px; border-radius: 4px" v-model="className">
+                    <option v-bind:id="'class_id_' + classs.id" v-for="classs in listClass">{{classs.name}}</option>
+                </select>
+            </div>
+            <h2 style="text-align: center; margin-bottom: 16px;">
+                Thời khóa biểu lớp {{className}}
+            </h2>
+            <div style="display: flex">
+                <div class="list_col_time">
+                    <div class="col_time"></div>
+                    <div class="col_time">07:00 - 07:50</div>
+                    <div class="col_time">07:50 – 08:40</div>
+                    <div class="col_time">08:50 - 09:40</div>
+                    <div class="col_time">09:50 - 10:40</div>
+                    <div class="col_time">10:40 – 11:30</div>
+                    <div class="col_time">13:30 – 14:20</div>
+                    <div class="col_time">14:20 – 15:10</div>
+                    <div class="col_time">15:20 – 16:10</div>
+                    <div class="col_time">16:10 – 17:00</div>
+                </div>
+        
+                <div class="list-subject">
+                    <div class="subject-item">Monday</div>
+                    <input :disabled="isDisabledColMonday" v-for="timeSchedule in listTimeScheduleMonday" class="subject-item" v-bind:value="timeSchedule.subject"/>
+                    <button class="btn btn-end-col" v-if="listTimeScheduleMonday.length > 0" type="button">{{textBtnColMonday}}</button>
+                </div>
+        
+                <div class="list-subject">
+                    <div class="subject-item">Tuesday</div>
+                    <div v-for="timeSchedule in listTimeScheduleTuesday" class="subject-item">{{timeSchedule.subject}}</div>
+                </div>
+        
+                <div class="list-subject">
+                    <div class="subject-item">Wednesday</div>
+                    <div v-for="timeSchedule in listTimeScheduleWednesday" class="subject-item">{{timeSchedule.subject}}</div>
+                </div>
+        
+                <div class="list-subject">
+                    <div class="subject-item">Thursday</div>
+                    <div v-for="timeSchedule in listTimeScheduleThursday" class="subject-item">{{timeSchedule.subject}}</div>
+                </div>
+        
+                <div class="list-subject">
+                    <div class="subject-item">Friday</div>
+                    <div v-for="timeSchedule in listTimeScheduleFriday" class="subject-item">{{timeSchedule.subject}}</div>
+                </div>
+        
+                <div class="list-subject">
+                    <div class="subject-item">Saturday</div>
+                    <div v-for="timeSchedule in listTimeScheduleSaturday" class="subject-item">{{timeSchedule.subject}}</div>
+                </div>
+        
+                <div class="list-subject">
+                    <div class="subject-item">Sunday</div>
+                    <div v-for="timeSchedule in listTimeScheduleSunday" class="subject-item">{{timeSchedule.subject}}</div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+    
+    
+    
+    <div class="modal fade bd-example-modal-lg" id="modal_delete_schedule" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa</h5>
+                </div>
+                <div class="modal-body" style="text-align: center">
+                    <h5>Bạn có muốn xóa không?</h5>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Đóng</button>
+                    <button id="btn_submit_delete" type="button" class="btn btn-primary btn-sm">
+                        Xóa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

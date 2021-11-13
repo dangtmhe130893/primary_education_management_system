@@ -142,7 +142,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         window.loader.hide();
-                        $("#modal_add_class").modal("hide");
+                        $("#modal_delete_class").modal("hide");
 
                         if(response.status.code === 1000) {
                             tableClass.ajax.reload();

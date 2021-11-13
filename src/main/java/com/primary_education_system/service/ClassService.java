@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
@@ -18,15 +19,20 @@ public class ClassService {
     @Autowired
     ClassRepository classRepository;
 
+    @Autowired
+    TimeScheduleService timeScheduleService;
+
     public Page<ClassEntity> getPage(Pageable pageable) {
         return classRepository.getPage(pageable);
     }
 
+    @Transactional
     public ServerResponseDto save(ClassDto classDto) {
         Long classId = classDto.getId();
+        boolean isUpdate = classId != null;
 
         ClassEntity classEntity;
-        if (classId != null) {
+        if (isUpdate) {
             classEntity = classRepository.findByIdAndIsDeletedFalse(classId);
             classEntity.setUpdatedTime(new Date());
         } else {
@@ -38,14 +44,19 @@ public class ClassService {
         classEntity.setGrade(classDto.getGrade());
         classEntity.setRoom(classDto.getRoom());
 
-        classRepository.save(classEntity);
+        classEntity = classRepository.save(classEntity);
+
+        if (!isUpdate) {
+            /* create time schedule */
+            timeScheduleService.createTimeSchedule(classEntity.getId());
+        }
 
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
     public ServerResponseDto detail(Long id) {
         ClassEntity classEntity = classRepository.findByIdAndIsDeletedFalse(id);
-        if(classEntity == null) {
+        if (classEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
         return new ServerResponseDto(ResponseCase.SUCCESS, classEntity);
@@ -53,11 +64,15 @@ public class ClassService {
 
     public ServerResponseDto delete(Long id) {
         ClassEntity classEntity = classRepository.findByIdAndIsDeletedFalse(id);
-        if(classEntity == null) {
+        if (classEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
         classEntity.setDeleted(true);
         classRepository.save(classEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    public ServerResponseDto getList() {
+        return new ServerResponseDto(ResponseCase.SUCCESS, classRepository.findByIsDeletedFalse());
     }
 }

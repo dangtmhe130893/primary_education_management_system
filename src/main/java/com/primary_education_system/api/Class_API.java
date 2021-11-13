@@ -27,6 +27,11 @@ public class Class_API {
         return classService.getPage(pageable);
     }
 
+    @GetMapping("/getList")
+    public ResponseEntity<ServerResponseDto> getList() {
+        return ResponseEntity.ok(classService.getList());
+    }
+
     @PostMapping("/save")
     public ResponseEntity<ServerResponseDto> save(@RequestBody ClassDto classDto) {
         return ResponseEntity.ok(classService.save(classDto));

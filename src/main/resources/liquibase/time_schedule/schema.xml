@@ -16,9 +16,7 @@
 			<column name="frame_time_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="subject" type="varchar(50)">
-				<constraints nullable="false" />
-			</column>
+			<column name="subject" type="varchar(50)"></column>
 
 			<column name="class_id" type="int(11)">
 				<constraints nullable="false" />
