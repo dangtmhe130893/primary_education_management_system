@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -98,7 +100,7 @@ public class UserService {
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
-    public ServerResponseDto updateProfile(Long id, AccountRequestDto saveDto) {
+    public ServerResponseDto updateProfile(Long id, AccountRequestDto saveDto) throws ParseException {
         UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(id);
         if (userEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
@@ -110,7 +112,8 @@ public class UserService {
         userEntity.setName(saveDto.getName());
         userEntity.setEmail(saveDto.getEmail());
         userEntity.setPhone(saveDto.getPhone());
-        userEntity.setBirthday(saveDto.getBirthday());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        userEntity.setBirthday(sdf.parse(saveDto.getBirthday()));
         userEntity.setAddress(saveDto.getAddress());
         userRepository.save(userEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);

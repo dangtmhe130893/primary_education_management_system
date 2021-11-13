@@ -18,7 +18,9 @@ $(document).ready(function () {
                         vm.name = response.name;
                         vm.email = response.email;
                         vm.phone = response.phone;
-                        vm.birthday = response.birthday;
+                        if (response.birthday) {
+                            vm.birthday = moment(response.birthday).format('YYYY/MM/DD')
+                        }
                         vm.address = response.address;
                     }
                 });
@@ -30,7 +32,7 @@ $(document).ready(function () {
                     "name": vm.name,
                     "email": vm.email,
                     "phone": vm.phone,
-                    "birthday": vm.birthday,
+                    "birthday": $("#birthday").val(),
                     "address": vm.address,
                 }
                 $.ajax({

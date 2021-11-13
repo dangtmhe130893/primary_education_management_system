@@ -14,7 +14,7 @@ public class AccountRequestDto {
     private String password;
     private String phone;
     private String listRoleName;
-    private Date birthday;
+    private String birthday;
     private String address;
 
 }

@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/api/user")
 public class User_API {
@@ -51,7 +53,7 @@ public class User_API {
 
     @PostMapping("/updateProfile")
     public ResponseEntity<ServerResponseDto> updateProfile(@RequestBody AccountRequestDto saveDto,
-                                                           @AuthenticationPrincipal CustomUserDetails userDetail) {
+                                                           @AuthenticationPrincipal CustomUserDetails userDetail) throws ParseException {
         return ResponseEntity.ok().body(userService.updateProfile(userDetail.getUserId(), saveDto));
     }
 
