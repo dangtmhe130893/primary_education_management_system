@@ -29,6 +29,14 @@ public class UserController {
         return "redirect:" + uri;
     }
 
+    @GetMapping("/profile")
+    public String getProfile(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return "login";
+        }
+        return "profile";
+    }
+
     @GetMapping("/change-password")
     public String changePasswordForm(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         return "change_password";
@@ -58,7 +66,6 @@ public class UserController {
     public String formNotFound() {
         return "access_denied";
     }
-
 
     @GetMapping("/confirmForgotPassword")
     public String confirmUser(@RequestParam("userId") Long userId, @RequestParam("token") String token, Model model) {

@@ -1,5 +1,6 @@
 package com.primary_education_system.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,9 @@ public class UserEntity {
 
     private String email;
     private String phone;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private Date birthday;
+    private String address;
     private boolean isDeleted;
     private Date createdTime;
     private Date updatedTime;

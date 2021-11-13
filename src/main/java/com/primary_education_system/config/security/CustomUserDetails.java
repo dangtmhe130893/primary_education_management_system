@@ -13,11 +13,6 @@ import java.util.Date;
 public class CustomUserDetails extends User {
     private Long userId;
     private String role;
-    private Long appId;
-    private boolean isSystemAdmin;
-    private boolean isWebUser;
-    private String appIdString;
-    private Long companyId;
     private String accessToken;
     private String refreshToken;
     private String redirectUrl;
@@ -31,5 +26,6 @@ public class CustomUserDetails extends User {
 
     public CustomUserDetails(String username, String password, Long userId, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
+        this.userId = userId;
     }
 }

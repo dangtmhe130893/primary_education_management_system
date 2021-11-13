@@ -74,7 +74,7 @@ public class UserService {
 
     public AccountResponseDto getDetail(Long id) {
         UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(id);
-        if (userEntity == null || userEntity.getId() == 1) {
+        if (userEntity == null) {
             return null;
         }
         AccountResponseDto accountResponseDto = new AccountResponseDto();
@@ -82,6 +82,8 @@ public class UserService {
         accountResponseDto.setEmail(userEntity.getEmail());
         accountResponseDto.setId(userEntity.getId());
         accountResponseDto.setName(userEntity.getName());
+        accountResponseDto.setBirthday(userEntity.getBirthday());
+        accountResponseDto.setAddress(userEntity.getAddress());
         return accountResponseDto;
     }
 
@@ -92,6 +94,24 @@ public class UserService {
         }
         userEntity.setDeleted(true);
         userEntity.setUpdatedTime(new Date());
+        userRepository.save(userEntity);
+        return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    public ServerResponseDto updateProfile(Long id, AccountRequestDto saveDto) {
+        UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(id);
+        if (userEntity == null) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
+        boolean isEmailExist = userRepository.countByEmailAndId(saveDto.getEmail(), id) != 0;
+        if (isEmailExist) {
+            return new ServerResponseDto(ResponseCase.EMAIL_EXISTED);
+        }
+        userEntity.setName(saveDto.getName());
+        userEntity.setEmail(saveDto.getEmail());
+        userEntity.setPhone(saveDto.getPhone());
+        userEntity.setBirthday(saveDto.getBirthday());
+        userEntity.setAddress(saveDto.getAddress());
         userRepository.save(userEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }

@@ -1,5 +1,6 @@
 package com.primary_education_system.api;
 
+import com.primary_education_system.config.security.CustomUserDetails;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
 import com.primary_education_system.dto.account.AccountResponseDto;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,6 +42,17 @@ public class User_API {
     @PostMapping("/delete")
     public ResponseEntity<ServerResponseDto> delete(@RequestParam("userId") Long userId) {
         return ResponseEntity.ok().body(userService.delete(userId));
+    }
+
+    @GetMapping("/profile")
+    public AccountResponseDto getProfile(@AuthenticationPrincipal CustomUserDetails userDetail) {
+        return userService.getDetail(userDetail.getUserId());
+    }
+
+    @PostMapping("/updateProfile")
+    public ResponseEntity<ServerResponseDto> updateProfile(@RequestBody AccountRequestDto saveDto,
+                                                           @AuthenticationPrincipal CustomUserDetails userDetail) {
+        return ResponseEntity.ok().body(userService.updateProfile(userDetail.getUserId(), saveDto));
     }
 
 }
