@@ -23,6 +23,10 @@
         <insert tableName="role">
             <column name="name" value="PUPIL_PARENT"/>
         </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

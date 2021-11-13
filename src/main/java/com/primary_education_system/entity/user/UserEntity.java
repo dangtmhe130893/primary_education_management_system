@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,9 @@ public class UserEntity {
     private String email;
     private String phone;
     private boolean isDeleted;
+    private Date createdTime;
+    private Date updatedTime;
+    private boolean isChangePassword;
 
     private Integer statusUser; //1 un_active, 2 active
 

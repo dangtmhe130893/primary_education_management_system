@@ -31,11 +31,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
+        String email = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        LOGGER.info("Validate web user with user name:  {}", username);
-        UserEntity userEntity = userService.findByUsername(username);
+        LOGGER.info("Validate web user with email:  {}", email);
+        UserEntity userEntity = userService.findByEmail(email);
         if (userEntity == null) {
             throw new BadCredentialsException("Username or password is incorrect!");
         }
@@ -46,7 +46,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         for (RoleEntity role : userEntity.getRoles()) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         }
-        UserDetails userDetails = new CustomUserDetails(username, password, userEntity.getId(), authorities);
+        UserDetails userDetails = new CustomUserDetails(email, password, userEntity.getId(), authorities);
         return new UsernamePasswordAuthenticationToken(userDetails, password, authorities);
     }
 
