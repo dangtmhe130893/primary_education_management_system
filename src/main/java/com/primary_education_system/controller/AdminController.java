@@ -20,4 +20,9 @@ public class AdminController {
         return "admin/account";
     }
 
+    @GetMapping("/class")
+    public String getClassRoom() {
+        return "admin/class";
+    }
+
 }

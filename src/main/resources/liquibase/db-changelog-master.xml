@@ -9,4 +9,14 @@
     <include file="liquibase/role/schema.xml"/>
     <include file="liquibase/role/data.xml"/>
 
+    <include file="liquibase/grade/schema.xml"/>
+    <include file="liquibase/grade/data.xml"/>
+
+    <include file="liquibase/class/schema.xml"/>
+
+    <include file="liquibase/time_schedule/schema.xml"/>
+
+    <include file="liquibase/frame_time_schedule/schema.xml"/>
+    <include file="liquibase/frame_time_schedule/data.xml"/>
+
 </databaseChangeLog>
