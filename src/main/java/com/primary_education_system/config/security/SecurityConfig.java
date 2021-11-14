@@ -53,7 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/api/v1/app/**").permitAll()
                 .antMatchers("/api/user/forgotPassword").permitAll()
                 .antMatchers("/api/setPassword").permitAll()
                 .antMatchers("/swagger-ui.html").hasAnyRole(Roles.SYSTEM_ADMIN.name());
