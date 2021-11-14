@@ -29,7 +29,8 @@
             flex-direction: column;
             width: 12.5%;
         }
-        .subject-item {
+        
+        .subject-item, .subject-item-title{
             height: 50px;
             width: 100%;
             border: 1px solid #ccc;
@@ -41,6 +42,9 @@
             border: none;
             height: 32px;
             background-color: blue;
+            color: white;
+        }
+        .btn-end-col:hover {
             color: white;
         }
     </style>
@@ -76,40 +80,46 @@
                 </div>
         
                 <div class="list-subject">
-                    <div class="subject-item">Monday</div>
-                    <input :disabled="isDisabledColMonday" v-for="timeSchedule in listTimeScheduleMonday" class="subject-item" v-bind:value="timeSchedule.subject"/>
-                    <button class="btn btn-end-col" v-if="listTimeScheduleMonday.length > 0" type="button">{{textBtnColMonday}}</button>
+                    <div class="subject-item-title">Monday</div>
+                    <input :disabled="!isEditing1" v-for="timeSchedule in listTimeScheduleMonday" class="subject-item" v-bind:value="timeSchedule.subject"/>
+                    <button id="btn-end-col-MONDAY" class="btn btn-end-col" v-if="listTimeScheduleMonday.length > 0" type="button">{{isEditing1 ? 'Cập nhật' : 'Sửa'}}</button>
                 </div>
         
                 <div class="list-subject">
-                    <div class="subject-item">Tuesday</div>
-                    <div v-for="timeSchedule in listTimeScheduleTuesday" class="subject-item">{{timeSchedule.subject}}</div>
+                    <div class="subject-item-title">Tuesday</div>
+                    <input :disabled="!isEditing2" v-for="timeSchedule in listTimeScheduleTuesday" class="subject-item" v-bind:value="timeSchedule.subject"/>
+                    <button id="btn-end-col-TUESDAY" class="btn btn-end-col" v-if="listTimeScheduleTuesday.length > 0" type="button">{{isEditing2 ? 'Cập nhật' : 'Sửa'}}</button>
                 </div>
-        
                 <div class="list-subject">
-                    <div class="subject-item">Wednesday</div>
-                    <div v-for="timeSchedule in listTimeScheduleWednesday" class="subject-item">{{timeSchedule.subject}}</div>
+                    <div class="subject-item-title">Wednesday</div>
+                    <input :disabled="!isEditing3" v-for="timeSchedule in listTimeScheduleWednesday" class="subject-item" v-bind:value="timeSchedule.subject"/>
+                    <button id="btn-end-col-WEDNESDAY" class="btn btn-end-col" v-if="listTimeScheduleWednesday.length > 0" type="button">{{isEditing3 ? 'Cập nhật' : 'Sửa'}}</button>
                 </div>
-        
+    
                 <div class="list-subject">
-                    <div class="subject-item">Thursday</div>
-                    <div v-for="timeSchedule in listTimeScheduleThursday" class="subject-item">{{timeSchedule.subject}}</div>
+                    <div class="subject-item-title">Thursday</div>
+                    <input :disabled="!isEditing4" v-for="timeSchedule in listTimeScheduleThursday" class="subject-item" v-bind:value="timeSchedule.subject"/>
+                    <button id="btn-end-col-THURSDAY" class="btn btn-end-col" v-if="listTimeScheduleThursday.length > 0" type="button">{{isEditing4 ? 'Cập nhật' : 'Sửa'}}</button>
                 </div>
-        
+    
                 <div class="list-subject">
-                    <div class="subject-item">Friday</div>
-                    <div v-for="timeSchedule in listTimeScheduleFriday" class="subject-item">{{timeSchedule.subject}}</div>
+                    <div class="subject-item-title">Friday</div>
+                    <input :disabled="!isEditing5" v-for="timeSchedule in listTimeScheduleFriday" class="subject-item" v-bind:value="timeSchedule.subject"/>
+                    <button id="btn-end-col-FRIDAY" class="btn btn-end-col" v-if="listTimeScheduleFriday.length > 0" type="button">{{isEditing5 ? 'Cập nhật' : 'Sửa'}}</button>
                 </div>
-        
+                
                 <div class="list-subject">
-                    <div class="subject-item">Saturday</div>
-                    <div v-for="timeSchedule in listTimeScheduleSaturday" class="subject-item">{{timeSchedule.subject}}</div>
+                    <div class="subject-item-title">Saturday</div>
+                    <input :disabled="!isEditing6" v-for="timeSchedule in listTimeScheduleSaturday" class="subject-item" v-bind:value="timeSchedule.subject"/>
+                    <button id="btn-end-col-SATURDAY" class="btn btn-end-col" v-if="listTimeScheduleSaturday.length > 0" type="button">{{isEditing6 ? 'Cập nhật' : 'Sửa'}}</button>
                 </div>
-        
+    
                 <div class="list-subject">
-                    <div class="subject-item">Sunday</div>
-                    <div v-for="timeSchedule in listTimeScheduleSunday" class="subject-item">{{timeSchedule.subject}}</div>
+                    <div class="subject-item-title">Sunday</div>
+                    <input :disabled="!isEditing7" v-for="timeSchedule in listTimeScheduleSunday" class="subject-item" v-bind:value="timeSchedule.subject"/>
+                    <button id="btn-end-col-SUNDAY" class="btn btn-end-col" v-if="listTimeScheduleSunday.length > 0" type="button">{{isEditing7 ? 'Cập nhật' : 'Sửa'}}</button>
                 </div>
+
             </div>
         </div>
         

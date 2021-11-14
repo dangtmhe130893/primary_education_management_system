@@ -2,6 +2,7 @@ package com.primary_education_system.service;
 
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
+import com.primary_education_system.dto.time_schedule.TimeScheduleRequestDto;
 import com.primary_education_system.entity.FrameTimeScheduleEntity;
 import com.primary_education_system.entity.TimeScheduleEntity;
 import com.primary_education_system.enum_type.DayOfWeek;
@@ -9,9 +10,7 @@ import com.primary_education_system.repository.TimeScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TimeScheduleService {
@@ -25,7 +24,7 @@ public class TimeScheduleService {
         List<TimeScheduleEntity> listTimeSchedule = timeScheduleRepository.findByClassIdAndIsDeletedFalse(classId);
         listTimeSchedule.forEach(timeScheduleEntity -> {
             if (timeScheduleEntity.getSubject() == null) {
-                timeScheduleEntity.setSubject("------");
+                timeScheduleEntity.setSubject("");
             }
         });
         return new ServerResponseDto(ResponseCase.SUCCESS, listTimeSchedule);
@@ -38,7 +37,7 @@ public class TimeScheduleService {
         for (FrameTimeScheduleEntity frameTime : listFrameTime) {
             Long frameTimeId = frameTime.getId();
             for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-                TimeScheduleEntity timeSchedule = new TimeScheduleEntity(dayOfWeek, frameTimeId, null, classId);
+                TimeScheduleEntity timeSchedule = new TimeScheduleEntity(dayOfWeek, frameTimeId, "", classId);
                 timeSchedule.setCreatedTime(new Date());
                 timeSchedule.setUpdatedTime(new Date());
                 listTimeSchedule.add(timeSchedule);
@@ -46,5 +45,26 @@ public class TimeScheduleService {
         }
 
         timeScheduleRepository.save(listTimeSchedule);
+    }
+
+    public ServerResponseDto save(TimeScheduleRequestDto timeScheduleRequestDto) {
+        DayOfWeek dayOfWeek = timeScheduleRequestDto.getDayOfWeekUpdateRequest();
+        Long classId = timeScheduleRequestDto.getClassId();
+        List<String> listSubjectRequest = timeScheduleRequestDto.getListSubjectUpdateRequest();
+
+
+        List<TimeScheduleEntity> listTimeScheduleByDayOfWeek = timeScheduleRepository
+                .getByDayOfWeekAndClassId(dayOfWeek, classId);
+
+        if (listSubjectRequest.size() != listTimeScheduleByDayOfWeek.size()) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
+
+        for (int i = 0; i < listTimeScheduleByDayOfWeek.size(); i++) {
+            listTimeScheduleByDayOfWeek.get(i).setSubject(listSubjectRequest.get(i));
+        }
+
+        timeScheduleRepository.save(listTimeScheduleByDayOfWeek);
+        return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 }

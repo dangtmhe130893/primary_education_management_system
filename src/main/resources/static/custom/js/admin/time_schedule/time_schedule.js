@@ -24,7 +24,16 @@ $(document).ready(function () {
             isDisabledColSaturday: true,
             isDisabledColSunday: true,
 
-            textBtnColMonday: "Sửa",
+            isEditing1: false,
+            isEditing2: false,
+            isEditing3: false,
+            isEditing4: false,
+            isEditing5: false,
+            isEditing6: false,
+            isEditing7: false,
+
+            listSubjectUpdateRequest: [],
+            dayOfWeekUpdateRequest: "",
 
         },
         watch: {
@@ -88,11 +97,87 @@ $(document).ready(function () {
                         }
                     }
                 })
+            },
+            resetListSubjectUpdate() {
+                this.listSubjectUpdateRequest = [];
             }
         },
         mounted() {
             let self = this;
             self.loadListClass();
+
+            $(document).on("click", ".btn-end-col", function (){
+                let isUpdate = !$(this).parent().find(".subject-item").prop('disabled');
+
+                self.dayOfWeekUpdateRequest = $(this).attr("id").replace("btn-end-col-", "")
+
+                $(this).parent().find(".subject-item").each(function (){
+                    self.listSubjectUpdateRequest.push($(this).val());
+                })
+
+                switch (self.dayOfWeekUpdateRequest) {
+                    case "MONDAY": {
+                        self.isEditing1 = ! self.isEditing1;
+                        break;
+                    }
+                    case "TUESDAY": {
+                        self.isEditing2 = ! self.isEditing2;
+                        break;
+                    }
+                    case "WEDNESDAY": {
+                        self.isEditing3 = ! self.isEditing3;
+                        break;
+                    }
+                    case "THURSDAY": {
+                        self.isEditing4 = ! self.isEditing4;
+                        break;
+                    }
+                    case "FRIDAY": {
+                        self.isEditing5 = ! self.isEditing5;
+                        break;
+                    }
+                    case "SATURDAY": {
+                        self.isEditing6 = ! self.isEditing6;
+                        break;
+                    }
+                    case "SUNDAY": {
+                        self.isEditing7 = ! self.isEditing7;
+                        break;
+                    }
+                }
+
+                let data = {
+                    classId: self.classId,
+                    dayOfWeekUpdateRequest: self.dayOfWeekUpdateRequest,
+                    listSubjectUpdateRequest: self.listSubjectUpdateRequest,
+                }
+
+                self.resetListSubjectUpdate();
+
+                if(!isUpdate) {
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/timeSchedule/save",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    beforeSend: function () {
+                        window.loader.show();
+                    },
+                    success: function (response) {
+                        window.loader.hide();
+
+                        if(response.status.code === 1000) {
+                            self.getTimeSchedule();
+                            window.alert.show("success", "Lưu thành công", 2000);
+                        } else {
+                            window.alert.show("error", "Lưu thất bại", 2000);
+                        }
+                    }
+                })
+            })
         }
     })
 })
