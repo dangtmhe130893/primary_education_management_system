@@ -65,7 +65,7 @@
         <div id="time_schedule">
             <div style="display: flex; align-items: center; margin-bottom: 16px">
                 <label style="margin-bottom: 0">Chọn lớp: </label>
-                <select id="select-class" style="width: 160px; border-radius: 4px" v-model="className">
+                <select id="select-class" style="width: 160px; border-radius: 4px; margin-left: 16px; padding-left: 4px" v-model="className">
                     <option v-bind:id="'class_id_' + classs.id" v-for="classs in listClass">{{classs.name}}</option>
                 </select>
             </div>
@@ -91,7 +91,10 @@
                     <select :disabled="!isEditing1" v-for="timeSchedule in listTimeScheduleMonday" v-model="timeSchedule.subject" class="subject-item">
                         <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
                     </select>
-                    <button id="btn-end-col-MONDAY" class="btn btn-end-col" v-if="listTimeScheduleMonday.length > 0" type="button">{{isEditing1 ? 'Cập nhật' : 'Sửa'}}</button>
+                    <button id="btn-end-col-MONDAY" class="btn btn-end-col" v-if="listTimeScheduleMonday.length > 0" type="button"
+                            :style="{backgroundColor: (isEditing1 ? 'blue' : '#ffc107'), color: (isEditing1 ? 'white' : 'black')}">
+                        {{isEditing1 ? 'Cập nhật' : 'Sửa'}}
+                    </button>
                 </div>
         
                 <div class="list-subject">
@@ -99,14 +102,20 @@
                     <select :disabled="!isEditing2" v-for="timeSchedule in listTimeScheduleTuesday" v-model="timeSchedule.subject" class="subject-item">
                         <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
                     </select>
-                    <button id="btn-end-col-TUESDAY" class="btn btn-end-col" v-if="listTimeScheduleTuesday.length > 0" type="button">{{isEditing2 ? 'Cập nhật' : 'Sửa'}}</button>
+                    <button id="btn-end-col-TUESDAY" class="btn btn-end-col" v-if="listTimeScheduleTuesday.length > 0" type="button"
+                            :style="{backgroundColor: (isEditing2 ? 'blue' : '#ffc107'), color: (isEditing2 ? 'white' : 'black')}">
+                        {{isEditing2 ? 'Cập nhật' : 'Sửa'}}
+                    </button>
                 </div>
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ tư</div>
                     <select :disabled="!isEditing3" v-for="timeSchedule in listTimeScheduleWednesday" v-model="timeSchedule.subject" class="subject-item">
                         <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
                     </select>
-                    <button id="btn-end-col-WEDNESDAY" class="btn btn-end-col" v-if="listTimeScheduleWednesday.length > 0" type="button">{{isEditing3 ? 'Cập nhật' : 'Sửa'}}</button>
+                    <button id="btn-end-col-WEDNESDAY" class="btn btn-end-col" v-if="listTimeScheduleWednesday.length > 0" type="button"
+                            :style="{backgroundColor: (isEditing3 ? 'blue' : '#ffc107'), color: (isEditing3 ? 'white' : 'black')}">
+                        {{isEditing3 ? 'Cập nhật' : 'Sửa'}}
+                    </button>
                 </div>
     
                 <div class="list-subject">
@@ -114,7 +123,10 @@
                     <select :disabled="!isEditing4" v-for="timeSchedule in listTimeScheduleThursday" v-model="timeSchedule.subject" class="subject-item">
                         <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
                     </select>
-                    <button id="btn-end-col-THURSDAY" class="btn btn-end-col" v-if="listTimeScheduleThursday.length > 0" type="button">{{isEditing4 ? 'Cập nhật' : 'Sửa'}}</button>
+                    <button id="btn-end-col-THURSDAY" class="btn btn-end-col" v-if="listTimeScheduleThursday.length > 0" type="button"
+                            :style="{backgroundColor: (isEditing4 ? 'blue' : '#ffc107'), color: (isEditing4 ? 'white' : 'black')}">
+                        {{isEditing4 ? 'Cập nhật' : 'Sửa'}}
+                    </button>
                 </div>
     
                 <div class="list-subject">
@@ -122,7 +134,10 @@
                     <select :disabled="!isEditing5" v-for="timeSchedule in listTimeScheduleFriday" v-model="timeSchedule.subject" class="subject-item">
                         <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
                     </select>
-                    <button id="btn-end-col-FRIDAY" class="btn btn-end-col" v-if="listTimeScheduleFriday.length > 0" type="button">{{isEditing5 ? 'Cập nhật' : 'Sửa'}}</button>
+                    <button id="btn-end-col-FRIDAY" class="btn btn-end-col" v-if="listTimeScheduleFriday.length > 0" type="button"
+                            :style="{backgroundColor: (isEditing5 ? 'blue' : '#ffc107'), color: (isEditing5 ? 'white' : 'black')}">
+                        {{isEditing5 ? 'Cập nhật' : 'Sửa'}}
+                    </button>
                 </div>
                 
                 <div class="list-subject">
@@ -130,7 +145,10 @@
                     <select :disabled="!isEditing6" v-for="timeSchedule in listTimeScheduleSaturday" v-model="timeSchedule.subject" class="subject-item">
                         <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
                     </select>
-                    <button id="btn-end-col-SATURDAY" class="btn btn-end-col" v-if="listTimeScheduleSaturday.length > 0" type="button">{{isEditing6 ? 'Cập nhật' : 'Sửa'}}</button>
+                    <button id="btn-end-col-SATURDAY" class="btn btn-end-col" v-if="listTimeScheduleSaturday.length > 0" type="button"
+                            :style="{backgroundColor: (isEditing6 ? 'blue' : '#ffc107'), color: (isEditing6 ? 'white' : 'black')}">
+                        {{isEditing6 ? 'Cập nhật' : 'Sửa'}}
+                    </button>
                 </div>
     
                 <div class="list-subject">
@@ -138,7 +156,10 @@
                     <select :disabled="!isEditing7" v-for="timeSchedule in listTimeScheduleSunday" v-model="timeSchedule.subject" class="subject-item">
                         <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
                     </select>
-                    <button id="btn-end-col-SUNDAY" class="btn btn-end-col" v-if="listTimeScheduleSunday.length > 0" type="button">{{isEditing7 ? 'Cập nhật' : 'Sửa'}}</button>
+                    <button id="btn-end-col-SUNDAY" class="btn btn-end-col" v-if="listTimeScheduleSunday.length > 0" type="button"
+                            :style="{backgroundColor: (isEditing7 ? 'blue' : '#ffc107'), color: (isEditing7 ? 'white' : 'black')}">
+                        {{isEditing7 ? 'Cập nhật' : 'Sửa'}}
+                    </button>
                 </div>
 
             </div>
