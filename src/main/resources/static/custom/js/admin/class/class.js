@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    let keyword = "";
 
     let columnDefinitions = [
         {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
@@ -16,7 +17,7 @@ $(document).ready(function () {
             "size": requestData.length,
             "sortField": "createdTime",
             "sortDir": sortDir,
-            "search": $("#search_account_id").val(),
+            "keyword": $("#search_class_id").val(),
         };
         window.loader.show();
         jQuery.get(link_api, params, function (response) {
@@ -144,7 +145,7 @@ $(document).ready(function () {
                         window.loader.hide();
                         $("#modal_delete_class").modal("hide");
 
-                        if(response.status.code === 1000) {
+                        if (response.status.code === 1000) {
                             tableClass.ajax.reload();
                             window.alert.show("success", "Xóa thành công", 2000);
                         } else {
@@ -230,4 +231,17 @@ $(document).ready(function () {
     $(document).on("click", "#btn_submit_delete", function () {
         formClassVue.deleteClass();
     })
+
+    $(document).on("click", "#btn_search_class", function () {
+        tableClass.ajax.reload();
+    })
+
+    $("#search_class_id").bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            tableClass.ajax.reload();
+        }
+    });
+
+
 })

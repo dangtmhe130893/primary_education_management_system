@@ -22,9 +22,10 @@ public class Class_API {
 
     @GetMapping("/getPage")
     public Page<ClassEntity> getPage(@RequestParam int size, @RequestParam int page,
-                                     @RequestParam String sortDir, @RequestParam String sortField) {
+                                     @RequestParam String sortDir, @RequestParam String sortField,
+                                     @RequestParam String keyword) {
         Pageable pageable = PageableUtils.from(page, size, sortDir, sortField);
-        return classService.getPage(pageable);
+        return classService.getPage(pageable, keyword);
     }
 
     @GetMapping("/getList")

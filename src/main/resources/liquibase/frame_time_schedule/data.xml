@@ -8,39 +8,39 @@
     <changeSet id="insert_table_frame_time_schedule" author="dangtm">
         <insert tableName="frame_time_schedule">
             <column name="id" value="1"/>
-            <column name="name" value="07:00 - 07:50"/>
+            <column name="name" value="07:15 - 08:00"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="2"/>
-            <column name="name" value="07:50 – 08:40"/>
+            <column name="name" value="08:05 – 08:50"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="3"/>
-            <column name="name" value="08:50 - 09:40"/>
+            <column name="name" value="08:55 - 09:40"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="4"/>
-            <column name="name" value="09:50 - 10:40"/>
+            <column name="name" value="09:45 - 10:30"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="5"/>
-            <column name="name" value="10:40 – 11:30"/>
+            <column name="name" value="10:35 – 11:20"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="6"/>
-            <column name="name" value="13:30 – 14:20"/>
+            <column name="name" value="13:30 – 14:15"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="7"/>
-            <column name="name" value="14:20 – 15:10"/>
+            <column name="name" value="14:20 – 15:05"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="8"/>
-            <column name="name" value="15:20 – 16:10"/>
+            <column name="name" value="15:10 – 15:55"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="9"/>
-            <column name="name" value="16:10 – 17:00"/>
+            <column name="name" value="16:00 – 16:45"/>
         </insert>
     </changeSet>
 

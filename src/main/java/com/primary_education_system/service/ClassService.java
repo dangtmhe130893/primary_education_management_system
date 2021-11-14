@@ -22,8 +22,8 @@ public class ClassService {
     @Autowired
     TimeScheduleService timeScheduleService;
 
-    public Page<ClassEntity> getPage(Pageable pageable) {
-        return classRepository.getPage(pageable);
+    public Page<ClassEntity> getPage(Pageable pageable, String keyword) {
+        return classRepository.getPage(keyword, pageable);
     }
 
     @Transactional

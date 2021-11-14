@@ -7,6 +7,8 @@ $(document).ready(function () {
             className: "",
             classId: "",
 
+            listSubject: [],
+
             listTimeSchedule: [],
             listTimeScheduleMonday: [],
             listTimeScheduleTuesday: [],
@@ -98,6 +100,19 @@ $(document).ready(function () {
                     }
                 })
             },
+            loadListSubject() {
+                let self = this;
+
+                $.ajax({
+                    type: "GET",
+                    url: "/api/subject/list",
+                    success: function (response) {
+                        if(response.status.code === 1000) {
+                            self.listSubject = response.data;
+                        }
+                    }
+                })
+            },
             resetListSubjectUpdate() {
                 this.listSubjectUpdateRequest = [];
             }
@@ -105,6 +120,7 @@ $(document).ready(function () {
         mounted() {
             let self = this;
             self.loadListClass();
+            self.loadListSubject();
 
             $(document).on("click", ".btn-end-col", function (){
                 let isUpdate = !$(this).parent().find(".subject-item").prop('disabled');

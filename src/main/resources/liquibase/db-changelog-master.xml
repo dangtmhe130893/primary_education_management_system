@@ -19,4 +19,7 @@
     <include file="liquibase/frame_time_schedule/schema.xml"/>
     <include file="liquibase/frame_time_schedule/data.xml"/>
 
+    <include file="liquibase/subject/schema.xml"/>
+    <include file="liquibase/subject/data.xml"/>
+
 </databaseChangeLog>
