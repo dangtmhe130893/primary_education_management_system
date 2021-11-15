@@ -4,7 +4,7 @@ $(document).ready(function () {
         window.loader.show();
         $.get("/logout", {}, function () {
             window.loader.hide();
-            window.location = "/login";
+            window.location = "/home";
         });
     });
 });
