@@ -9,30 +9,23 @@
 <header th:fragment="header(level,screen)">
     <div class="header-menu header-mini">
         <div class="left-menu-header">
-            <nav aria-label="breadcrumb" th:block th:switch="${level}">
-                <ol class="breadcrumb" th:case="'system'" th:if="${isSysAdmin}">
-                    <li class="breadcrumb-item"><a href="/">ホーム</a></li>
-                    <li th:if="${screen} == 'list_company'" class="breadcrumb-item active" aria-current="page">会社一覧</li>
-                    <li th:if="${screen} == 'notification'" class="breadcrumb-item active" aria-current="page">
-                        会社管理者へのお知らせ
-                    </li>
-                    <li th:if="${screen} == 'management_user'" class="breadcrumb-item active" aria-current="page">
-                        会社管理者
-                    </li>
-                    <li th:if="${screen} == 'list_company_admin'" class="breadcrumb-item active" aria-current="page">
-                        会社管理者一覧
-                    </li>
-                    <li th:if="${screen} == 'change_password'" class="breadcrumb-item active" aria-current="page">
-                        パスワード変更
-                    </li>
-                </ol>
-                <ol class="breadcrumb" th:case="'app'">
-                    <li class="breadcrumb-item" th:if="${isSysAdmin}"><a href="/">ホーム</a></li>
+            <nav aria-label="breadcrumb" th:block >
+                <ol class="breadcrumb" >
+                    <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
+                    <li th:if="${screen} == 'list_account'" class="breadcrumb-item active" aria-current="page">Tài khoản</li>
+                    <li th:if="${screen} == 'list_class'" class="breadcrumb-item active" aria-current="page">Quản lý lớp học</li>
+                    <li th:if="${screen} == 'time_schedule'" class="breadcrumb-item active" aria-current="page">Quản lý thời khóa biểu</li>
                 </ol>
             </nav>
         </div>
         </a>
         <div class="right-menu">
+            <div class="info-user-login">
+                <div><b th:text="${user.name}"></b></div>
+                <div>
+                    <span th:text="''+${year} +'/'+ ${month} +'/'+ ${day} +''"></span>
+                </div>
+            </div>
             <i class="fa fa-navicon control-menu" style="cursor: pointer;"></i>
         </div>
     </div>
