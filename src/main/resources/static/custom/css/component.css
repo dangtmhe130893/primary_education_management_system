@@ -2,7 +2,7 @@ L@CHARSET "UTF-8";
 
 *{font-family: メイリオ;}
 * {
-	font-family: "メイリオ", "Meiryo", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "游ゴシック", YuGothic, "Meiryo UI", "ＭＳ Ｐゴシック", Lato, sans-serif;
+	font-family: "Alegreya", Lato, sans-serif;
 }
 .hidden{display: none !important;}
 label{font-weight: bold}
