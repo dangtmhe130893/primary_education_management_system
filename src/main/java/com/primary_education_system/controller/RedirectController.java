@@ -31,7 +31,7 @@ public class RedirectController {
     @GetMapping("/")
     public String redirectRoot(@AuthenticationPrincipal CustomUserDetails userDetails) {
         if (userDetails == null) {
-            return "redirect:/login";
+            return "redirect:/home";
         } else {
             String uri = redirectService.getDefaultRedirectUri(userDetails);
             log.info("Redirect user {} to url {}", userDetails.getUsername(), uri);
