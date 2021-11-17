@@ -9,8 +9,8 @@ $(document).ready(function () {
     }
 
     $(".control-block-menu").on('click', function () {
-        var parentClass = $(this).parent().attr('class').replace("block-menu ", "");
-        var icon = $(this).find('.block-icon');
+        let parentClass = $(this).parent().attr('class').replace("block-menu ", "");
+        let icon = $(this).find('.block-icon');
         if (icon.hasClass("fa-angle-double-down")) {
             icon.removeClass("fa-angle-double-down");
             icon.addClass("fa-angle-double-right");
@@ -25,8 +25,8 @@ $(document).ready(function () {
     });
 
     $(".has-sub-menu").on('click', function () {
-        var icon = $(this).find('.block-icon-sub-menu');
-        var parentClass = $(this).parent().attr('class');
+        let icon = $(this).find('.block-icon-sub-menu');
+        let parentClass = $(this).parent().attr('class');
         if (icon.hasClass("fa-angle-double-down")) {
             icon.removeClass("fa-angle-double-down");
             icon.addClass("fa-angle-double-right");
@@ -39,12 +39,12 @@ $(document).ready(function () {
             $("." + parentClass + " .sub-menu").removeClass("d-none");
         }
     });
-    var toggle = true;
-    var movePageTitleToLeft = function () {
+    let toggle = true;
+    let movePageTitleToLeft = function () {
         $(".header-page-title").animate({left: "75px"}, 20)
     };
 
-    var movePageTitleToRight = function () {
+    let movePageTitleToRight = function () {
         $(".header-page-title").animate({left: "235px"}, 20);
     }
 
@@ -63,7 +63,7 @@ $(document).ready(function () {
         toogleLeftMenu();
     });
 
-    var hideItem = function () {
+    let hideItem = function () {
     	    $("#icon_menu .fa-arrow-left").addClass("d-none");
 	        $("#icon_menu .fa-arrow-right").removeClass("d-none");
             $(".left-menu").addClass('left-menu-not-active');
@@ -78,7 +78,7 @@ $(document).ready(function () {
             $(".page-content").addClass("page-content-big");
     }
 
-    var showItem = function () {
+    let showItem = function () {
     	$("#icon_menu .fa-arrow-left").removeClass("d-none");
         $("#icon_menu .fa-arrow-right").addClass("d-none");
         $(".left-menu").removeClass('left-menu-not-active');
