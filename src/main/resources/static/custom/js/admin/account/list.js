@@ -28,6 +28,7 @@ $(document).ready(function () {
         {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "email", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "phone",  "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": null,  "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "createdTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": "statusUser", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "id", "orderable": false,  "defaultContent": "", "class": 'text-center'}
@@ -54,20 +55,32 @@ $(document).ready(function () {
         columnDefs: [
             {
                 "render": function (data) {
+                    let result = `<ul>`;
+                    data.roles.forEach(role => {
+                        result += `<li>${role.name}</li>`
+                    })
+                    result += `</ul>`;
+
+                    return result;
+                },
+                "targets": 3
+            },
+            {
+                "render": function (data) {
                     if (data === 2) {
                         return '<button disabled class="btn btn-sm btn-success " >Có hiệu lực</button>';
                     } else {
                         return '<button disabled class="btn btn-sm btn-secondary" >Không có hiệu lực</button>';
                     }
                 },
-                "targets": 4
+                "targets": 5
             },
             {
                 "render": function (data) {
                     return '<button type="button" data-toggle="modal" data-target="#modal_add_account" value="' + data + '" class="btn btn-sm btn-primary detail-acount">Chi tiết</button>'
                         + '<button style="margin-left: 10px" data-toggle="modal" data-target="#modal_delete_account" class="btn btn-sm btn-danger delelte-acount" data-id="' + data + '">Xóa</button>';
                 },
-                "targets": 5
+                "targets": 6
             },
         ]
     });

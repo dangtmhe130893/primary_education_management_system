@@ -1,6 +1,7 @@
 package com.primary_education_system.api;
 
 import com.primary_education_system.config.security.CustomUserDetails;
+import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
 import com.primary_education_system.dto.account.AccountResponseDto;
@@ -15,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -37,7 +39,7 @@ public class User_API {
     }
 
     @GetMapping("/getDetail")
-    public AccountResponseDto getDetail(@RequestParam("userId") Long userId) {
+    public UserEntity getDetail(@RequestParam("userId") Long userId) {
         return userService.getDetail(userId);
     }
 
@@ -47,7 +49,7 @@ public class User_API {
     }
 
     @GetMapping("/profile")
-    public AccountResponseDto getProfile(@AuthenticationPrincipal CustomUserDetails userDetail) {
+    public UserEntity getProfile(@AuthenticationPrincipal CustomUserDetails userDetail) {
         return userService.getDetail(userDetail.getUserId());
     }
 
@@ -57,4 +59,13 @@ public class User_API {
         return ResponseEntity.ok().body(userService.updateProfile(userDetail.getUserId(), saveDto));
     }
 
+    @GetMapping("/getListTeacherCanTeach")
+    public ResponseEntity<ServerResponseDto> getListTeacherCanTeach() {
+        return ResponseEntity.ok(new ServerResponseDto(ResponseCase.SUCCESS, userService.getListTeacherCanTeach()));
+    }
+
+    @GetMapping("/listTeacherForSubject/{subjectId}")
+    public List<UserEntity> getListTeacherForSubject(@PathVariable Long subjectId) {
+        return userService.getListTeacherForSubject(subjectId);
+    }
 }

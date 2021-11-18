@@ -7,6 +7,18 @@ L@CHARSET "UTF-8";
 .hidden{display: none !important;}
 label{font-weight: bold}
 
+
+ul {
+	margin-bottom: 0;
+}
+li {
+	text-align: left;
+}
+
+select {
+	height: 30px;
+}
+
 /*container*/
 .page-content{padding: 20px 20px 0px 230px;}
 .page-content-big{padding-left: 80px !important;}

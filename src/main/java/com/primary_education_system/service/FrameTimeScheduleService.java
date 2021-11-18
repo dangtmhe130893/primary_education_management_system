@@ -15,4 +15,9 @@ public class FrameTimeScheduleService {
     public List<FrameTimeScheduleEntity> findAll() {
         return frameTimeScheduleRepository.findByIsDeletedFalse();
     }
+
+    public String getNameFrameTimeById(Long frameTimeId) {
+        FrameTimeScheduleEntity frameTimeScheduleEntity = frameTimeScheduleRepository.findByIdAndIsDeletedFalse(frameTimeId);
+        return frameTimeScheduleEntity.getName();
+    }
 }

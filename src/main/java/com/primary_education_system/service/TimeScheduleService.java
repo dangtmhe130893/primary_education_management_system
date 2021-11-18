@@ -5,12 +5,14 @@ import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.time_schedule.TimeScheduleRequestDto;
 import com.primary_education_system.entity.FrameTimeScheduleEntity;
 import com.primary_education_system.entity.TimeScheduleEntity;
+import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.enum_type.DayOfWeek;
 import com.primary_education_system.repository.TimeScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeScheduleService {
@@ -20,12 +22,32 @@ public class TimeScheduleService {
     @Autowired
     private FrameTimeScheduleService frameTimeScheduleService;
 
+    @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
+    private UserService userService;
+
     public ServerResponseDto getTimeSchedule(Long classId) {
         List<TimeScheduleEntity> listTimeSchedule = timeScheduleRepository.findByClassIdAndIsDeletedFalse(classId);
+
+        List<Long> listSubjectId = listTimeSchedule
+                .stream()
+                .map(TimeScheduleEntity::getSubjectId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        Map<Long, String> mapNameSubjectById = subjectService.getMapNameSubjectById(listSubjectId);
+
+        List<Long> listTeacherId = listTimeSchedule
+                .stream()
+                .map(TimeScheduleEntity::getTeacherId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        Map<Long, String> mapNameTeacherById = userService.getMapNameTeacherById(listTeacherId);
+
         listTimeSchedule.forEach(timeScheduleEntity -> {
-            if (timeScheduleEntity.getSubject() == null) {
-                timeScheduleEntity.setSubject("");
-            }
+            timeScheduleEntity.setNameSubject(mapNameSubjectById.getOrDefault(timeScheduleEntity.getSubjectId(), ""));
+            timeScheduleEntity.setNameTeacher(mapNameTeacherById.getOrDefault(timeScheduleEntity.getTeacherId(), ""));
         });
         return new ServerResponseDto(ResponseCase.SUCCESS, listTimeSchedule);
     }
@@ -37,7 +59,7 @@ public class TimeScheduleService {
         for (FrameTimeScheduleEntity frameTime : listFrameTime) {
             Long frameTimeId = frameTime.getId();
             for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-                TimeScheduleEntity timeSchedule = new TimeScheduleEntity(dayOfWeek, frameTimeId, "", classId);
+                TimeScheduleEntity timeSchedule = new TimeScheduleEntity(dayOfWeek, frameTimeId, null, null, classId);
                 timeSchedule.setCreatedTime(new Date());
                 timeSchedule.setUpdatedTime(new Date());
                 listTimeSchedule.add(timeSchedule);
@@ -48,23 +70,31 @@ public class TimeScheduleService {
     }
 
     public ServerResponseDto save(TimeScheduleRequestDto timeScheduleRequestDto) {
-        DayOfWeek dayOfWeek = timeScheduleRequestDto.getDayOfWeekUpdateRequest();
-        Long classId = timeScheduleRequestDto.getClassId();
-        List<String> listSubjectRequest = timeScheduleRequestDto.getListSubjectUpdateRequest();
+        TimeScheduleEntity timeScheduleEntity = timeScheduleRepository
+                .findByIdAndIsDeletedFalse(timeScheduleRequestDto.getTimeScheduleId());
 
+        if (timeScheduleEntity == null) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
+        timeScheduleEntity.setSubjectId(timeScheduleRequestDto.getSubjectId());
+        timeScheduleEntity.setTeacherId(timeScheduleRequestDto.getTeacherId());
 
-        List<TimeScheduleEntity> listTimeScheduleByDayOfWeek = timeScheduleRepository
-                .getByDayOfWeekAndClassId(dayOfWeek, classId);
+        timeScheduleRepository.save(timeScheduleEntity);
+        return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
 
-        if (listSubjectRequest.size() != listTimeScheduleByDayOfWeek.size()) {
+    public ServerResponseDto detail(Long timeScheduleId) {
+        TimeScheduleEntity timeScheduleEntity = timeScheduleRepository.findByIdAndIsDeletedFalse(timeScheduleId);
+        if (timeScheduleEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
 
-        for (int i = 0; i < listTimeScheduleByDayOfWeek.size(); i++) {
-            listTimeScheduleByDayOfWeek.get(i).setSubject(listSubjectRequest.get(i));
-        }
+        String nameFrameTime = frameTimeScheduleService.getNameFrameTimeById(timeScheduleEntity.getFrameTimeId());
+        timeScheduleEntity.setNameFrameTime(nameFrameTime);
 
-        timeScheduleRepository.save(listTimeScheduleByDayOfWeek);
-        return new ServerResponseDto(ResponseCase.SUCCESS);
+        Long subjectId = timeScheduleEntity.getSubjectId();
+        List<UserEntity> listTeacher = userService.getListTeacherBySubjectId(subjectId);
+        timeScheduleEntity.setListTeacher(listTeacher);
+        return new ServerResponseDto(ResponseCase.SUCCESS, timeScheduleEntity);
     }
 }

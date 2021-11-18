@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    let timeScheduleVue = new Vue({
+    let timeScheduleTableVue = new Vue({
         el: "#time_schedule",
         data: {
             listClass: [],
@@ -26,33 +26,38 @@ $(document).ready(function () {
             isDisabledColSaturday: true,
             isDisabledColSunday: true,
 
-            isEditing1: false,
-            isEditing2: false,
-            isEditing3: false,
-            isEditing4: false,
-            isEditing5: false,
-            isEditing6: false,
-            isEditing7: false,
-
-            listSubjectUpdateRequest: [],
-            dayOfWeekUpdateRequest: "",
+            isEditing: true,
 
         },
         watch: {
-            className() {
+            className(value) {
+                popupVue.nameClass = value;
                 this.classId = Number($("#select-class option:selected").attr("id").replace("class_id_", ""));
                 this.getTimeSchedule();
             }
         },
         methods: {
-            getTimeSchedule(){
+            loadListClass() {
+                let self = this;
+
+                $.ajax({
+                    type: "GET",
+                    url: "/api/class/getList",
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            self.listClass = response.data;
+                        }
+                    }
+                })
+            },
+            getTimeSchedule() {
                 let self = this;
 
                 $.ajax({
                     type: "GET",
                     url: "/api/timeSchedule/getTimeSchedule/" + self.classId,
                     success: function (response) {
-                        if(response.status.code === 1000) {
+                        if (response.status.code === 1000) {
                             self.listTimeSchedule = response.data;
 
                             self.listTimeScheduleMonday = self.listTimeSchedule.filter(timeSchedule => {
@@ -87,18 +92,67 @@ $(document).ready(function () {
                 })
             },
 
-            loadListClass() {
-                let self = this;
+        },
+        mounted() {
+            let self = this;
+            self.loadListClass();
 
-                $.ajax({
-                    type: "GET",
-                    url: "/api/class/getList",
-                    success: function (response) {
-                        if (response.status.code === 1000) {
-                            self.listClass = response.data;
-                        }
-                    }
-                })
+            $(document).on("click", ".time-schedule-cell", function () {
+                if (!self.isEditing) {
+                    return;
+                }
+                popupVue.timeScheduleId = Number($(this).attr('id').replace('time-schedule-', ''));
+                $("#modal_add_time_schedule").modal("show");
+                popupVue.detailCellTimeSchedule();
+            })
+
+        }
+    })
+
+    let popupVue = new Vue({
+        el: "#modal_add_time_schedule",
+        data: {
+            isShowErrorSubject: false,
+            isShowErrorTeacher: false,
+
+            nameClass: "",
+            dayOfWeek: "",
+            nameFrameTime: "",
+
+            timeScheduleId: "",
+
+            listSubject: [],
+            listTeacher: [],
+            subjectId: null,
+            teacherId: null,
+        },
+        watch: {
+            subjectId(value) {
+                if (value == null) {
+                    return;
+                }
+                this.validateSubjectId();
+                this.loadListTeacher(value);
+            },
+            teacherId(value) {
+                if (value == null) {
+                    return;
+                }
+                this.validateTeacherId();
+            }
+        },
+        methods: {
+            validateForm() {
+                this.validateSubjectId();
+                this.validateTeacherId();
+
+                return !this.isShowErrorSubject && !this.isShowErrorTeacher;
+            },
+            validateSubjectId() {
+                this.isShowErrorSubject = !this.subjectId;
+            },
+            validateTeacherId() {
+                this.isShowErrorTeacher = !this.teacherId;
             },
             loadListSubject() {
                 let self = this;
@@ -107,71 +161,92 @@ $(document).ready(function () {
                     type: "GET",
                     url: "/api/subject/list",
                     success: function (response) {
-                        if(response.status.code === 1000) {
+                        if (response.status.code === 1000) {
                             self.listSubject = response.data;
                         }
                     }
                 })
             },
-            resetListSubjectUpdate() {
-                this.listSubjectUpdateRequest = [];
-            }
-        },
-        mounted() {
-            let self = this;
-            self.loadListClass();
-            self.loadListSubject();
 
-            $(document).on("click", ".btn-end-col", function (){
-                let isUpdate = !$(this).parent().find(".subject-item").prop('disabled');
+            loadListTeacher(subjectId) {
+                if (!subjectId) {
+                    return;
+                }
+                let self = this;
 
-                self.dayOfWeekUpdateRequest = $(this).attr("id").replace("btn-end-col-", "")
-
-                $(this).parent().find(".subject-item").each(function (){
-                    self.listSubjectUpdateRequest.push($(this).val());
+                $.ajax({
+                    type: "GET",
+                    url: "/api/user/listTeacherForSubject/" + Number(subjectId),
+                    success: function (response) {
+                        self.listTeacher = response;
+                    }
                 })
+            },
+            detailCellTimeSchedule() {
+                let self = this;
 
-                switch (self.dayOfWeekUpdateRequest) {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/timeSchedule/detail/" + self.timeScheduleId,
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            let data = response.data;
+                            self.nameFrameTime = data.nameFrameTime;
+                            self.dayOfWeek = self.convertTextDayOfWeekToVietNamese(data.dayOfWeek);
+                            self.subjectId = data.subjectId;
+                            self.listTeacher = data.listTeacher;
+                            self.teacherId = data.teacherId;
+                        } else {
+                            window.alert.show("error", "Lỗi", 2000);
+                        }
+                    }
+                })
+            },
+
+            convertTextDayOfWeekToVietNamese(textEnglish) {
+                switch (textEnglish) {
                     case "MONDAY": {
-                        self.isEditing1 = ! self.isEditing1;
+                        return "Thứ hai";
                         break;
                     }
                     case "TUESDAY": {
-                        self.isEditing2 = ! self.isEditing2;
+                        return "Thứ ba";
                         break;
                     }
                     case "WEDNESDAY": {
-                        self.isEditing3 = ! self.isEditing3;
+                        return "Thứ tư";
                         break;
                     }
                     case "THURSDAY": {
-                        self.isEditing4 = ! self.isEditing4;
+                        return "Thứ năm";
                         break;
                     }
                     case "FRIDAY": {
-                        self.isEditing5 = ! self.isEditing5;
+                        return "Thứ sáu";
                         break;
                     }
                     case "SATURDAY": {
-                        self.isEditing6 = ! self.isEditing6;
+                        return "Thứ bảy";
                         break;
                     }
                     case "SUNDAY": {
-                        self.isEditing7 = ! self.isEditing7;
+                        return "Chủ nhật";
                         break;
                     }
                 }
+            },
 
-                let data = {
-                    classId: self.classId,
-                    dayOfWeekUpdateRequest: self.dayOfWeekUpdateRequest,
-                    listSubjectUpdateRequest: self.listSubjectUpdateRequest,
+            saveTimeSchedule() {
+                let self = this;
+
+                if (!self.validateForm()) {
+                    return;
                 }
 
-                self.resetListSubjectUpdate();
-
-                if(!isUpdate) {
-                    return;
+                let data = {
+                    timeScheduleId: self.timeScheduleId,
+                    subjectId: self.subjectId,
+                    teacherId: self.teacherId,
                 }
 
                 $.ajax({
@@ -184,16 +259,39 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         window.loader.hide();
-
-                        if(response.status.code === 1000) {
-                            self.getTimeSchedule();
+                        $("#modal_add_time_schedule").modal("hide");
+                        if (response.status.code === 1000) {
+                            timeScheduleTableVue.getTimeSchedule();
                             window.alert.show("success", "Lưu thành công", 2000);
                         } else {
                             window.alert.show("error", "Lưu thất bại", 2000);
                         }
                     }
                 })
+            },
+            resetPopup() {
+                this.dayOfWeek = "";
+                this.nameFrameTime = "";
+
+                this.timeScheduleId = "";
+
+                this.listTeacher = [];
+                this.subjectId = null;
+                this.teacherId = null;
+
+                this.isShowErrorSubject = false;
+                this.isShowErrorTeacher = false;
+
+            }
+        },
+        mounted() {
+            let self = this;
+            self.loadListSubject();
+
+            $('#modal_add_time_schedule').on('hidden.bs.modal', function () {
+                self.resetPopup();
             })
+
         }
     })
 })

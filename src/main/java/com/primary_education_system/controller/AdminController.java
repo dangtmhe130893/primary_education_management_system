@@ -30,4 +30,8 @@ public class AdminController {
         return "admin/time_schedule";
     }
 
+    @GetMapping("/subject")
+    public String getSubject() {
+        return "admin/subject";
+    }
 }

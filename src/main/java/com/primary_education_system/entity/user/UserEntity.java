@@ -36,10 +36,10 @@ public class UserEntity {
     private Date createdTime;
     private Date updatedTime;
     private boolean isChangePassword;
+    private Long teachSubjectId;
 
     private Integer statusUser; //1 un_active, 2 active
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;

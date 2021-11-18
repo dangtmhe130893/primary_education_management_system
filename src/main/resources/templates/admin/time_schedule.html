@@ -12,7 +12,7 @@
         .list_col_time{
             display: flex;
             flex-direction: column;
-            width: 12.5%;
+            width: 10%;
         }
         .col_time{
             height: 50px;
@@ -30,12 +30,15 @@
             width: 12.5%;
         }
         
-        .subject-item, .subject-item-title{
+        .subject-item, .subject-item-title, .time-schedule-cell{
             height: 50px;
             width: 100%;
             border: 1px solid #ccc;
             text-align: center;
             line-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .subject-item-title {
             font-weight: bold;
@@ -54,6 +57,10 @@
         .subject-item:disabled {
             color: black;
         }
+        .sub-cell {
+            height: 100%;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -65,7 +72,7 @@
         <div id="time_schedule">
             <div style="display: flex; align-items: center; margin-bottom: 16px">
                 <label style="margin-bottom: 0">Chọn lớp: </label>
-                <select id="select-class" style="width: 160px; border-radius: 4px; margin-left: 16px; padding-left: 4px" v-model="className">
+                <select id="select-class" style="width: 160px; border-radius: 4px; margin-left: 16px; padding-left: 4px; height: 30px" v-model="className">
                     <option v-bind:id="'class_id_' + classs.id" v-for="classs in listClass">{{classs.name}}</option>
                 </select>
             </div>
@@ -88,87 +95,106 @@
         
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ hai</div>
-                    <select :disabled="!isEditing1" v-for="timeSchedule in listTimeScheduleMonday" v-model="timeSchedule.subject" class="subject-item">
-                        <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
-                    </select>
-                    <button id="btn-end-col-MONDAY" class="btn btn-end-col" v-if="listTimeScheduleMonday.length > 0" type="button"
-                            :style="{backgroundColor: (isEditing1 ? 'blue' : '#ffc107'), color: (isEditing1 ? 'white' : 'black')}">
-                        {{isEditing1 ? 'Cập nhật' : 'Sửa'}}
-                    </button>
+                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleMonday"
+                         :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                        {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
+                    </div>
                 </div>
         
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ ba</div>
-                    <select :disabled="!isEditing2" v-for="timeSchedule in listTimeScheduleTuesday" v-model="timeSchedule.subject" class="subject-item">
-                        <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
-                    </select>
-                    <button id="btn-end-col-TUESDAY" class="btn btn-end-col" v-if="listTimeScheduleTuesday.length > 0" type="button"
-                            :style="{backgroundColor: (isEditing2 ? 'blue' : '#ffc107'), color: (isEditing2 ? 'white' : 'black')}">
-                        {{isEditing2 ? 'Cập nhật' : 'Sửa'}}
-                    </button>
+                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleTuesday"
+                         :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                        {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
+                    </div>
                 </div>
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ tư</div>
-                    <select :disabled="!isEditing3" v-for="timeSchedule in listTimeScheduleWednesday" v-model="timeSchedule.subject" class="subject-item">
-                        <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
-                    </select>
-                    <button id="btn-end-col-WEDNESDAY" class="btn btn-end-col" v-if="listTimeScheduleWednesday.length > 0" type="button"
-                            :style="{backgroundColor: (isEditing3 ? 'blue' : '#ffc107'), color: (isEditing3 ? 'white' : 'black')}">
-                        {{isEditing3 ? 'Cập nhật' : 'Sửa'}}
-                    </button>
+                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleWednesday"
+                         :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                        {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
+                    </div>
                 </div>
     
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ năm</div>
-                    <select :disabled="!isEditing4" v-for="timeSchedule in listTimeScheduleThursday" v-model="timeSchedule.subject" class="subject-item">
-                        <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
-                    </select>
-                    <button id="btn-end-col-THURSDAY" class="btn btn-end-col" v-if="listTimeScheduleThursday.length > 0" type="button"
-                            :style="{backgroundColor: (isEditing4 ? 'blue' : '#ffc107'), color: (isEditing4 ? 'white' : 'black')}">
-                        {{isEditing4 ? 'Cập nhật' : 'Sửa'}}
-                    </button>
+                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleThursday"
+                         :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                        {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
+                    </div>
                 </div>
     
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ sáu</div>
-                    <select :disabled="!isEditing5" v-for="timeSchedule in listTimeScheduleFriday" v-model="timeSchedule.subject" class="subject-item">
-                        <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
-                    </select>
-                    <button id="btn-end-col-FRIDAY" class="btn btn-end-col" v-if="listTimeScheduleFriday.length > 0" type="button"
-                            :style="{backgroundColor: (isEditing5 ? 'blue' : '#ffc107'), color: (isEditing5 ? 'white' : 'black')}">
-                        {{isEditing5 ? 'Cập nhật' : 'Sửa'}}
-                    </button>
+                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleFriday"
+                         :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                        {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
+                    </div>
                 </div>
                 
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ bảy</div>
-                    <select :disabled="!isEditing6" v-for="timeSchedule in listTimeScheduleSaturday" v-model="timeSchedule.subject" class="subject-item">
-                        <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
-                    </select>
-                    <button id="btn-end-col-SATURDAY" class="btn btn-end-col" v-if="listTimeScheduleSaturday.length > 0" type="button"
-                            :style="{backgroundColor: (isEditing6 ? 'blue' : '#ffc107'), color: (isEditing6 ? 'white' : 'black')}">
-                        {{isEditing6 ? 'Cập nhật' : 'Sửa'}}
-                    </button>
+                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleSaturday"
+                         :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                        {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
+                    </div>
                 </div>
     
                 <div class="list-subject">
                     <div class="subject-item-title">Chủ nhật</div>
-                    <select :disabled="!isEditing7" v-for="timeSchedule in listTimeScheduleSunday" v-model="timeSchedule.subject" class="subject-item">
-                        <option v-for="subject in listSubject" :value="subject.name">{{subject.name}}</option>
-                    </select>
-                    <button id="btn-end-col-SUNDAY" class="btn btn-end-col" v-if="listTimeScheduleSunday.length > 0" type="button"
-                            :style="{backgroundColor: (isEditing7 ? 'blue' : '#ffc107'), color: (isEditing7 ? 'white' : 'black')}">
-                        {{isEditing7 ? 'Cập nhật' : 'Sửa'}}
-                    </button>
+                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleSunday"
+                         :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                        {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
+                    </div>
                 </div>
 
             </div>
         </div>
-        
-        
     </div>
     
-    
+    <div class="modal fade bd-example-modal-lg" id="modal_add_time_schedule" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="text-align: center" class="modal-title">Thêm thời khóa biểu: {{nameClass}} - {{dayOfWeek}} - {{nameFrameTime}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <div class="form-group">
+                                <label>Môn học:</label><sup style="color: red"> *</sup>
+                                <p class="error-message" v-bind:class="{ hidden : !isShowErrorSubject}">
+                                    Trường này là bắt buộc</p>
+                                <select id="select-subject" v-model="subjectId" class="form-control">
+                                    <option v-for="subject in listSubject" :value="subject.id">{{subject.name}}</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Giáo viên:</label><sup style="color: red"> *</sup>
+                                <p class="error-message" v-bind:class="{ hidden : !isShowErrorTeacher}">
+                                    Trường này là bắt buộc</p>
+                                <select id="select-teacher" v-model="teacherId" class="form-control">
+                                    <option v-for="teacher in listTeacher" :value="teacher.id">{{teacher.name}}</option>
+                                </select>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary btn-sm" v-on:click="saveTimeSchedule()">
+                        Lưu
+                    </button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
     
     <div class="modal fade bd-example-modal-lg" id="modal_delete_schedule" role="dialog"
          aria-labelledby="myLargeModalLabel" aria-hidden="true">

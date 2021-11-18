@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 @Getter
 public class TimeScheduleRequestDto {
-    private Long classId;
-    private DayOfWeek dayOfWeekUpdateRequest;
-    private List<String> listSubjectUpdateRequest;
+    private Long timeScheduleId;
+    private Long subjectId;
+    private Long teacherId;
 }

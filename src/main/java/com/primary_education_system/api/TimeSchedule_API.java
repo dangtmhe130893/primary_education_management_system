@@ -1,6 +1,5 @@
 package com.primary_education_system.api;
 
-import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.time_schedule.TimeScheduleRequestDto;
 import com.primary_education_system.service.TimeScheduleService;
@@ -22,7 +21,11 @@ public class TimeSchedule_API {
 
     @PostMapping("/save")
     public ResponseEntity<ServerResponseDto> save(@RequestBody TimeScheduleRequestDto timeScheduleRequestDto) {
-
         return ResponseEntity.ok(timeScheduleService.save(timeScheduleRequestDto));
+    }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<ServerResponseDto> detail(@PathVariable Long id) {
+        return ResponseEntity.ok(timeScheduleService.detail(id));
     }
 }

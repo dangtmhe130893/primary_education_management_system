@@ -37,11 +37,15 @@ $(document).ready(function () {
                 this.validPassword = true;
                 this.validPasswordLength = true;
                 this.validEqualPassword = true;
+
+                $("#select_role").val("").trigger("change");
             },
             mounted: function () {
 
             },
             detail: function (data) {
+                let listNameRole = data.roles.map(role => role.name);
+                $("#select_role").val(listNameRole).trigger("change");
                 $("#account_name").val(data.name);
                 $("#account_email").val(data.email);
                 $("#account_phone").val(data.phone);
@@ -149,6 +153,7 @@ $(document).ready(function () {
                         "listRoleName": $("#select_role").val().toString(),
                         "id": id_global,
                     }
+
                     $.ajax({
                         type: "POST",
                         contentType: "application/json",
@@ -168,7 +173,7 @@ $(document).ready(function () {
                                     location.reload();
                                 }, 1000);
                             } else if (response.status.code === 1001) {
-                                window.alert.show("error", "電Email đã tồn tại", 2000);
+                                window.alert.show("error", "Email đã tồn tại", 2000);
 
                             } else {
                                 window.alert.show("error", "Đã có lỗi xảy ra", 2000);
@@ -182,16 +187,20 @@ $(document).ready(function () {
                     placeholder: '',
                 });
 
-            }
+            },
         },
         mounted() {
             let self = this;
             self.loadRole();
+
+            $('#modal_add_account').on('hidden.bs.modal', function () {
+                self.resetForm();
+            })
+
         }
     })
 
     $(document).on('click', ".detail_manager", function () {
-        accountVue.resetForm();
         $("#account_email").attr('disabled', true);
         accountVue.isUpdateMan = true;
         id_global = this.value;
@@ -203,13 +212,11 @@ $(document).ready(function () {
             }
         })
     });
-    $(document).on('click', "#add_account_popup", function () {
+    $(document).on('click', "#btn_add_account", function () {
         accountVue.isUpdateMan = false;
-        accountVue.resetForm();
     });
 
     $(document).on('click', ".detail-acount", function () {
-        accountVue.resetForm();
         accountVue.isUpdateMan = true;
         id_global = this.value;
         $.ajax({

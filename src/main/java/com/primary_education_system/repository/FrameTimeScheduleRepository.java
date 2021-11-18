@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface FrameTimeScheduleRepository extends JpaRepository<FrameTimeScheduleEntity, Long> {
     List<FrameTimeScheduleEntity> findByIsDeletedFalse();
+
+    FrameTimeScheduleEntity findByIdAndIsDeletedFalse(Long frameTimeId);
 }
