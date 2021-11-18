@@ -42,59 +42,59 @@
          		<i class="fa fa-arrow-right fa-2x menu-des d-none"></i>
     	 </span>
     </div>
-    <div class="block-menu" >
-        <div class="control-block-menu">
+    <div class="block-menu" th:if="${isCanShowSystemMenu}">
+        <div class="control-block-menu" >
             <i class="fa fa-server icon-active"></i>
             <span style="font-size: 12px">SYSTEM MENU</span>
             <i class="fa fa-angle-double-right block-icon"></i>
         </div>
         <a href="/admin/home">
-            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Home</span></div>
         </a>
         <a href="/admin/account">
-            <div th:class=" ${currentPage} == 'list_account' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+            <div th:class=" ${currentPage} == 'list_account' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-users"></i><span>Quản lý tài khoản</span></div>
         </a>
     </div>
-    <div class="block-menu" >
+    <div class="block-menu" th:if="${isCanShowStaffMenu}">
         <div class="control-block-menu">
             <i class="fa fa-server icon-active"></i>
             <span style="font-size: 12px">STAFF MENU</span>
             <i class="fa fa-angle-double-right block-icon"></i>
         </div>
         <a href="/admin/home">
-            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Quản lý tình trạng học phí</span></div>
         </a>
     </div>
-    <div class="block-menu" >
+    <div class="block-menu" th:if="${isCanShowTeacherMenu}">
         <div class="control-block-menu">
             <i class="fa fa-server icon-active"></i>
             <span style="font-size: 12px">TEACHER MENU</span>
             <i class="fa fa-angle-double-right block-icon"></i>
         </div>
         <a href="/admin/home">
-            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Quản lý lớp học</span></div>
         </a>
         <a href="/admin/home">
-            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Quản lý điểm</span></div>
         </a>
     </div>
-    <div class="block-menu" >
+    <div class="block-menu" th:if="${isCanShowAcademicHeadMenu}">
         <div class="control-block-menu">
             <i class="fa fa-server icon-active"></i>
             <span style="font-size: 12px">ACADEMIC HEAD MENU</span>
             <i class="fa fa-angle-double-right block-icon"></i>
         </div>
         <a href="/admin/time_schedule">
-            <div th:class=" ${currentPage} == 'time_schedule' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+            <div th:class=" ${currentPage} == 'time_schedule' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Quản lý thời khóa biếu</span></div>
         </a>
         <a href="/admin/class">
-            <div th:class=" ${currentPage} == 'list_class' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+            <div th:class=" ${currentPage} == 'list_class' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Quản lý lớp học</span></div>
         </a>
         <a href="/admin/subject">
@@ -102,14 +102,14 @@
                 <i class="fa fa-info"></i><span>Quản lý môn học</span></div>
         </a>
     </div>
-    <div class="block-menu" >
+    <div class="block-menu" th:if="${isCanShowHeadMasterMenu}">
         <div class="control-block-menu">
             <i class="fa fa-server icon-active"></i>
             <span style="font-size: 12px">HEAD MASTER MENU</span>
             <i class="fa fa-angle-double-right block-icon"></i>
         </div>
         <a href="/admin/home">
-            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu d-none' : 'menu not-active-menu d-none' ">
+            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Quản lý học phí</span></div>
         </a>
     </div>
