@@ -20,6 +20,16 @@ public class AdminController {
         return "admin/account";
     }
 
+    @GetMapping("/tuition_status")
+    public String getTuitionStatus() {
+        return "admin/tuition_status";
+    }
+
+    @GetMapping("/pupil_account")
+    public String getPupilAccount() {
+        return "admin/pupil_account";
+    }
+
     @GetMapping("/class")
     public String getClassRoom() {
         return "admin/class";

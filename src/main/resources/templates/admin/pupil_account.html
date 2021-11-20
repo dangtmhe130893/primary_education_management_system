@@ -1,0 +1,89 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/admin_template}"
+      th:with="currentPage='pupil_account'">
+<head>
+    <title>Quản lý tài khoản học sinh</title>
+    <script type="text/javascript" src="/custom/js/admin/pupil_account/list.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    <div th:fragment="table-account">
+
+        <div id="filter">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Khối</label>
+                    <select class="form-control" >
+                        <option value="Khối 1">Khối 1</option>
+                        <option value="Khối 2">Khối 2</option>
+                        <option value="Khối 3">Khối 3</option>
+                        <option value="Khối 4">Khối 4</option>
+                        <option value="Khối 5">Khối 5</option>
+                        <option value="null">Tất cả</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Lớp</label>
+                    <select  class="form-control" >
+                        <option value="null">Tất cả</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+                <div style="display: flex;" class="col-6">
+                    <div class="input-group" style="float: right">
+                        <input class="form-control" type="text" id="search_account"
+                               placeholder="Tìm kiếm theo tên, email, sđt" autocomplete="off">
+                        <div class="input-group-append" id="btn_search_account">
+                    <span class="input-group-text amber lighten-3">
+                        <i style="font-size: 14px; cursor: pointer" class="fa fa-search text-grey"
+                           aria-hidden="true"></i>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="table-content" style="margin-top: 20px">
+            <div style="float: right">
+                <button data-toggle="modal" data-target="#modal_add_account"
+                        class="btn btn-primary btn-sm" id="btn_add_account"
+                        v-on:click="managerVue.resetForm()">Đăng ký
+                </button>
+            </div>
+            <table class="table responsive" id="account_table">
+                <thead>
+                <th style="width: 5% !important" scope="col" class="text-center">Mã học sinh</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Họ Tên</th>
+                <th style="width: 5% !important" scope="col" class="text-center">Khối</th>
+                <th style="width: 5% !important" scope="col" class="text-center">Lớp</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Email</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Số điện thoại</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Ngày sinh</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Giới tính</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Địa chỉ</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Họ tên bố</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Họ tên mẹ</th>
+                <th style="width: 10% !important" scope="col" class="text-center">
+                </th>
+
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

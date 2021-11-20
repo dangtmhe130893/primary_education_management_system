@@ -34,12 +34,11 @@ public class ClassService {
         ClassEntity classEntity;
         if (isUpdate) {
             classEntity = classRepository.findByIdAndIsDeletedFalse(classId);
-            classEntity.setUpdatedTime(new Date());
         } else {
             classEntity = new ClassEntity();
             classEntity.setCreatedTime(new Date());
-            classEntity.setUpdatedTime(new Date());
         }
+        classEntity.setUpdatedTime(new Date());
         classEntity.setName(classDto.getNameClass());
         classEntity.setGrade(classDto.getGrade());
         classEntity.setRoom(classDto.getRoom());

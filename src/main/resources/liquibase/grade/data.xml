@@ -8,23 +8,23 @@
     <changeSet id="insert_table_grade" author="dangtm">
         <insert tableName="grade">
             <column name="id" value="1"/>
-            <column name="name" value="1"/>
+            <column name="name" value="Khối 1"/>
         </insert>
         <insert tableName="grade">
             <column name="id" value="2"/>
-            <column name="name" value="2"/>
+            <column name="name" value="Khối 2"/>
         </insert>
         <insert tableName="grade">
             <column name="id" value="3"/>
-            <column name="name" value="3"/>
+            <column name="name" value="Khối 3"/>
         </insert>
         <insert tableName="grade">
             <column name="id" value="4"/>
-            <column name="name" value="4"/>
+            <column name="name" value="Khối 4"/>
         </insert>
         <insert tableName="grade">
             <column name="id" value="5"/>
-            <column name="name" value="5"/>
+            <column name="name" value="Khối 5"/>
         </insert>
     </changeSet>
 

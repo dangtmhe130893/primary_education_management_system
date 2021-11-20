@@ -101,6 +101,10 @@
             <div th:class=" ${currentPage} == 'list_subject' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Quản lý môn học</span></div>
         </a>
+        <a href="/admin/pupil_account">
+            <div th:class=" ${currentPage} == 'pupil_account' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i><span>Quản lý tài khoản học sinh</span></div>
+        </a>
     </div>
     <div class="block-menu" th:if="${isCanShowHeadMasterMenu}">
         <div class="control-block-menu">
