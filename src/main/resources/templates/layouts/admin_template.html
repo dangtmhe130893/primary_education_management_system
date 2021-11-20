@@ -54,7 +54,7 @@
         </a>
         <a href="/admin/account">
             <div th:class=" ${currentPage} == 'list_account' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-users"></i><span>Quản lý tài khoản</span></div>
+                <i class="fa fa-info"></i><span>Quản lý tài khoản</span></div>
         </a>
     </div>
     <div class="block-menu" th:if="${isCanShowStaffMenu}">
@@ -63,8 +63,8 @@
             <span style="font-size: 12px">STAFF MENU</span>
             <i class="fa fa-angle-double-right block-icon"></i>
         </div>
-        <a href="/admin/home">
-            <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
+        <a href="/admin/tuition_status">
+            <div th:class=" ${currentPage} == 'tuition_status' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i><span>Quản lý tình trạng học phí</span></div>
         </a>
     </div>
