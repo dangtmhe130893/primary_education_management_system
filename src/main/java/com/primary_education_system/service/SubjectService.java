@@ -44,9 +44,8 @@ public class SubjectService {
         }
 
         Map<Long, List<UserEntity>> mapListTeacherBySubjectId = userService.getMapListTeacherBySubjectId(listSubjectId);
-        pageSubject.forEach(subjectEntity -> {
-            subjectEntity.setListTeacherTeaching(mapListTeacherBySubjectId.get(subjectEntity.getId()));
-        });
+        pageSubject.forEach(subjectEntity -> subjectEntity
+                .setListTeacherTeaching(mapListTeacherBySubjectId.get(subjectEntity.getId())));
         return pageSubject;
     }
 
