@@ -61,6 +61,20 @@
             height: 100%;
             text-align: center;
         }
+        .btn-enable-edit {
+            background-color: blue;
+            width: 88px;
+            height: 32px;
+            color: white;
+            line-height: 20px;
+        }
+        .btn-enable-edit:hover {
+            color: white;
+        }
+        .btn-enable-edit:focus {
+            outline: none;
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>
@@ -70,11 +84,17 @@
     <div th:fragment="table-admin">
         
         <div id="time_schedule">
-            <div style="display: flex; align-items: center; margin-bottom: 16px">
-                <label style="margin-bottom: 0">Chọn lớp: </label>
-                <select id="select-class" style="width: 160px; border-radius: 4px; margin-left: 16px; padding-left: 4px; height: 30px" v-model="className">
-                    <option v-bind:id="'class_id_' + classs.id" v-for="classs in listClass">{{classs.name}}</option>
-                </select>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+                <div style="display: flex; align-items: center">
+                    <label style="margin-bottom: 0">Chọn lớp: </label>
+                    <select id="select-class" style="width: 160px; border-radius: 4px; margin-left: 16px; padding-left: 4px; height: 30px" v-model="className">
+                        <option v-bind:id="'class_id_' + classs.id" v-for="classs in listClass">{{classs.name}}</option>
+                    </select>
+                </div>
+                <div>
+                    <button :style="{backgroundColor: isEditing ? 'blue' : 'yellow', color: isEditing ? 'white' : 'black'}" @click="isEditing = !isEditing" class="btn btn-enable-edit">{{textBtnEdit}}</button>
+                </div>
+                
             </div>
             <h2 style="text-align: center; margin-bottom: 16px;">
                 Thời khóa biểu lớp {{className}}
