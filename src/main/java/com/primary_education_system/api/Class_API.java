@@ -35,7 +35,7 @@ public class Class_API {
 
     @GetMapping("/getListByGrade")
     public ResponseEntity<ServerResponseDto> getListByGrade(@RequestParam String grade) {
-        return ResponseEntity.ok(classService.getListByGrade(grade));
+        return ResponseEntity.ok(classService.getListByGradeIdStr(grade));
     }
 
     @PostMapping("/save")

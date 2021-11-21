@@ -2,11 +2,13 @@ package com.primary_education_system.entity.pupil;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.primary_education_system.entity.ClassEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "pupil_account")
@@ -44,6 +46,9 @@ public class PupilAccountEntity {
 
     @Transient
     private String className;
+
+    @Transient
+    private List<ClassEntity> listClass;
 
     private Integer statusUser; //1 un_active, 2 active
 

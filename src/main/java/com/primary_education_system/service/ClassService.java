@@ -78,7 +78,7 @@ public class ClassService {
         return new ServerResponseDto(ResponseCase.SUCCESS, classRepository.findByIsDeletedFalse());
     }
 
-    public ServerResponseDto getListByGrade(String grade) {
+    public ServerResponseDto getListByGradeIdStr(String grade) {
         List<ClassEntity> listClass;
         if ("0".equals(grade)) {
             listClass = classRepository.findByIsDeletedFalse();
@@ -86,6 +86,10 @@ public class ClassService {
             listClass = classRepository.findByGradeAndIsDeletedFalse(new StringBuilder("Khối ").append(grade).toString());
         }
         return new ServerResponseDto(ResponseCase.SUCCESS, listClass);
+    }
+
+    public List<ClassEntity> getListByGrade(String grade) {
+        return classRepository.findByGradeAndIsDeletedFalse(grade);
     }
 
     public Map<Long, String> getMapClassNameByClassId(List<Long> listClassId) {

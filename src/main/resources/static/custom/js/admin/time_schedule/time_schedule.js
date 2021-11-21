@@ -167,7 +167,6 @@ $(document).ready(function () {
                     url: "/api/subject/list",
                     success: function (response) {
                         if (response.status.code === 1000) {
-                            console.log(123);
                             self.listSubject = response.data;
                         }
                     }

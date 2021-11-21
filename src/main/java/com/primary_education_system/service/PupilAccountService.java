@@ -3,6 +3,7 @@ package com.primary_education_system.service;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.pupil_account.PupilAccountDto;
+import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.pupil.PupilAccountEntity;
 import com.primary_education_system.repository.PupilAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +109,10 @@ public class PupilAccountService {
     }
 
     public ServerResponseDto detail(Long id) {
-        return new ServerResponseDto(ResponseCase.SUCCESS, repository.findByIdAndIsDeletedFalse(id));
+        PupilAccountEntity pupilAccountEntity = repository.findByIdAndIsDeletedFalse(id);
+        List<ClassEntity> listClass = classService.getListByGrade(pupilAccountEntity.getGrade());
+        pupilAccountEntity.setListClass(listClass);
+        return new ServerResponseDto(ResponseCase.SUCCESS, pupilAccountEntity);
     }
 
     public ServerResponseDto delete(Long id) {

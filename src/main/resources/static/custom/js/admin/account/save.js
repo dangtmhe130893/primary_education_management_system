@@ -211,7 +211,6 @@ $(document).ready(function () {
             type: "GET",
             url: "/api/user/getDetail?userId=" + id_global,
             success: function (data) {
-                console.log(data);
                 accountVue.detail(data);
             }
         })
