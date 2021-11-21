@@ -23,4 +23,8 @@
 
     <include file="liquibase/subject/schema.xml"/>
 
+    <include file="liquibase/material/schema.xml"/>
+    <include file="liquibase/exercise/schema.xml"/>
+    <include file="liquibase/exam/schema.xml"/>
+
 </databaseChangeLog>

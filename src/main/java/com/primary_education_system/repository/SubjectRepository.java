@@ -18,4 +18,5 @@ public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
     SubjectEntity findByIdAndIsDeletedFalse(Long subjectId);
 
     List<SubjectEntity> findByIdInAndIsDeletedFalse(List<Long> listSubjectId);
+
 }

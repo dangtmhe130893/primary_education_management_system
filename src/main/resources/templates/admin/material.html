@@ -1,0 +1,165 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/admin_template}"
+      th:with="currentPage='material'">
+<head>
+    <title>Quản lý tài liệu</title>
+    <script type="text/javascript" src="/custom/js/admin/material/list.js"></script>
+    <script type="text/javascript" src="/custom/js/admin/material/save.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    <div th:fragment="table-account">
+
+        <div id="filter">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Môn</label>
+                    <select class="form-control" id="select_subject">
+                        <option th:each="subject : ${listSubject}" th:value="${subject.id}" th:text="${subject.name}"></option>
+                        <option value="ALL" th:if="${isCanShowSystemMenu}" selected="selected">Tất cả</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+                <div class="col-md-3">
+                    <label>Khối</label>
+                    <select class="form-control">
+                        <option value="Khối 1">Khối 1</option>
+                        <option value="Khối 2">Khối 2</option>
+                        <option value="Khối 3">Khối 3</option>
+                        <option value="Khối 4">Khối 4</option>
+                        <option value="Khối 5">Khối 5</option>
+                        <option value="ALL" selected="selected">Tất cả</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Thể loại</label>
+                    <select class="form-control">
+                        <option value="Bài giảng">Bài giảng</option>
+                        <option value="Đề cương">Đề cương</option>
+                        <option value="Sách tham khảo">Sách tham khảo</option>
+                        <option value="ALL" selected="selected">Tất cả</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+                <div style="display: flex;" class="col-6">
+                    <div class="input-group" style="float: right">
+                        <input class="form-control" type="text" id="search_account"
+                               placeholder="Tìm kiếm theo mã, tên" autocomplete="off">
+                        <div class="input-group-append" id="btn_search_account">
+                    <span class="input-group-text amber lighten-3">
+                        <i style="font-size: 14px; cursor: pointer" class="fa fa-search text-grey"
+                           aria-hidden="true"></i>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-content" style="margin-top: 20px">
+            <div style="float: right">
+                <button data-toggle="modal" data-target="#modal_add_material"
+                        class="btn btn-primary btn-sm" id="btn_add_material"
+                        v-on:click="materialVue.resetForm()">Đăng ký
+                </button>
+            </div>
+            <table class="table responsive" id="material_table">
+                <thead>
+                <th style="width: 5% !important" scope="col" class="text-center">Mã tài liệu</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Tên tài liệu</th>
+                <th style="width: 5% !important" scope="col" class="text-center">Môn</th>
+                <th style="width: 5% !important" scope="col" class="text-center">Khối</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Nội dung</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Link</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Thời gian đăng ký</th>
+                <th style="width: 10% !important" scope="col" class="text-center">
+                </th>
+
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="modal_add_material" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đăng ký tài liệu</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <form id="form_material" class="col-md-12">
+
+                            <div class="form-group">
+                                <label>Môn</label>
+                                <select class="form-control" id="modal_select_subject" v-model="subjectId">
+                                    <option th:each="subject : ${listSubject}" th:value="${subject.id}" th:text="${subject.name}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Khối:</label>
+                                <select class="form-control" v-model="grade">
+                                    <option value="Khối 1">Khối 1</option>
+                                    <option value="Khối 2">Khối 2</option>
+                                    <option value="Khối 3">Khối 3</option>
+                                    <option value="Khối 4">Khối 4</option>
+                                    <option value="Khối 5">Khối 5</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên:</label><sup style="color: red"> *</sup>
+                                <input v-model="name" name="name" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Thể loại</label>
+                                <select class="form-control" v-model="type">
+                                    <option value="Bài giảng">Bài giảng</option>
+                                    <option value="Đề cương">Đề cương</option>
+                                    <option value="Sách tham khảo">Sách tham khảo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nội dụng</label>
+                                <textarea class="form-control" id="content" name="content"></textarea>
+                            </div>
+
+                            <div class="form-group" id="container_selected_file"></div>
+
+                            <div id="file_preview_form_group" >
+                                <input type="file" id="upload_file_input"
+                                       name="upload_file_input" class="hidden" value="" />
+                                <div class="btn btn-sm btn-primary btn-upload-file" v-if="isShowBtnUploadFile"
+                                     id="btn_upload_file">
+                                    <i id="icon_upload" class="fa fa-lg fa-folder-open-o"></i> <span>Đính kèm file</span>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary btn-sm" v-on:click="saveMaterial()">
+                        Lưu
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

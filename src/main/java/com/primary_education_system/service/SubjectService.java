@@ -4,7 +4,6 @@ import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.subject.SubjectRequestDto;
 import com.primary_education_system.entity.SubjectEntity;
-import com.primary_education_system.entity.TimeScheduleEntity;
 import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -99,4 +94,19 @@ public class SubjectService {
                 .stream()
                 .collect(Collectors.toMap(SubjectEntity::getId, SubjectEntity::getName));
     }
+
+    public List<SubjectEntity> getListByUser(Long userId) {
+        if (userId == 1) {
+            return subjectRepository.findByIsDeletedFalse();
+        }
+        UserEntity userEntity = userService.getDetail(userId);
+        if (userEntity == null || userEntity.getTeachSubjectId() == null) {
+            return null;
+        }
+        SubjectEntity subjectEntity = subjectRepository.findByIdAndIsDeletedFalse(userEntity.getTeachSubjectId());
+        List<SubjectEntity> result = new ArrayList<>(1);
+        result.add(subjectEntity);
+        return result;
+    }
+
 }

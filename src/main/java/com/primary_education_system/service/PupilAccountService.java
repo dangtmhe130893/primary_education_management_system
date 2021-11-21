@@ -53,9 +53,8 @@ public class PupilAccountService {
                 .collect(Collectors.toList());
 
         Map<Long, String> mapClassNameByClassId = classService.getMapClassNameByClassId(listClassId);
-        pageResult.forEach(pupilAccount -> {
-            pupilAccount.setClassName(mapClassNameByClassId.getOrDefault(pupilAccount.getClassId(), ""));
-        });
+        pageResult.forEach(pupilAccount -> pupilAccount
+                .setClassName(mapClassNameByClassId.getOrDefault(pupilAccount.getClassId(), "")));
         return pageResult;
     }
 
@@ -71,12 +70,12 @@ public class PupilAccountService {
             pupilAccountEntity.setCode(generateCodePupilAccount());
             pupilAccountEntity.setCreatedTime(new Date());
         }
-        pupilAccountEntity = convertDtoToEntity(pupilAccountEntity, pupilAccountDto);
+        convertDtoToEntity(pupilAccountEntity, pupilAccountDto);
         repository.save(pupilAccountEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
-    private PupilAccountEntity convertDtoToEntity(PupilAccountEntity entity, PupilAccountDto dto) {
+    private void convertDtoToEntity(PupilAccountEntity entity, PupilAccountDto dto) {
         entity.setName(dto.getName());
         entity.setEmail(dto.getEmail());
         entity.setUsername(dto.getUsername());
@@ -94,7 +93,6 @@ public class PupilAccountService {
             entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
             entity.setRawPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         }
-        return entity;
     }
 
     private String generateCodePupilAccount() {

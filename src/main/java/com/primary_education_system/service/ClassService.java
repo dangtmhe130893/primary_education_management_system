@@ -20,10 +20,10 @@ import java.util.stream.Collectors;
 @Service
 public class ClassService {
     @Autowired
-    ClassRepository classRepository;
+    private ClassRepository classRepository;
 
     @Autowired
-    TimeScheduleService timeScheduleService;
+    private TimeScheduleService timeScheduleService;
 
     public Page<ClassEntity> getPage(Pageable pageable, String keyword) {
         return classRepository.getPage(keyword, pageable);

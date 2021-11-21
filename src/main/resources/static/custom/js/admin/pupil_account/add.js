@@ -126,7 +126,7 @@ $(document).ready(function () {
                             $('#modal_add_pupil_account').modal("hide");
                             window.alert.show("success", "Lưu thành công", 2000);
                         } else {
-                            window.alert.show("error", "Lưu thất bại", 2000);
+                            window.alert.show("error", "Đã có lỗi xảy ra", 2000);
                         }
                     }
                 })

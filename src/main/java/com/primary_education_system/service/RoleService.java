@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class RoleService {
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
 
     public List<RoleEntity> findByNameIn(List<String> listName) {
