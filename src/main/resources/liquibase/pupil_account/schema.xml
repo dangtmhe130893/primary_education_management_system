@@ -36,4 +36,8 @@
         </modifySql>
     </changeSet>
 
+    <changeSet id="create_unique_code" author="dangtm">
+        <addUniqueConstraint columnNames="code" tableName="pupil_account"/>
+    </changeSet>
+
 </databaseChangeLog>

@@ -33,6 +33,11 @@ public class Class_API {
         return ResponseEntity.ok(classService.getList());
     }
 
+    @GetMapping("/getListByGrade")
+    public ResponseEntity<ServerResponseDto> getListByGrade(@RequestParam String grade) {
+        return ResponseEntity.ok(classService.getListByGrade(grade));
+    }
+
     @PostMapping("/save")
     public ResponseEntity<ServerResponseDto> save(@RequestBody ClassDto classDto) {
         return ResponseEntity.ok(classService.save(classDto));

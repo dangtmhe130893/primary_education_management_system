@@ -6,6 +6,8 @@ import com.primary_education_system.repository.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GradeService {
 
@@ -14,5 +16,9 @@ public class GradeService {
 
     public ServerResponseDto getList() {
         return new ServerResponseDto(ResponseCase.SUCCESS, gradeRepository.findByIsDeletedFalse());
+    }
+
+    public List<String> getAllNameGrade() {
+        return gradeRepository.getAllNameGrade();
     }
 }

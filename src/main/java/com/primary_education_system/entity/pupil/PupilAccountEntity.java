@@ -33,7 +33,7 @@ public class PupilAccountEntity {
     private String phone;
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date birthday;
-    private int gender; //1 mail, 2 female, 9 other
+    private int gender; //1 male, 2 female, 9 other
     private String address;
     private String fatherName;
     private String motherName;
@@ -41,6 +41,9 @@ public class PupilAccountEntity {
     private Date createdTime;
     private Date updatedTime;
     private boolean isChangePassword;
+
+    @Transient
+    private String className;
 
     private Integer statusUser; //1 un_active, 2 active
 

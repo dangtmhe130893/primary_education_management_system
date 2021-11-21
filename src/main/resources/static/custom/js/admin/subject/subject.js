@@ -190,13 +190,17 @@ $(document).ready(function () {
             validateForm() {
                 this.validateNameSubject();
                 this.validateNameSubjectLength();
-                return !this.isShowErrorNameSubject && !this.isShowErrorNameSubjectLength;
+                this.validateListTeacher();
+                return !this.isShowErrorNameSubject && !this.isShowErrorNameSubjectLength && !this.isShowErrorListTeacher;
             },
             validateNameSubject() {
                 this.isShowErrorNameSubject = this.subject.trim() == "";
             },
             validateNameSubjectLength() {
                 this.isShowErrorNameSubjectLength = this.subject.length > 20;
+            },
+            validateListTeacher() {
+                this.isShowErrorListTeacher = ! $("#select-teacher").val().toString();
             },
             resetPopup() {
                 this.id = "";

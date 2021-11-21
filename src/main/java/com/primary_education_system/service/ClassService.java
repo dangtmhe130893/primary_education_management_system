@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ClassService {
@@ -73,5 +76,30 @@ public class ClassService {
 
     public ServerResponseDto getList() {
         return new ServerResponseDto(ResponseCase.SUCCESS, classRepository.findByIsDeletedFalse());
+    }
+
+    public ServerResponseDto getListByGrade(String grade) {
+        List<ClassEntity> listClass;
+        if ("0".equals(grade)) {
+            listClass = classRepository.findByIsDeletedFalse();
+        } else {
+            listClass = classRepository.findByGradeAndIsDeletedFalse(new StringBuilder("Khối ").append(grade).toString());
+        }
+        return new ServerResponseDto(ResponseCase.SUCCESS, listClass);
+    }
+
+    public Map<Long, String> getMapClassNameByClassId(List<Long> listClassId) {
+        List<ClassEntity> listClassEntity = classRepository.findByIdInAndIsDeletedFalse(listClassId);
+        return listClassEntity
+                .stream()
+                .collect(Collectors.toMap(ClassEntity::getId, ClassEntity::getName));
+    }
+
+    public List<Long> getALlClassId() {
+        List<ClassEntity> listClassEntity = classRepository.findByIsDeletedFalse();
+        return listClassEntity
+                .stream()
+                .map(ClassEntity::getId)
+                .collect(Collectors.toList());
     }
 }

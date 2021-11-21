@@ -200,18 +200,6 @@ $(document).ready(function () {
         }
     })
 
-    $(document).on('click', ".detail_manager", function () {
-        $("#account_email").attr('disabled', true);
-        accountVue.isUpdateMan = true;
-        id_global = this.value;
-        $.ajax({
-            type: "GET",
-            url: "/api/v1/web/user/getDetail?userId=" + id_global.toString(),
-            success: function (data) {
-                accountVue.detailManager(data);
-            }
-        })
-    });
     $(document).on('click', "#btn_add_account", function () {
         accountVue.isUpdateMan = false;
     });
@@ -223,6 +211,7 @@ $(document).ready(function () {
             type: "GET",
             url: "/api/user/getDetail?userId=" + id_global,
             success: function (data) {
+                console.log(data);
                 accountVue.detail(data);
             }
         })
