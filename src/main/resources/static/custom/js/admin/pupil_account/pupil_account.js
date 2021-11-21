@@ -23,27 +23,19 @@ $(document).ready(function () {
                     }
                 })
             },
-            checkDisabledBtnAddAccount() {
-                if (this.classId == "0" || this.grade == "0") {
-                    $("#btn_add_pupil_account").prop("disabled", true);
-                } else {
-                    $("#btn_add_pupil_account").prop("disabled", false);
-                }
-            }
+
         },
         watch: {
             grade() {
                 listAccountTable.ajax.reload();
                 this.loadListClass();
-                this.checkDisabledBtnAddAccount();
             },
-            classId(value) {
+            classId() {
                 listAccountTable.ajax.reload();
-                this.checkDisabledBtnAddAccount();
             }
         },
         mounted() {
-
+            this.loadListClass();
         }
     })
 
@@ -75,14 +67,14 @@ $(document).ready(function () {
 
     let columnDefinitions = [
         {"data": "code", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "name", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": "grade", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "className", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "email", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "email", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": "phone", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "gender", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "address", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "fatherName", "orderable": true, "defaultContent": "", "class": 'text-center'},
+        {"data": "fatherName", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "motherName", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center',}
     ];
@@ -98,7 +90,7 @@ $(document).ready(function () {
         "searching": false,
         rowId: 'id',
         "ordering": true,
-        "order": [4, "desc"],
+        "order": [[1, "asc"]],
         "pagingType": "full_numbers",
         "serverSide": true,
         "columns": columnDefinitions,
@@ -150,9 +142,11 @@ $(document).ready(function () {
     let popupPupilAccountVue = new Vue({
         el: "#modal_add_pupil_account",
         data: {
+            grade: "",
+            listClass: [],
+            classId: "",
             id: "",
             name: "",
-            username: "",
             email: "",
             phone: "",
             password: "",
@@ -163,26 +157,45 @@ $(document).ready(function () {
             motherName: "",
 
             isUpdate: false,
+
+            isShowErrorGrade: false,
+            isShowErrorClass: false,
         },
         watch: {
             id(value) {
                 this.isUpdate = !!value;
+            },
+            grade() {
+                this.loadListClass();
             }
         },
         methods: {
+            loadListClass() {
+                let self = this;
+                $.ajax({
+                    type: "GET",
+                    url: "/api/class/getListByGrade?grade=" + self.grade,
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            self.listClass = response.data;
+                            if (self.listClass.length > 0) {
+                                self.classId = self.listClass[0].id;
+                            }
+                        }
+                    }
+                })
+            },
             savePupilAccount() {
                 if (!$("#form-pupil-account").valid()) {
                     return;
                 }
 
-                if (!filterVue.classId || !filterVue.grade) {
-                    window.alert.show("error", "Chưa chọn khối hoặc lớp", 2000);
+                if (!this.validateForm()) {
                     return;
                 }
 
                 let data = {
                     name: this.name,
-                    username: this.username,
                     email: this.email,
                     phone: this.phone,
                     password: this.password,
@@ -190,8 +203,8 @@ $(document).ready(function () {
                     address: this.address,
                     fatherName: this.fatherName,
                     motherName: this.motherName,
-                    grade: filterVue.grade,
-                    classId: filterVue.classId,
+                    grade: this.grade,
+                    classId: this.classId,
                 }
 
                 if (this.id) {
@@ -230,7 +243,6 @@ $(document).ready(function () {
                         if (response.status.code === 1000) {
                             let data = response.data;
                             self.name = data.name;
-                            self.username = data.username;
                             self.email = data.email;
                             self.phone = data.phone;
                             self.sex = data.gender;
@@ -258,10 +270,20 @@ $(document).ready(function () {
                     }
                 })
             },
+            validateGrade() {
+                this.isShowErrorGrade = this.grade == "";
+            },
+            validateClass() {
+                this.isShowErrorClass = this.classId == "";
+            },
+            validateForm() {
+                this.validateGrade();
+                this.validateClass();
+                return !this.isShowErrorGrade && !this.isShowErrorClass;
+            },
             resetPopup() {
                 this.id = "";
                 this.name = "";
-                this.username = "";
                 this.email = "";
                 this.phone = "";
                 this.password = "";
@@ -292,10 +314,6 @@ $(document).ready(function () {
                         required: true,
                         maxlength: 200,
                     },
-                    username: {
-                        required: true,
-                        maxlength: 200,
-                    },
                     email: {
                         required: true,
                         maxlength: 200,
@@ -318,21 +336,9 @@ $(document).ready(function () {
                         required: true,
                         maxlength: 200,
                     },
-                    fatherName: {
-                        required: true,
-                        maxlength: 200,
-                    },
-                    motherName: {
-                        required: true,
-                        maxlength: 200,
-                    },
                 },
                 messages: {
                     name: {
-                        required: "Trường này là bắt buộc",
-                        maxlength: "Tối đa 200 ký từ",
-                    },
-                    username: {
                         required: "Trường này là bắt buộc",
                         maxlength: "Tối đa 200 ký từ",
                     },
@@ -353,14 +359,6 @@ $(document).ready(function () {
                         equalTo: "Mật khẩu và mật khẩu xác nhận không khớp",
                     },
                     address: {
-                        required: "Trường này là bắt buộc",
-                        maxlength: "Tối đa 200 ký từ",
-                    },
-                    fatherName: {
-                        required: "Trường này là bắt buộc",
-                        maxlength: "Tối đa 200 ký từ",
-                    },
-                    motherName: {
                         required: "Trường này là bắt buộc",
                         maxlength: "Tối đa 200 ký từ",
                     },

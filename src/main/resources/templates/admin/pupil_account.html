@@ -11,6 +11,12 @@
             width: 56px;
             height: 28px;
         }
+        .error-message-select {
+            color: red;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +68,7 @@
         
         <div class="table-content" style="margin-top: 20px">
             <div style="float: right">
-                <button disabled data-toggle="modal" data-target="#modal_add_pupil_account"
+                <button data-toggle="modal" data-target="#modal_add_pupil_account"
                         class="btn btn-primary btn-sm" id="btn_add_pupil_account">Đăng ký
                 </button>
             </div>
@@ -94,14 +100,29 @@
                     <div class="modal-body">
                         <div class="row">
                             <form id="form-pupil-account" class="col-md-12">
-    
+                                <div class="form-group">
+                                    <label>Khối:</label><sup style="color: red"> *</sup>
+                                    <p class="error-message-select" v-bind:class="{ hidden : !isShowErrorGrade}">
+                                        Trường này là bắt buộc</p>
+                                    <select style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="grade">
+                                        <option value="1">Khối 1</option>
+                                        <option value="2">Khối 2</option>
+                                        <option value="3">Khối 3</option>
+                                        <option value="4">Khối 4</option>
+                                        <option value="5">Khối 5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lớp:</label><sup style="color: red"> *</sup>
+                                    <p class="error-message-select" v-bind:class="{ hidden : !isShowErrorClass}">
+                                        Trường này là bắt buộc</p>
+                                    <select style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="classId">
+                                        <option v-for="classs in listClass" v-bind:value="classs.id">{{classs.name}}</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label>Họ tên:</label><sup style="color: red"> *</sup>
                                     <input v-model="name" name="name" class="form-control"/>
-                                </div>
-                                <div class="form-group">
-                                    <label>Username:</label><sup style="color: red"> *</sup>
-                                    <input v-model="username" name="username" class="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Email:</label><sup style="color: red"> *</sup>
@@ -147,11 +168,11 @@
                                     <input v-model="address" name="address" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label>Họ tên bố:</label><sup style="color: red"> *</sup>
+                                    <label>Họ tên bố:</label>
                                     <input v-model="fatherName" name="fatherName" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label>Họ tên mẹ:</label><sup style="color: red"> *</sup>
+                                    <label>Họ tên mẹ:</label>
                                     <input v-model="motherName" name="motherName" class="form-control"/>
                                 </div>
                             </form>
