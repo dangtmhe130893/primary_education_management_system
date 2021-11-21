@@ -79,11 +79,7 @@ public class UserService {
     }
 
     public UserEntity getDetail(Long id) {
-        UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(id);
-        if (userEntity == null) {
-            return null;
-        }
-        return userEntity;
+        return userRepository.findByIdAndIsDeletedFalse(id);
     }
 
     public ServerResponseDto delete(Long id) {
@@ -129,26 +125,20 @@ public class UserService {
     @Transactional
     public void setTeachSubjectIdForTeacher(Long subjectId, String listTeacherIdString) {
         String[] arrayId = listTeacherIdString.split(",");
-        List<Long> listTeacherIdAfter = Arrays.asList(arrayId).stream()
-                .map(id -> Long.parseLong(id))
+        List<Long> listTeacherIdAfter = Arrays.stream(arrayId)
+                .map(Long::parseLong)
                 .collect(Collectors.toList());
 
         List<UserEntity> listTeacherEntityBefore = userRepository.getListTeacherBySubjectId(subjectId);
         List<Long> listTeacherIdBefore = listTeacherEntityBefore.stream().map(UserEntity::getId).collect(Collectors.toList());
 
-        /* remove */
         removeTeachSubjectId(listTeacherIdBefore, listTeacherIdAfter);
-        /*--------*/
 
-        /* add */
         addTeachSubjectId(listTeacherIdBefore, listTeacherIdAfter, subjectId);
-        /*--------*/
 
         List<UserEntity> listTeacher = userRepository.getListUserByListIdAndRole(listTeacherIdAfter, Constant.TEACHER);
 
-        listTeacher.forEach(teacher -> {
-            teacher.setTeachSubjectId(subjectId);
-        });
+        listTeacher.forEach(teacher -> teacher.setTeachSubjectId(subjectId));
 
         userRepository.save(listTeacher);
     }
@@ -167,7 +157,8 @@ public class UserService {
             return;
         }
 
-        List<UserEntity> listTeacherRemovedSubjectId = userRepository.getListUserByListIdAndRole(listIdRemoved, Constant.TEACHER);
+        List<UserEntity> listTeacherRemovedSubjectId = userRepository
+                .getListUserByListIdAndRole(listIdRemoved, Constant.TEACHER);
         listTeacherRemovedSubjectId.forEach(teacher -> teacher.setTeachSubjectId(null));
 
         userRepository.save(listTeacherRemovedSubjectId);
