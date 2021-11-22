@@ -43,18 +43,22 @@
     	 </span>
     </div>
     <div class="block-menu" th:if="${isCanShowSystemMenu}">
-        <div class="control-block-menu" >
+        <div class="control-block-menu">
             <i class="fa fa-server icon-active"></i>
             <span style="font-size: 12px">SYSTEM MENU</span>
             <i class="fa fa-angle-double-right block-icon"></i>
         </div>
         <a href="/admin/home">
             <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Home</span></div>
+                <i class="fa fa-info"></i>
+                <span>Home</span>
+            </div>
         </a>
         <a href="/admin/account">
             <div th:class=" ${currentPage} == 'list_account' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý tài khoản</span></div>
+                <i class="fa fa-info"></i>
+                <span>Quản lý tài khoản</span>
+            </div>
         </a>
     </div>
     <div class="block-menu" th:if="${isCanShowStaffMenu}">
@@ -65,7 +69,9 @@
         </div>
         <a href="/admin/tuition_status">
             <div th:class=" ${currentPage} == 'tuition_status' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý tình trạng học phí</span></div>
+                <i class="fa fa-info"></i>
+                <span>Quản lý tình trạng học phí</span>
+            </div>
         </a>
     </div>
     <div class="block-menu" th:if="${isCanShowTeacherMenu}">
@@ -76,11 +82,15 @@
         </div>
         <a href="/admin/material">
             <div th:class=" ${currentPage} == 'material' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý tài liệu</span></div>
+                <i class="fa fa-info"></i>
+                <span>Quản lý tài liệu</span>
+            </div>
         </a>
-        <a href="/admin/class">
-            <div th:class=" ${currentPage} == 'class' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý lớp học</span></div>
+        <a href="/admin/teach_class">
+            <div th:class=" ${currentPage} == 'teach_class' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý lớp học</span>
+            </div>
         </a>
     </div>
     <div class="block-menu" th:if="${isCanShowAcademicHeadMenu}">
@@ -91,19 +101,28 @@
         </div>
         <a href="/admin/time_schedule">
             <div th:class=" ${currentPage} == 'time_schedule' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý thời khóa biếu</span></div>
+                <i class="fa fa-info"></i>
+                <span>Quản lý thời khóa biếu</span>
+            </div>
         </a>
         <a href="/admin/class">
             <div th:class=" ${currentPage} == 'list_class' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý lớp học</span></div>
+                <i class="fa fa-info"></i>
+                <span>Quản lý lớp học</span>
+            </div>
         </a>
         <a href="/admin/subject">
             <div th:class=" ${currentPage} == 'list_subject' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý môn học</span></div>
+                <i class="fa fa-info">
+
+                </i><span>Quản lý môn học</span>
+            </div>
         </a>
         <a href="/admin/pupil_account">
             <div th:class=" ${currentPage} == 'pupil_account' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý tài khoản học sinh</span></div>
+                <i class="fa fa-info"></i>
+                <span>Quản lý tài khoản học sinh</span>
+            </div>
         </a>
     </div>
     <div class="block-menu" th:if="${isCanShowHeadMasterMenu}">
@@ -114,7 +133,9 @@
         </div>
         <a href="/admin/home">
             <div th:class=" ${currentPage} == 'system_notification' ?  'menu active-menu' : 'menu not-active-menu' ">
-                <i class="fa fa-info"></i><span>Quản lý học phí</span></div>
+                <i class="fa fa-info"></i>
+                <span>Quản lý học phí</span>
+            </div>
         </a>
     </div>
 </div>

@@ -1,11 +1,17 @@
 package com.primary_education_system.service;
 
+import com.primary_education_system.entity.material.MaterialEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
@@ -34,6 +40,20 @@ public class FileService {
         out.close();
         log.info("Upload success!!!");
         return convertFile.getAbsolutePath();
+    }
+
+    public ResponseEntity<Object> downloadFile(String pathFile) throws IOException {
+        File file = new File(pathFile);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(
+                MediaType.parseMediaType("application/jpg")).body(resource);
     }
 
 }

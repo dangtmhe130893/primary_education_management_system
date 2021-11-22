@@ -9,17 +9,12 @@ import com.primary_education_system.repository.material.MaterialRepository;
 import com.primary_education_system.service.FileService;
 import com.primary_education_system.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -108,18 +103,7 @@ public class MaterialService {
         if (materialEntity == null) {
             return null;
         }
-        String filename = materialEntity.getLinkFile();
-        File file = new File(filename);
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
-        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Pragma", "no-cache");
-        headers.add("Expires", "0");
-
-        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(
-                MediaType.parseMediaType("application/jpg")).body(resource);
+        return fileService.downloadFile(materialEntity.getLinkFile());
     }
 
     public ServerResponseDto detail(Long id) {
