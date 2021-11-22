@@ -9,7 +9,7 @@ $(document).ready(function (){
             "sortField": "createdTime",
             "sortDir": sortDir,
             "search": $("#search_account").val(),
-            "grade": filterVue.grade,
+            "grade": filterVue.grade == "0" ? "All" : "Khối " + filterVue.grade,
             "classId": filterVue.classId,
         };
 

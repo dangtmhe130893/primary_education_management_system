@@ -8,7 +8,6 @@ $(document).ready(function () {
             nameClass: "",
             grade: "",
             room: "",
-            listGrade: [],
 
             isShowErrorNameClass: false,
             isShowErrorNameClassLength: false,
@@ -94,19 +93,6 @@ $(document).ready(function () {
                 })
             },
 
-            loadListGrade() {
-                let self = this;
-
-                $.ajax({
-                    type: "GET",
-                    url: "/api/grade/getList",
-                    success: function (response) {
-                        if (response.status.code === 1000) {
-                            self.listGrade = response.data;
-                        }
-                    }
-                })
-            },
             validateForm() {
                 this.validateNameClass();
                 this.validateNameClassLength();
@@ -145,7 +131,6 @@ $(document).ready(function () {
         },
         mounted() {
             let self = this;
-            self.loadListGrade();
 
             $('#modal_add_class').on('hidden.bs.modal', function () {
                 self.resetPopup();

@@ -3,7 +3,6 @@ $(document).ready(function () {
     let timeScheduleTableVue = new Vue({
         el: "#time_schedule",
         data: {
-            textBtnEdit: "Sửa",
 
             listClass: [],
             className: "",
@@ -28,7 +27,6 @@ $(document).ready(function () {
             isDisabledColSaturday: true,
             isDisabledColSunday: true,
 
-            isEditing: false,
 
         },
         watch: {
@@ -37,9 +35,6 @@ $(document).ready(function () {
                 this.classId = Number($("#select-class option:selected").attr("id").replace("class_id_", ""));
                 this.getTimeSchedule();
             },
-            isEditing(value) {
-                 this.textBtnEdit = value ? "OK" : "Sửa";
-            }
         },
         methods: {
             loadListClass() {
@@ -103,9 +98,6 @@ $(document).ready(function () {
             self.loadListClass();
 
             $(document).on("click", ".time-schedule-cell", function () {
-                if (!self.isEditing) {
-                    return;
-                }
                 popupVue.timeScheduleId = Number($(this).attr('id').replace('time-schedule-', ''));
                 $("#modal_add_time_schedule").modal("show");
                 popupVue.detailCellTimeSchedule();

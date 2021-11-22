@@ -78,7 +78,11 @@
                                 <p class="error-message" v-bind:class="{ hidden : !isShowErrorGrade}">
                                     Trường này là bắt buộc</p>
                                 <select style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="grade">
-                                    <option v-for="grade in listGrade" v-bind:value="grade.name">{{grade.name}}</option>
+                                    <option value="Khối 1">Khối 1</option>
+                                    <option value="Khối 2">Khối 2</option>
+                                    <option value="Khối 3">Khối 3</option>
+                                    <option value="Khối 4">Khối 4</option>
+                                    <option value="Khối 5">Khối 5</option>
                                 </select>
                             </div>
                             

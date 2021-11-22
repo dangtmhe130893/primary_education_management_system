@@ -40,6 +40,9 @@
             align-items: center;
             justify-content: center;
         }
+        .time-schedule-cell {
+            cursor: pointer;
+        }
         .subject-item-title {
             font-weight: bold;
         }
@@ -91,9 +94,6 @@
                         <option v-bind:id="'class_id_' + classs.id" v-for="classs in listClass">{{classs.name}}</option>
                     </select>
                 </div>
-                <div>
-                    <button :style="{backgroundColor: isEditing ? 'blue' : 'yellow', color: isEditing ? 'white' : 'black'}" @click="isEditing = !isEditing" class="btn btn-enable-edit">{{textBtnEdit}}</button>
-                </div>
                 
             </div>
             <h2 style="text-align: center; margin-bottom: 16px;">
@@ -115,7 +115,7 @@
         
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ hai</div>
-                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleMonday"
+                    <div v-for="timeSchedule in listTimeScheduleMonday"
                          :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
                         {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
                     </div>
@@ -123,14 +123,14 @@
         
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ ba</div>
-                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleTuesday"
+                    <div v-for="timeSchedule in listTimeScheduleTuesday"
                          :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
                         {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
                     </div>
                 </div>
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ tư</div>
-                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleWednesday"
+                    <div v-for="timeSchedule in listTimeScheduleWednesday"
                          :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
                         {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
                     </div>
@@ -138,7 +138,7 @@
     
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ năm</div>
-                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleThursday"
+                    <div v-for="timeSchedule in listTimeScheduleThursday"
                          :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
                         {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
                     </div>
@@ -146,7 +146,7 @@
     
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ sáu</div>
-                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleFriday"
+                    <div v-for="timeSchedule in listTimeScheduleFriday"
                          :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
                         {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
                     </div>
@@ -154,7 +154,7 @@
                 
                 <div class="list-subject">
                     <div class="subject-item-title">Thứ bảy</div>
-                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleSaturday"
+                    <div v-for="timeSchedule in listTimeScheduleSaturday"
                          :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
                         {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
                     </div>
@@ -162,7 +162,7 @@
     
                 <div class="list-subject">
                     <div class="subject-item-title">Chủ nhật</div>
-                    <div :style="{cursor: isEditing ? 'pointer' : 'default'}" v-for="timeSchedule in listTimeScheduleSunday"
+                    <div v-for="timeSchedule in listTimeScheduleSunday"
                          :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
                         {{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}
                     </div>

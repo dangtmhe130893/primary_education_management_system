@@ -1,5 +1,6 @@
 package com.primary_education_system.service;
 
+import com.google.common.collect.Lists;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.pupil_account.PupilAccountDto;
@@ -24,19 +25,21 @@ public class PupilAccountService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private GradeService gradeService;
 
     @Autowired
     private ClassService classService;
 
     public Page<PupilAccountEntity> getPagePupilAccount(Pageable pageable, String keyword, String grade, Long classId) {
-        List<String> listGradeFilter = new ArrayList<>();
+        List<String> listGradeFilter = Lists.newArrayListWithExpectedSize(5);
         List<Long> listClassIdFilter = new ArrayList<>();
-        if ("0".equals(grade)) {
-            listGradeFilter = gradeService.getAllNameGrade();
+        if ("All".equals(grade)) {
+            listGradeFilter.add("Khối 1");
+            listGradeFilter.add("Khối 2");
+            listGradeFilter.add("Khối 3");
+            listGradeFilter.add("Khối 4");
+            listGradeFilter.add("Khối 5");
         } else {
-            listGradeFilter.add("Khối " + grade);
+            listGradeFilter.add(grade);
         }
 
         if (classId == 0) {
@@ -84,7 +87,7 @@ public class PupilAccountService {
         entity.setAddress(dto.getAddress());
         entity.setFatherName(dto.getFatherName());
         entity.setMotherName(dto.getMotherName());
-        entity.setGrade("Khối " + dto.getGrade());
+        entity.setGrade(dto.getGrade());
         entity.setClassId(dto.getClassId());
         entity.setChangePassword(false);
         entity.setStatusUser(2);
