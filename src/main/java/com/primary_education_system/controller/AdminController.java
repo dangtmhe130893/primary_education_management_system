@@ -52,6 +52,11 @@ public class AdminController {
         return "admin/material";
     }
 
+    @GetMapping("/teach_class")
+    public String getTeachClass() {
+        return "admin/teach_class";
+    }
+
     @GetMapping("/class")
     public String getClassRoom() {
         return "admin/class";
