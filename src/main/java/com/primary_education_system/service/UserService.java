@@ -1,9 +1,12 @@
 package com.primary_education_system.service;
 
 import com.google.common.collect.Lists;
+import com.primary_education_system.config.security.CustomUserDetails;
 import com.primary_education_system.dto.ResponseCase;
+import com.primary_education_system.dto.ResponseStatus;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
+import com.primary_education_system.dto.account.ChangePasswordRequestDto;
 import com.primary_education_system.entity.user.RoleEntity;
 import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.enum_type.Roles;
@@ -205,5 +208,22 @@ public class UserService {
         return listTeacher
                 .stream()
                 .collect(Collectors.toMap(UserEntity::getId, UserEntity::getName));
+    }
+
+    public ServerResponseDto changePassword(ChangePasswordRequestDto changePasswordRequestDto,
+                                            CustomUserDetails customUserDetails) {
+        UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(customUserDetails.getUserId());
+        if (userEntity == null) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
+        String currentPassword = userEntity.getPassword();
+        String currentPasswordRequest = changePasswordRequestDto.getCurrentPassword();
+
+        if (!passwordEncoder.matches(currentPasswordRequest, currentPassword)) {
+            return new ServerResponseDto(ResponseCase.ERROR_PASSWORD);
+        }
+        userEntity.setPassword(passwordEncoder.encode(changePasswordRequestDto.getNewPassword()));
+        userRepository.save(userEntity);
+        return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 }

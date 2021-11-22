@@ -5,6 +5,7 @@ import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
 import com.primary_education_system.dto.account.AccountResponseDto;
+import com.primary_education_system.dto.account.ChangePasswordRequestDto;
 import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.service.UserService;
 import com.primary_education_system.util.PageableUtils;
@@ -67,5 +68,11 @@ public class User_API {
     @GetMapping("/listTeacherForSubject/{subjectId}")
     public List<UserEntity> getListTeacherForSubject(@PathVariable Long subjectId) {
         return userService.getListTeacherForSubject(subjectId);
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<ServerResponseDto> changePassword(@RequestBody ChangePasswordRequestDto changePasswordRequestDto,
+                                                            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return ResponseEntity.ok(userService.changePassword(changePasswordRequestDto, customUserDetails));
     }
 }
