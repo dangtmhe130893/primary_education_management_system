@@ -19,6 +19,42 @@ $(document).ready(function () {
             },
         },
         methods: {
+            resetPopup() {
+                this.id = "";
+                this.type = "Bài giảng";
+                this.grade = "Khối 1";
+                this.name = "";
+                this.subjectId = "";
+                this.isShowBtnUploadFile = true;
+            },
+            detail() {
+                let self = this;
+                $.ajax({
+                    type: "GET",
+                    url: "/api/material/detail/" + self.id,
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            let data = response.data;
+                            self.grade = data.grade;
+                            self.type = data.type;
+                            self.name = data.name;
+                            self.subjectId = data.subjectId;
+                            CKEDITOR.instances['content'].setData(data.content);
+                            $("#container_selected_file").children().remove();
+                            if (data.fileName) {
+                                let label = "<label class='selected-file'>" +
+                                    "	<i class='fa fa-paperclip' style='margin-right: 5px'></i>" + data.fileName +
+                                    "   <i class='btn fa fa-remove btn-remove-file'></i>" +
+                                    "</label>";
+                                $("#container_selected_file").append(label);
+                                self.isShowBtnUploadFile = false
+                            } else {
+                                self.isShowBtnUploadFile = true
+                            }
+                        }
+                    }
+                })
+            },
             saveMaterial() {
                 let vm = this;
                 let formData = new FormData();
@@ -60,7 +96,8 @@ $(document).ready(function () {
             let self = this;
 
             $('#modal_add_material').on('hidden.bs.modal', function () {
-                // self.resetPopup();
+                $("#container_selected_file").children().remove();
+                self.resetPopup();
             })
 
             $("#form-pupil-account").validate({
@@ -114,6 +151,11 @@ $(document).ready(function () {
         $("#upload_file_input").val('');
         $(this).parent().remove();
         materialVue.isShowBtnUploadFile = true;
+    })
+
+    $(document).on("click", ".detail-material", function () {
+        materialVue.id = Number($(this).attr('id').replace('btn_detail_', ''));
+        materialVue.detail();
     })
 
 })

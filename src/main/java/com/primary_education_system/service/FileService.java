@@ -18,7 +18,8 @@ public class FileService {
     private String folderStorageFile;
 
     public String uploadFile(String sub, MultipartFile file) throws IOException {
-        log.info("Start upload file: {}", file.getOriginalFilename());
+        String fileName = file.getOriginalFilename();
+        log.info("Start upload file: {}", fileName);
         String PATH = folderStorageFile + sub;
 
         File directory = new File(PATH);
@@ -26,7 +27,7 @@ public class FileService {
             directory.mkdir();
         }
 
-        File convertFile = new File(folderStorageFile + sub + UUID.randomUUID() + file.getOriginalFilename().replaceAll("\\s+",""));
+        File convertFile = new File(folderStorageFile + sub + UUID.randomUUID() + fileName.replaceAll("\\s+", ""));
         convertFile.createNewFile();
         FileOutputStream out = new FileOutputStream(convertFile);
         out.write(file.getBytes());

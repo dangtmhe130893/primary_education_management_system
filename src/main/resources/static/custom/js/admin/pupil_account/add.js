@@ -140,7 +140,7 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response.status.code === 1000) {
                             let data = response.data;
-                            self.grade = data.grade.replace("Khối ", "");
+                            self.grade = data.grade;
                             self.listClass = data.listClass;
                             self.classId = data.classId;
                             self.name = data.name;

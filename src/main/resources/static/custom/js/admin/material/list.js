@@ -1,6 +1,31 @@
 let listMaterialTable;
+let filterVue;
 $(document).ready(function () {
     let deleteId;
+
+    filterVue = new Vue({
+        el: "#filter_material",
+        data: {
+            grade: '',
+            type: '',
+            subjectId: 0,
+        },
+        methods: {
+
+        },
+        watch: {
+            grade() {
+                listMaterialTable.ajax.reload();
+            },
+            type() {
+                listMaterialTable.ajax.reload();
+            },
+            subjectId() {
+                listMaterialTable.ajax.reload();
+            }
+        },
+    })
+
     let getAccount = function (requestData, renderFunction, link_api) {
 
         let sortDir = requestData.order[0].dir;
@@ -9,7 +34,10 @@ $(document).ready(function () {
             "size": requestData.length,
             "sortField": "createdTime",
             "sortDir": sortDir,
-            "search": $("#search_account").val(),
+            "grade": filterVue.grade,
+            "type": filterVue.type,
+            "subjectId": filterVue.subjectId,
+            "search": $("#search_material").val(),
         };
         window.loader.show();
         jQuery.get(link_api, params, function (response) {
@@ -27,12 +55,13 @@ $(document).ready(function () {
     let columnDefinitions = [
         {"data": "code", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "subjectName",  "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "grade",  "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "content",  "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": null,  "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "subjectName", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "grade", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "type", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "createdTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
-        {"data": "id", "orderable": false,  "defaultContent": "", "class": 'text-center'}
+        {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'}
     ];
     listMaterialTable = $("#material_table").DataTable({
         "language": {
@@ -46,7 +75,7 @@ $(document).ready(function () {
         "searching": false,
         rowId: 'id',
         "ordering": true,
-        "order": [2, "desc"],
+        "order": [7, "desc"],
         "pagingType": "full_numbers",
         "serverSide": true,
         "columns": columnDefinitions,
@@ -56,12 +85,32 @@ $(document).ready(function () {
         columnDefs: [
             {
                 "render": function (data) {
-                    return `<button type="button" data-toggle="modal" data-target="#modal_add_material" id="btn_detail_${data.id}" class="btn btn-sm btn-primary detail-material">Chi tiết</button>
-                            <button style="margin-left: 10px" data-toggle="modal" id="btn_delete_${data.id}" data-target="#modal_delete_material" class="btn btn-sm btn-danger delete-material">Xóa</button>`;
+                    return `<p class="btn-show-content" style="color: blue; text-decoration: underline; cursor: pointer" data-name="${data.name}" data-content="${data.content}">Hiển thị</p>`;
                 },
-                "targets": 7
+                "targets": 5
             },
-        ]
+            {
+                "render": function (data) {
+                    return '<a class="download_material" target="_blank" href="' + "/api/material/download/" + data.code  + '" >Tải xuống</a>'
+                },
+                "targets": 6,
+            },
+            {
+                "render": function (data) {
+                    return `<button type="button" data-toggle="modal" data-target="#modal_add_material" id="btn_detail_${data.id}" class="btn btn-sm btn-primary detail-material">Chi tiết</button>
+                            <button style="margin-left: 10px" data-toggle="modal" data-id="${data.id}" data-target="#modal_delete_material" class="btn btn-sm btn-danger delete-material">Xóa</button>`;
+                },
+                "targets": 8
+            },
+        ],
+        "drawCallback": function () {
+            $(".btn-show-content").click(function () {
+                $("#material_name").text($(this).attr('data-name'));
+                $("#textarea_material_content").append($(this).attr('data-content'))
+                $("#modal_material_content").modal('toggle');
+            })
+
+        },
     });
     $(document).on('click', "#btn_search_account", function () {
         listMaterialTable.ajax.reload();
@@ -70,11 +119,11 @@ $(document).ready(function () {
     listMaterialTable.on('draw', function () {
         $("#account_table_length").parent().addClass('col-md-2')
     })
-    $(document).on('click', ".delelte-acount", function () {
+    $(document).on('click', ".delete-material", function () {
         deleteId = null;
         deleteId = $(this).attr('data-id');
+        console.log(deleteId)
     });
-
     $(document).on('click', "#btn_submit_delete", function () {
         if (!deleteId) {
             window.alert.show("error", "Đã có lỗi xảy ra, vui lòng thử lại", "2000");
@@ -82,12 +131,12 @@ $(document).ready(function () {
         }
         $.ajax({
             type: "POST",
-            url: "/api/user/delete?userId=" + deleteId,
+            url: "/api/material/delete/" + deleteId,
             error: function (xhr, ajaxOptions, thrownError) {
             },
             success: function (response) {
                 if (response.status.code === 1000) {
-                    $("#modal_delete_account").modal("hide");
+                    $("#modal_delete_material").modal("hide");
                     listMaterialTable.ajax.reload();
                     deleteId = null;
                     window.alert.show("success", "Thành công", "2000");

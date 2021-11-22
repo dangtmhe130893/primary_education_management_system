@@ -25,9 +25,12 @@ public class Material_API {
     @GetMapping("/getPage")
     public Page<MaterialEntity> getPageMaterial(@RequestParam int size, @RequestParam int page,
                                                 @RequestParam String sortDir, @RequestParam String sortField,
-                                                @RequestParam String search) {
+                                                @RequestParam String search,
+                                                @RequestParam Long subjectId,
+                                                @RequestParam String grade,
+                                                @RequestParam String type) {
         Pageable pageable = PageableUtils.from(page, size, sortDir, sortField);
-        return materialService.getPageMaterial(pageable, search);
+        return materialService.getPageMaterial(pageable, search, subjectId, grade, type);
     }
 
     @PostMapping("/save")
@@ -36,5 +39,20 @@ public class Material_API {
         return ResponseEntity.ok(materialService.save(saveDto, currentUser.getUserId()));
     }
 
+
+    @GetMapping("/download/{code}")
+    public ResponseEntity<Object> download(@PathVariable String code) throws IOException {
+        return materialService.downloadFile(code);
+    }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<ServerResponseDto> detail(@PathVariable Long id) {
+        return ResponseEntity.ok(materialService.detail(id));
+    }
+
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<ServerResponseDto> delete(@PathVariable Long id) {
+        return ResponseEntity.ok(materialService.delete(id));
+    }
 
 }
