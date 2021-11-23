@@ -24,6 +24,12 @@ $(document).ready(function () {
                 listMaterialTable.ajax.reload();
             }
         },
+        mounted() {
+            let self = this;
+            if ($("#select_subject").val() == null) {
+                self.subjectId = $("#select_subject option:first").val();
+            }
+        }
     })
 
     let getAccount = function (requestData, renderFunction, link_api) {

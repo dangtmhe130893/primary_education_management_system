@@ -39,6 +39,12 @@ public class TimeScheduleEntity {
     private String nameFrameTime;
 
     @Transient
+    private String className;
+
+    @Transient
+    private String classRoom;
+
+    @Transient
     private List<UserEntity> listTeacher;
 
     public TimeScheduleEntity() {

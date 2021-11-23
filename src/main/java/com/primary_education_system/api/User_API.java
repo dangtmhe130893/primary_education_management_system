@@ -4,7 +4,6 @@ import com.primary_education_system.config.security.CustomUserDetails;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
-import com.primary_education_system.dto.account.AccountResponseDto;
 import com.primary_education_system.dto.account.ChangePasswordRequestDto;
 import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.service.UserService;
@@ -58,6 +57,12 @@ public class User_API {
     public ResponseEntity<ServerResponseDto> updateProfile(@RequestBody AccountRequestDto saveDto,
                                                            @AuthenticationPrincipal CustomUserDetails userDetail) throws ParseException {
         return ResponseEntity.ok().body(userService.updateProfile(userDetail.getUserId(), saveDto));
+    }
+
+    @PostMapping(value = "/setPassword")
+    public ResponseEntity<ServerResponseDto> setPassword(@RequestParam("token") String token,
+                                                         @RequestParam("password") String password) {
+        return ResponseEntity.ok().body(userService.setPassword(token, password));
     }
 
     @GetMapping("/getListTeacherCanTeach")

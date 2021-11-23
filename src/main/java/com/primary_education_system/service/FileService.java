@@ -1,6 +1,5 @@
 package com.primary_education_system.service;
 
-import com.primary_education_system.entity.material.MaterialEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -20,7 +19,7 @@ import java.util.UUID;
 @Service
 public class FileService {
 
-    @Value("${application.folderStorageFile}")
+    @Value("${folderStorageFile}")
     private String folderStorageFile;
 
     public String uploadFile(String sub, MultipartFile file) throws IOException {

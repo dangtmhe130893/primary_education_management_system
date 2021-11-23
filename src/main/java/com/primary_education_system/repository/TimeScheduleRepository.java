@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface TimeScheduleRepository extends JpaRepository<TimeScheduleEntity, Long> {
     List<TimeScheduleEntity> findByClassIdAndIsDeletedFalse(Long classId);
+    List<TimeScheduleEntity> findByTeacherIdAndIsDeletedFalse(Long teacherId);
 
     @Query(value = "select t from TimeScheduleEntity t " +
             "where t.dayOfWeek = ?1 and t.classId = ?2 and t.isDeleted = false " +

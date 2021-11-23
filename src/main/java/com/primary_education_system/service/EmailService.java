@@ -4,7 +4,6 @@ import com.primary_education_system.dto.EmailTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import java.io.UnsupportedEncodingException;
 @Service
 public class EmailService {
 
-
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -30,7 +28,7 @@ public class EmailService {
             try {
                 MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                 MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
-                mailMsg.setFrom(new InternetAddress("authcode@yakuodo-info.com", "薬王堂", "utf-8"));
+                mailMsg.setFrom(new InternetAddress("dangtmhe130893@fpt.edu.vn", "MInh Dang", "utf-8"));
                 mailMsg.setTo(emailTemplate.getReceiver());
                 mailMsg.setSubject(emailTemplate.getSubject());
                 mailMsg.setText(emailTemplate.getContent(), true);

@@ -1,0 +1,69 @@
+.list_col_time{
+	display: flex;
+	flex-direction: column;
+	width: 12.5%;
+}
+.col_time{
+	height: 50px;
+	width: 100%;
+	border: 1px solid #ccc;
+	text-align: center;
+	line-height: 50px;
+}
+.col_time:first-child {
+	border: none;
+}
+.list-subject {
+	display: flex;
+	flex-direction: column;
+	width: 12.5%;
+}
+
+.subject-item, .subject-item-title, .time-schedule-cell{
+	height: 50px;
+	width: 100%;
+	border: 1px solid #ccc;
+	text-align: center;
+	line-height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.time-schedule-cell {
+	cursor: pointer;
+}
+.subject-item-title {
+	font-weight: bold;
+}
+.btn-end-col {
+	border: none;
+	height: 32px;
+	background-color: blue;
+	color: white;
+	width: 90%;
+	margin: 16px auto;
+}
+.btn-end-col:hover {
+	color: white;
+}
+.subject-item:disabled {
+	color: black;
+}
+.sub-cell {
+	height: 100%;
+	text-align: center;
+}
+.btn-enable-edit {
+	background-color: blue;
+	width: 88px;
+	height: 32px;
+	color: white;
+	line-height: 20px;
+}
+.btn-enable-edit:hover {
+	color: white;
+}
+.btn-enable-edit:focus {
+	outline: none;
+	box-shadow: none;
+}

@@ -49,5 +49,9 @@ server:
 isOnSendMailError: false
 errorReportReceiver: xxx@gmail.com
 application:
-  folderStorageFile: E:/
+
+folderStorageFile: E:/
 host: http://localhost:8080/
+mail:
+  username:
+  password:

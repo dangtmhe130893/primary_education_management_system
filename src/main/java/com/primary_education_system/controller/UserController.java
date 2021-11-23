@@ -68,8 +68,13 @@ public class UserController {
     }
 
     @GetMapping("/confirmForgotPassword")
-    public String confirmUser(@RequestParam("userId") Long userId, @RequestParam("token") String token, Model model) {
-        return "redirect:/server-error";
-
+    public String confirmForgotPassword(@RequestParam("token") String token, Model model) {
+        boolean status = userService.confirmForgotPassword(token);
+        if (status) {
+            model.addAttribute("token", token);
+            return "forgot_password/set_password";
+        } else {
+            return "confirm_error";
+        }
     }
 }

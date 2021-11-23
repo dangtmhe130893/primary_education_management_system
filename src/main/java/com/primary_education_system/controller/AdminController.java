@@ -1,7 +1,9 @@
 package com.primary_education_system.controller;
 
 import com.primary_education_system.config.security.CustomUserDetails;
+import com.primary_education_system.entity.FrameTimeScheduleEntity;
 import com.primary_education_system.entity.SubjectEntity;
+import com.primary_education_system.service.FrameTimeScheduleService;
 import com.primary_education_system.service.SubjectService;
 import com.primary_education_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FrameTimeScheduleService frameTimeScheduleService;
 
     @GetMapping("/home")
     public String getHome() {
@@ -58,7 +63,9 @@ public class AdminController {
     }
 
     @GetMapping("/teach_class")
-    public String getTeachClass() {
+    public String getTeachClass(Model model) {
+        List<FrameTimeScheduleEntity> listFrame = frameTimeScheduleService.findAll();
+        model.addAttribute("listFrame", listFrame);
         return "admin/teach_class";
     }
 
@@ -68,7 +75,9 @@ public class AdminController {
     }
 
     @GetMapping("/time_schedule")
-    public String getTimeSchedule() {
+    public String getTimeSchedule(Model model) {
+        List<FrameTimeScheduleEntity> listFrame = frameTimeScheduleService.findAll();
+        model.addAttribute("listFrame", listFrame);
         return "admin/time_schedule";
     }
 
@@ -77,13 +86,4 @@ public class AdminController {
         return "admin/subject";
     }
 
-    @GetMapping("/confirmForgotPassword")
-    public String confirmForgotPassword(@RequestParam("token") String token) {
-        boolean status = userService.confirmForgotPassword(token);
-        if (status) {
-            return "forgot_password/set_password";
-        } else {
-            return "confirm_error";
-        }
-    }
 }

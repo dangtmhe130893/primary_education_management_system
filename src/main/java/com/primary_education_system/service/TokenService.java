@@ -1,7 +1,6 @@
 package com.primary_education_system.service;
 
 import com.primary_education_system.entity.token.TokenEntity;
-import com.primary_education_system.entity.token.TokenType;
 import com.primary_education_system.repository.TokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +37,7 @@ public class TokenService {
         }
     }
 
-    public TokenEntity validateToken(String token, TokenType tokenType) {
+    public TokenEntity validateToken(String token, Integer tokenType) {
         return tokenRepository.findByTokenAndTokenType(token, tokenType);
     }
 }

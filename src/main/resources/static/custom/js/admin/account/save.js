@@ -40,9 +40,6 @@ $(document).ready(function () {
 
                 $("#select_role").val("").trigger("change");
             },
-            mounted: function () {
-
-            },
             detail: function (data) {
                 let listNameRole = data.roles.map(role => role.name);
                 $("#select_role").val(listNameRole).trigger("change");

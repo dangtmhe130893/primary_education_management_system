@@ -1,7 +1,6 @@
 package com.primary_education_system.service;
 
 import com.primary_education_system.dto.ResponseCase;
-import com.primary_education_system.dto.ResponseStatus;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.classs.ClassDto;
 import com.primary_education_system.entity.ClassEntity;
@@ -15,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -102,6 +102,13 @@ public class ClassService {
         return listClassEntity
                 .stream()
                 .collect(Collectors.toMap(ClassEntity::getId, ClassEntity::getName));
+    }
+
+    public Map<Long, ClassEntity> getMapClassById(List<Long> listClassId) {
+        List<ClassEntity> listClassEntity = classRepository.findByIdInAndIsDeletedFalse(listClassId);
+        return listClassEntity
+                .stream()
+                .collect(Collectors.toMap(ClassEntity::getId, Function.identity()));
     }
 
     public List<Long> getALlClassId() {

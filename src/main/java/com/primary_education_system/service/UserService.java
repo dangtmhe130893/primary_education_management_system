@@ -8,7 +8,6 @@ import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
 import com.primary_education_system.dto.account.ChangePasswordRequestDto;
 import com.primary_education_system.entity.token.TokenEntity;
-import com.primary_education_system.entity.token.TokenType;
 import com.primary_education_system.entity.user.RoleEntity;
 import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.UserRepository;
@@ -125,6 +124,23 @@ public class UserService {
         userRepository.save(userEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
+
+    public ServerResponseDto setPassword(String token, String password) {
+        TokenEntity tokenEntity = tokenService.validateToken(token, 4);
+        if (tokenEntity == null) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
+        UserEntity userEntity = userRepository.findOne(tokenEntity.getUserId());
+        if (userEntity == null) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
+        userEntity.setPassword(passwordEncoder.encode(password));
+        userEntity.setRawPassword(passwordEncoder.encode(password));
+        userRepository.save(userEntity);
+        tokenService.save(tokenEntity);
+        return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
 
     public Map<Long, List<UserEntity>> getMapListTeacherBySubjectId(List<Long> listSubjectId) {
         List<UserEntity> listTeacher = userRepository.getListTeacherByListSubjectId(listSubjectId);
@@ -246,24 +262,20 @@ public class UserService {
         UserEntity userEntity = userRepository.findFirstByEmail(email);
         if (userEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
-        } else {
-            String tokenString = tokenService.generateToken();
-            String confirmationUrl = host + "confirmForgotPassword?token=" + tokenString;
-            String subject = "Quên mật khẩu";
-            EmailTemplate emailTemplate = new EmailTemplate(email, subject, confirmationUrl);
-            emailService.sendMail(emailTemplate);
-
-            TokenEntity tokenEntity = new TokenEntity(tokenString, TokenType.FORGOT_PASSWORD_TOKEN);
-            tokenService.save(tokenEntity);
-            return new ServerResponseDto(ResponseCase.SUCCESS);
         }
+        String tokenString = tokenService.generateToken();
+        String confirmationUrl = host + "confirmForgotPassword?token=" + tokenString;
+        String subject = "Quên mật khẩu";
+        EmailTemplate emailTemplate = new EmailTemplate(email, subject, confirmationUrl);
+        emailService.sendMail(emailTemplate);
+
+        TokenEntity tokenEntity = new TokenEntity(userEntity.getId(), tokenString, 4);
+        tokenService.save(tokenEntity);
+        return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
     public boolean confirmForgotPassword(String token) {
-        TokenEntity tokenEntity = tokenService.validateToken(token, TokenType.FORGOT_PASSWORD_TOKEN);
-        if (tokenEntity == null) {
-            return false;
-        }
-        return true;
+        TokenEntity tokenEntity = tokenService.validateToken(token, 4);
+        return tokenEntity != null;
     }
 }

@@ -3,6 +3,7 @@ package com.primary_education_system.service;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.time_schedule.TimeScheduleRequestDto;
+import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.FrameTimeScheduleEntity;
 import com.primary_education_system.entity.TimeScheduleEntity;
 import com.primary_education_system.entity.user.UserEntity;
@@ -28,6 +29,9 @@ public class TimeScheduleService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ClassService classService;
+
     public ServerResponseDto getTimeSchedule(Long classId) {
         List<TimeScheduleEntity> listTimeSchedule = timeScheduleRepository.findByClassIdAndIsDeletedFalse(classId);
 
@@ -48,6 +52,23 @@ public class TimeScheduleService {
         listTimeSchedule.forEach(timeScheduleEntity -> {
             timeScheduleEntity.setNameSubject(mapNameSubjectById.getOrDefault(timeScheduleEntity.getSubjectId(), ""));
             timeScheduleEntity.setNameTeacher(mapNameTeacherById.getOrDefault(timeScheduleEntity.getTeacherId(), ""));
+        });
+        return new ServerResponseDto(ResponseCase.SUCCESS, listTimeSchedule);
+    }
+
+    public ServerResponseDto getTimeScheduleForTeacher(Long teacherId) {
+        List<TimeScheduleEntity> listTimeSchedule = timeScheduleRepository.findByTeacherIdAndIsDeletedFalse(teacherId);
+
+        List<Long> listClassId = listTimeSchedule
+                .stream()
+                .map(TimeScheduleEntity::getClassId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        Map<Long, ClassEntity> mapClassById = classService.getMapClassById(listClassId);
+
+        listTimeSchedule.forEach(timeScheduleEntity -> {
+            timeScheduleEntity.setClassName(mapClassById.get(timeScheduleEntity.getClassId()).getName());
+            timeScheduleEntity.setClassRoom(mapClassById.get(timeScheduleEntity.getClassId()).getRoom());
         });
         return new ServerResponseDto(ResponseCase.SUCCESS, listTimeSchedule);
     }

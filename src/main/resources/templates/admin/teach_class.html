@@ -4,10 +4,54 @@
       th:with="currentPage='teach_class'">
 <head>
     <title>Home</title>
+    <script type="text/javascript" src="/custom/js/admin/teach_class/teach_class.js"></script>
+    <link th:href="@{/custom/css/frame_time.css}" rel="stylesheet" media="screen"/>
 </head>
 <body>
 <div layout:fragment="content">
-ff
+
+    <div style="display: flex" id="frame_teach_class">
+        <div class="list_col_time">
+            <div class="col_time"></div>
+            <div class="col_time" th:each="frame : ${listFrame}" th:text="${frame.name}"></div>
+        </div>
+
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ hai</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_monday_' + ${frame.id}" class="frame-monday"></div>
+        </div>
+
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ ba</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_tuesday_' + ${frame.id}" class="frame-tuesday"></div>
+        </div>
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ tư</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_wednesday_' + ${frame.id}" class="frame-wednesday"></div>
+        </div>
+
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ năm</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_thursday_' + ${frame.id}" class="frame-thursday"></div>
+        </div>
+
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ sáu</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_friday_' + ${frame.id}" class="frame-friday"></div>
+        </div>
+
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ bảy</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_saturday_' + ${frame.id}" class="frame-saturday"></div>
+        </div>
+
+        <div class="list-subject">
+            <div class="subject-item-title">Chủ nhật</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_sunday_' + ${frame.id}" class="frame-sunday"></div>
+        </div>
+
+    </div>
+
 </div>
 </body>
 </html>

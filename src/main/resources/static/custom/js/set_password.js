@@ -2,7 +2,7 @@ $(document).ready(function () {
 
 
     jQuery.validator.addMethod("hasCharacter", function (password) {
-        var length = password.length;
+        let length = password.length;
         ch = '';
         while (length--) {
             ch = password.charAt(length);
@@ -44,13 +44,12 @@ $(document).ready(function () {
         },
         submitHandler: function (form, event) {
             event.preventDefault();
-            var formData = new FormData();
+            let formData = new FormData();
             formData.append("password", $("#password").val());
-            formData.append("userId", $("#user_id").val());
             formData.append("token", $("#token").val());
             $.ajax({
                 type: "POST",
-                url: "/api/v1/web/user/setPassword",
+                url: "/api/user/setPassword",
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -59,10 +58,10 @@ $(document).ready(function () {
                     console.log(response)
                     switch (response.status.code) {
                         case 4:
-                            window.alert.show("error", $("#code_is_incorrect").html(), "2000");
+                            window.alert.show("error", "Đã có lỗi xảy ra", "2000");
                             break;
                         case 1000:
-                            window.alert.show("success", $("#password_setted").html(), "2000");
+                            window.alert.show("success", "Thành công", "2000");
                             setTimeout(function () {
                                 window.location.href = '/login';
                             }, 2000);

@@ -94,7 +94,9 @@ $(document).ready(function () {
         mounted() {
 
             let self = this;
-
+            if ($("#modal_select_subject").val() == null) {
+                self.subjectId = $("#modal_select_subject option:first").val();
+            }
             $('#modal_add_material').on('hidden.bs.modal', function () {
                 $("#container_selected_file").children().remove();
                 self.resetPopup();
