@@ -19,4 +19,8 @@ public interface TimeScheduleRepository extends JpaRepository<TimeScheduleEntity
 
     TimeScheduleEntity findByIdAndIsDeletedFalse(Long timeScheduleId);
 
+    @Query(value = "select count(t.id) from TimeScheduleEntity t " +
+            "where t.classId <> ?1 and t.dayOfWeek = ?2 and t.frameTimeId = ?3 and t.teacherId = ?4 " +
+            "and t.isDeleted = false")
+    long countSameTimeSchedule(Long classId, DayOfWeek dayOfWeek, Long frameTimeId, Long teacherId);
 }

@@ -49,4 +49,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "and role.name = 'TEACHER'", nativeQuery = true)
     List<UserEntity> getListTeacherBySubjectId(Long subjectId);
 
+    @Query(value = "select u.* from user as u " +
+            "where u.email = ?1 limit 1", nativeQuery = true)
+    UserEntity findFirstByEmail(String email);
 }

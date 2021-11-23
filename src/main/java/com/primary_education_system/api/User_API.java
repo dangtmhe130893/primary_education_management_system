@@ -75,4 +75,10 @@ public class User_API {
                                                             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return ResponseEntity.ok(userService.changePassword(changePasswordRequestDto, customUserDetails));
     }
+
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<ServerResponseDto> forgotPassword(@RequestParam String email) {
+        return ResponseEntity.ok(userService.forgotPassword(email));
+    }
+
 }

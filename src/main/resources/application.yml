@@ -50,3 +50,4 @@ isOnSendMailError: false
 errorReportReceiver: xxx@gmail.com
 application:
   folderStorageFile: E:/
+host: http://localhost:8080/

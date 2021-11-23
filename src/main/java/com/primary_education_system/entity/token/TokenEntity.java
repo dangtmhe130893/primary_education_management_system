@@ -1,5 +1,7 @@
 package com.primary_education_system.entity.token;
 
+import com.primary_education_system.entity.user.UserEntity;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,9 @@ public class TokenEntity {
     private Boolean isUsed;
     private Boolean isDeleted;
     private Date createdTime;
+
+    public TokenEntity(String tokenString, TokenType forgotPasswordToken) {
+    }
 
     public String getToken() {
         return token;

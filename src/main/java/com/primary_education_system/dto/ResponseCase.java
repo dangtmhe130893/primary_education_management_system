@@ -7,6 +7,8 @@ public interface ResponseCase {
 
     ResponseStatus ERROR_PASSWORD = new ResponseStatus(1002, "Error password");
 
+    ResponseStatus SAME_TIME_SCHEDULE = new ResponseStatus(1003, "Same time schedule");
+
     ResponseStatus ERROR = new ResponseStatus(4, "ERROR");
 
 }

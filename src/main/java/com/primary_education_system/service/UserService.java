@@ -2,17 +2,19 @@ package com.primary_education_system.service;
 
 import com.google.common.collect.Lists;
 import com.primary_education_system.config.security.CustomUserDetails;
+import com.primary_education_system.dto.EmailTemplate;
 import com.primary_education_system.dto.ResponseCase;
-import com.primary_education_system.dto.ResponseStatus;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
 import com.primary_education_system.dto.account.ChangePasswordRequestDto;
+import com.primary_education_system.entity.token.TokenEntity;
+import com.primary_education_system.entity.token.TokenType;
 import com.primary_education_system.entity.user.RoleEntity;
 import com.primary_education_system.entity.user.UserEntity;
-import com.primary_education_system.enum_type.Roles;
 import com.primary_education_system.repository.UserRepository;
 import com.primary_education_system.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +29,9 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
+    @Value("${host}")
+    public String host;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -34,7 +39,13 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
+    private TokenService tokenService;
+
+    @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private EmailService emailService;
 
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmailAndIsDeletedFalse(email);
@@ -225,5 +236,34 @@ public class UserService {
         userEntity.setPassword(passwordEncoder.encode(changePasswordRequestDto.getNewPassword()));
         userRepository.save(userEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    public UserEntity findByIdAndIsDeletedFalse(Long teacherId) {
+        return userRepository.findByIdAndIsDeletedFalse(teacherId);
+    }
+
+    public ServerResponseDto forgotPassword(String email) {
+        UserEntity userEntity = userRepository.findFirstByEmail(email);
+        if (userEntity == null) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        } else {
+            String tokenString = tokenService.generateToken();
+            String confirmationUrl = host + "confirmForgotPassword?token=" + tokenString;
+            String subject = "Quên mật khẩu";
+            EmailTemplate emailTemplate = new EmailTemplate(email, subject, confirmationUrl);
+            emailService.sendMail(emailTemplate);
+
+            TokenEntity tokenEntity = new TokenEntity(tokenString, TokenType.FORGOT_PASSWORD_TOKEN);
+            tokenService.save(tokenEntity);
+            return new ServerResponseDto(ResponseCase.SUCCESS);
+        }
+    }
+
+    public boolean confirmForgotPassword(String token) {
+        TokenEntity tokenEntity = tokenService.validateToken(token, TokenType.FORGOT_PASSWORD_TOKEN);
+        if (tokenEntity == null) {
+            return false;
+        }
+        return true;
     }
 }

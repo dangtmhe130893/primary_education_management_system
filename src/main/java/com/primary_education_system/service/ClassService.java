@@ -64,13 +64,18 @@ public class ClassService {
         return new ServerResponseDto(ResponseCase.SUCCESS, classEntity);
     }
 
-    public ServerResponseDto delete(Long id) {
-        ClassEntity classEntity = classRepository.findByIdAndIsDeletedFalse(id);
+    @Transactional
+    public ServerResponseDto delete(Long classId) {
+        ClassEntity classEntity = classRepository.findByIdAndIsDeletedFalse(classId);
         if (classEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
         classEntity.setDeleted(true);
         classRepository.save(classEntity);
+
+        /* delete Time schedule */
+        timeScheduleService.deleteTimeScheduleByClassId(classId);
+
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 

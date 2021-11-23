@@ -3,12 +3,14 @@ package com.primary_education_system.controller;
 import com.primary_education_system.config.security.CustomUserDetails;
 import com.primary_education_system.entity.SubjectEntity;
 import com.primary_education_system.service.SubjectService;
+import com.primary_education_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,6 +20,9 @@ public class AdminController {
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/home")
     public String getHome() {
@@ -70,5 +75,15 @@ public class AdminController {
     @GetMapping("/subject")
     public String getSubject() {
         return "admin/subject";
+    }
+
+    @GetMapping("/confirmForgotPassword")
+    public String confirmForgotPassword(@RequestParam("token") String token) {
+        boolean status = userService.confirmForgotPassword(token);
+        if (status) {
+            return "forgot_password/set_password";
+        } else {
+            return "confirm_error";
+        }
     }
 }

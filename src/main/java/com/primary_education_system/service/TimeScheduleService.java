@@ -73,6 +73,23 @@ public class TimeScheduleService {
         TimeScheduleEntity timeScheduleEntity = timeScheduleRepository
                 .findByIdAndIsDeletedFalse(timeScheduleRequestDto.getTimeScheduleId());
 
+
+        /*
+         * trùng lịch nếu: + khác classId
+         *                 + trùng dayOfWeek
+         *                 + trùng frameTimeId
+         *                 + trùng teacherId
+         * */
+        Long classId = timeScheduleEntity.getClassId();
+        DayOfWeek dayOfWeek = timeScheduleEntity.getDayOfWeek();
+        Long frameTimeId = timeScheduleEntity.getFrameTimeId();
+        Long teacherId = timeScheduleRequestDto.getTeacherId();
+
+        if (checkSameTimeSchedule(classId, dayOfWeek, frameTimeId, teacherId)) {
+            UserEntity teacherDuplicate = userService.findByIdAndIsDeletedFalse(teacherId);
+            return new ServerResponseDto(ResponseCase.SAME_TIME_SCHEDULE, teacherDuplicate.getName());
+        }
+
         if (timeScheduleEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
@@ -81,6 +98,11 @@ public class TimeScheduleService {
 
         timeScheduleRepository.save(timeScheduleEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    private boolean checkSameTimeSchedule(Long classId, DayOfWeek dayOfWeek, Long frameTimeId, Long teacherId) {
+        int numberSameTimeSchedule = (int) timeScheduleRepository.countSameTimeSchedule(classId, dayOfWeek, frameTimeId, teacherId);
+        return numberSameTimeSchedule > 0;
     }
 
     public ServerResponseDto detail(Long timeScheduleId) {
@@ -96,5 +118,13 @@ public class TimeScheduleService {
         List<UserEntity> listTeacher = userService.getListTeacherBySubjectId(subjectId);
         timeScheduleEntity.setListTeacher(listTeacher);
         return new ServerResponseDto(ResponseCase.SUCCESS, timeScheduleEntity);
+    }
+
+    public void deleteTimeScheduleByClassId(Long classId) {
+        List<TimeScheduleEntity> listTimeSchedule = timeScheduleRepository.findByClassIdAndIsDeletedFalse(classId);
+        listTimeSchedule.forEach(timeSchedule -> {
+            timeSchedule.setDeleted(true);
+        });
+        timeScheduleRepository.save(listTimeSchedule);
     }
 }

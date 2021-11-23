@@ -256,10 +256,12 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         window.loader.hide();
-                        $("#modal_add_time_schedule").modal("hide");
                         if (response.status.code === 1000) {
+                            $("#modal_add_time_schedule").modal("hide");
                             timeScheduleTableVue.getTimeSchedule();
                             window.alert.show("success", "Lưu thành công", 2000);
+                        } else if (response.status.code === 1003){
+                            window.alert.show("error", response.data + " đã có lịch dạy vào thời điểm này", 2000);
                         } else {
                             window.alert.show("error", "Đã có lỗi xảy ra", 2000);
                         }
