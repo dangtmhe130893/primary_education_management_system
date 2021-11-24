@@ -9,18 +9,16 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "class")
-public class ClassEntity {
+@Table(name = "tuition")
+public class TuitionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
     private String grade;
-    private String room;
+    private int fee;
 
     private boolean isDeleted;
     private Date createdTime;
     private Date updatedTime;
-
 }
