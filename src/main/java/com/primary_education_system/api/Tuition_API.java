@@ -1,8 +1,6 @@
 package com.primary_education_system.api;
 
 import com.primary_education_system.dto.ServerResponseDto;
-import com.primary_education_system.dto.classs.ClassDto;
-import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.TuitionEntity;
 import com.primary_education_system.service.TuitionService;
 import com.primary_education_system.util.PageableUtils;
@@ -21,20 +19,9 @@ public class Tuition_API {
 
     @GetMapping("/getPage")
     public Page<TuitionEntity> getPage(@RequestParam int size, @RequestParam int page,
-                                              @RequestParam String sortDir, @RequestParam String sortField,
-                                              @RequestParam String keyword) {
+                                       @RequestParam String sortDir, @RequestParam String sortField) {
         Pageable pageable = PageableUtils.from(page, size, sortDir, sortField);
-        return tuitionService.getPage(pageable, keyword);
-    }
-
-    @GetMapping("/getList")
-    public ResponseEntity<ServerResponseDto> getList() {
-        return ResponseEntity.ok(tuitionService.getList());
-    }
-
-    @GetMapping("/getListByGrade")
-    public ResponseEntity<ServerResponseDto> getListByGrade(@RequestParam String grade) {
-        return ResponseEntity.ok(tuitionService.getListByGradeIdStr(grade));
+        return tuitionService.getPage(pageable);
     }
 
     @PostMapping("/save")

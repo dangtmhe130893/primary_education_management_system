@@ -16,7 +16,7 @@ public class TuitionEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String grade;
-    private int fee;
+    private Integer fee;
 
     private boolean isDeleted;
     private Date createdTime;
