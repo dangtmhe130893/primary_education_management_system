@@ -86,6 +86,7 @@ public class ClassService {
     public ServerResponseDto getListByGradeIdStr(String grade) {
         List<ClassEntity> listClass;
         if ("0".equals(grade)) {
+            System.out.println("testtt");
             listClass = classRepository.findByIsDeletedFalse();
         } else {
             listClass = classRepository.findByGradeAndIsDeletedFalse(grade);
