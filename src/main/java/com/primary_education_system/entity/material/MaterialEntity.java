@@ -33,4 +33,7 @@ public class MaterialEntity {
     @Transient
     private String subjectName;
 
+    @Transient
+    private String creator;
+
 }

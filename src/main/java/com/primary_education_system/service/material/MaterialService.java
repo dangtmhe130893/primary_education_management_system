@@ -8,6 +8,7 @@ import com.primary_education_system.entity.material.MaterialEntity;
 import com.primary_education_system.repository.material.MaterialRepository;
 import com.primary_education_system.service.FileService;
 import com.primary_education_system.service.SubjectService;
+import com.primary_education_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,9 @@ public class MaterialService {
     @Autowired
     private SubjectService subjectService;
 
+    @Autowired
+    private UserService userService;
+
     public Page<MaterialEntity> getPageMaterial(Pageable pageable, String keyword, Long subjectId, String grade, String type) {
         List<Long> listSubjectIdForSearch = new ArrayList<>();
         if (subjectId == 0) {
@@ -51,8 +55,17 @@ public class MaterialService {
                 .map(MaterialEntity::getSubjectId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+        List<Long> listUserCreateId = result.getContent()
+                .stream()
+                .map(MaterialEntity::getCreatedByUserId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
         Map<Long, String> mapNameSubjectById = subjectService.getMapNameSubjectById(listSubjectId);
-        result.getContent().forEach(material -> material.setSubjectName(mapNameSubjectById.get(material.getSubjectId())));
+        Map<Long, String> mapUserNameById = userService.getMapNameById(listUserCreateId);
+        result.getContent().forEach(material -> {
+            material.setSubjectName(mapNameSubjectById.get(material.getSubjectId()));
+            material.setCreator(mapUserNameById.get(material.getCreatedByUserId()));
+        });
         return result;
     }
 

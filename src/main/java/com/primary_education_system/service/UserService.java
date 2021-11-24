@@ -237,6 +237,16 @@ public class UserService {
                 .collect(Collectors.toMap(UserEntity::getId, UserEntity::getName));
     }
 
+    public Map<Long, String> getMapNameById(List<Long> listTeacherId) {
+        if (listTeacherId.isEmpty()) {
+            return new HashMap<>();
+        }
+        List<UserEntity> listUser = userRepository.getListUserByListId(listTeacherId);
+        return listUser
+                .stream()
+                .collect(Collectors.toMap(UserEntity::getId, UserEntity::getName));
+    }
+
     public ServerResponseDto changePassword(ChangePasswordRequestDto changePasswordRequestDto,
                                             CustomUserDetails customUserDetails) {
         UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(customUserDetails.getUserId());

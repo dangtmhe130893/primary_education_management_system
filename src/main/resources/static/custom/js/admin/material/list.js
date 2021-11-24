@@ -66,6 +66,7 @@ $(document).ready(function () {
         {"data": "type", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "creator", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": "createdTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'}
     ];
@@ -106,7 +107,7 @@ $(document).ready(function () {
                     return `<button type="button" data-toggle="modal" data-target="#modal_add_material" id="btn_detail_${data.id}" class="btn btn-sm btn-primary detail-material">Chi tiết</button>
                             <button style="margin-left: 10px" data-toggle="modal" data-id="${data.id}" data-target="#modal_delete_material" class="btn btn-sm btn-danger delete-material">Xóa</button>`;
                 },
-                "targets": 8
+                "targets": 9
             },
         ],
         "drawCallback": function () {
