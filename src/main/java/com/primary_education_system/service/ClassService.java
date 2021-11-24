@@ -88,7 +88,7 @@ public class ClassService {
         if ("0".equals(grade)) {
             listClass = classRepository.findByIsDeletedFalse();
         } else {
-            listClass = classRepository.findByGradeAndIsDeletedFalse(new StringBuilder("Khối ").append(grade).toString());
+            listClass = classRepository.findByGradeAndIsDeletedFalse(grade);
         }
         return new ServerResponseDto(ResponseCase.SUCCESS, listClass);
     }
