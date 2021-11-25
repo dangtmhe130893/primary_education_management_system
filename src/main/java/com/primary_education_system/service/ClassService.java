@@ -32,16 +32,26 @@ public class ClassService {
 
     @Transactional
     public ServerResponseDto save(ClassDto classDto) {
+
+
         Long classId = classDto.getId();
         boolean isUpdate = classId != null;
 
         ClassEntity classEntity;
+        String oldNameClass;
         if (isUpdate) {
             classEntity = classRepository.findByIdAndIsDeletedFalse(classId);
+            oldNameClass = classEntity.getName();
         } else {
             classEntity = new ClassEntity();
             classEntity.setCreatedTime(new Date());
+            oldNameClass = "";
         }
+
+        if (checkIsDuplicateNameClass(classDto.getNameClass(), oldNameClass)) {
+            return new ServerResponseDto(ResponseCase.SAME_NAME_CLASS);
+        }
+
         classEntity.setSeo(new Slugify().slugify(classDto.getNameClass()));
         classEntity.setUpdatedTime(new Date());
         classEntity.setName(classDto.getNameClass());
@@ -56,6 +66,13 @@ public class ClassService {
         }
 
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    private boolean checkIsDuplicateNameClass(String newNameClass, String oldNameClass) {
+        List<ClassEntity> listClassSaved = classRepository.findByIsDeletedFalse();
+        return listClassSaved
+                .stream()
+                .anyMatch(classSaved -> classSaved.getName().equals(newNameClass) && !oldNameClass.equals(newNameClass));
     }
 
     public ServerResponseDto detail(Long id) {

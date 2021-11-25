@@ -40,11 +40,13 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         window.loader.hide();
-                        $("#modal_add_class").modal("hide");
 
                         if (response.status.code === 1000) {
                             tableClass.ajax.reload();
+                            $("#modal_add_class").modal("hide");
                             window.alert.show("success", "Lưu thành công", 2000);
+                        } else if (response.status.code === 1004) {
+                            window.alert.show("error", "Tên lớp đã tồn tại", 2000);
                         } else {
                             window.alert.show("error", "Đã có lỗi xảy ra", 2000);
                         }
