@@ -117,4 +117,9 @@ public class AdminController {
 
         return "admin/teach_class";
     }
+    @GetMapping("/tuition")
+    public String getTuition() {
+        return "admin/tuition";
+    }
+
 }

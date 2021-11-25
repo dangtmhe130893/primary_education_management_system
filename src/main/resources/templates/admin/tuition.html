@@ -1,0 +1,84 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/admin_template}"
+      th:with="currentPage='tuition'">
+<head>
+    <title>Quản lý học phí</title>
+    <script type="text/javascript" src="/custom/js/admin/tuition/list.js"></script>
+    <script type="text/javascript" src="/custom/js/admin/tuition/save.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    <div th:fragment="table-tuition">
+
+        <div class="table-content">
+            <button style="float:right;" data-toggle="modal" data-target="#modal_add_tuition"
+                    class="btn btn-primary btn-sm" id="btn_add_tuition"
+                    >Thêm mới
+            </button>
+            <table class="table responsive" id="tuition_table">
+                <thead>
+                <th style="width: 10% !important" scope="col" class="text-center">Tên Khối</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Học phí</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Thời gian tạo</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Thời gian sửa</th>
+                <th style="width: 10% !important" scope="col" class="text-center"></th>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="modal_add_tuition" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Học phí</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label>Khối:</label><sup style="color: red"> *</sup>
+                                <select style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="grade">
+                                    <option value="Khối 1">Khối 1</option>
+                                    <option value="Khối 2">Khối 2</option>
+                                    <option value="Khối 3">Khối 3</option>
+                                    <option value="Khối 4">Khối 4</option>
+                                    <option value="Khối 5">Khối 5</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Học phí:</label><sup style="color: red"> *</sup>
+                                <p class="error-message" v-bind:class="{ hidden : !isShowErrorFee}">
+                                    Trường này là bắt buộc</p>
+
+                                <input v-model="fee" class="form-control input" type="number" min="0"
+                                       v-on:blur="validateFee();"
+                                       v-on:keyup="validateFee();"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary btn-sm" v-on:click="saveTuition()">
+                        Lưu
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
