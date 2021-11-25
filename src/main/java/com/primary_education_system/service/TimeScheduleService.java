@@ -2,6 +2,7 @@ package com.primary_education_system.service;
 
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
+import com.primary_education_system.dto.time_schedule.InfoTimeScheduleTeacherDto;
 import com.primary_education_system.dto.time_schedule.TimeScheduleRequestDto;
 import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.FrameTimeScheduleEntity;
@@ -10,6 +11,8 @@ import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.enum_type.DayOfWeek;
 import com.primary_education_system.repository.TimeScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -31,6 +34,9 @@ public class TimeScheduleService {
 
     @Autowired
     private ClassService classService;
+
+    @Autowired
+    private PupilAccountService pupilAccountService;
 
     public ServerResponseDto getTimeSchedule(Long classId) {
         List<TimeScheduleEntity> listTimeSchedule = timeScheduleRepository.findByClassIdAndIsDeletedFalse(classId);
@@ -147,5 +153,26 @@ public class TimeScheduleService {
             timeSchedule.setDeleted(true);
         });
         timeScheduleRepository.save(listTimeSchedule);
+    }
+
+    public Page<InfoTimeScheduleTeacherDto> getInfoTimeScheduleTeacher(Long teacherId, Pageable pageable) {
+        Page<InfoTimeScheduleTeacherDto> page = timeScheduleRepository.getInfoTimeScheduleTeacher(teacherId, pageable);
+
+        List<Long> listClassId = page.getContent()
+                .stream()
+                .map(InfoTimeScheduleTeacherDto::getClassId)
+                .collect(Collectors.toList());
+        Map<Long, ClassEntity> mapClassById = classService.getMapClassById(listClassId);
+
+        Map<Long, Integer> mapNumberPupilByClassId = pupilAccountService.getMapNumberPupilByClassId(listClassId);
+
+        page.forEach(row -> {
+            ClassEntity classEntity = mapClassById.get(row.getClassId());
+            row.setNameClass(classEntity.getName());
+            row.setSeoNameClass(classEntity.getSeo());
+            row.setNameRoom(classEntity.getRoom());
+            row.setNumberPupil(mapNumberPupilByClassId.getOrDefault(classEntity.getId(), 0));
+        });
+        return page;
     }
 }

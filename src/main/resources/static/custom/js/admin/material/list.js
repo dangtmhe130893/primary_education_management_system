@@ -119,6 +119,10 @@ $(document).ready(function () {
 
         },
     });
+    $("#modal_material_content").on("hidden.bs.modal", function () {
+        $("#textarea_material_content").empty();
+    })
+
     $(document).on('click', "#btn_search_account", function () {
         listMaterialTable.ajax.reload();
     })

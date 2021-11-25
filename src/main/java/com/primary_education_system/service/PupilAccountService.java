@@ -3,6 +3,7 @@ package com.primary_education_system.service;
 import com.google.common.collect.Lists;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
+import com.primary_education_system.dto.pupil_account.ClassIdAndNumberPupil;
 import com.primary_education_system.dto.pupil_account.PupilAccountDto;
 import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.pupil.PupilAccountEntity;
@@ -28,6 +29,10 @@ public class PupilAccountService {
 
     @Autowired
     private ClassService classService;
+
+//    public Page<PupilAccountEntity> getPagePupilAccountNotKeyword(Pageable pageable, String grade, Long classId) {
+//
+//    }
 
     public Page<PupilAccountEntity> getPagePupilAccount(Pageable pageable, String keyword, String grade, Long classId) {
         List<String> listGradeFilter = Lists.newArrayListWithExpectedSize(5);
@@ -124,5 +129,22 @@ public class PupilAccountService {
         pupilAccountEntity.setDeleted(true);
         repository.save(pupilAccountEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    public Map<Long, Integer> getMapNumberPupilByClassId(List<Long> listClassId) {
+        if (listClassId.isEmpty()) {
+            return Collections.EMPTY_MAP;
+        }
+
+        List<ClassIdAndNumberPupil> listClassIdAndNumberPupil = repository.getClassIdAndNumberPupil(listClassId);
+        if (listClassIdAndNumberPupil.isEmpty()) {
+            return Collections.EMPTY_MAP;
+        }
+
+        Map<Long, Integer> mapNumberPupilByClassId = new HashMap<>();
+        listClassIdAndNumberPupil.forEach(object -> {
+            mapNumberPupilByClassId.put(object.getClassId(), object.getNumberPupil());
+        });
+        return mapNumberPupilByClassId;
     }
 }

@@ -2,9 +2,13 @@ package com.primary_education_system.api;
 
 import com.primary_education_system.config.security.CustomUserDetails;
 import com.primary_education_system.dto.ServerResponseDto;
+import com.primary_education_system.dto.time_schedule.InfoTimeScheduleTeacherDto;
 import com.primary_education_system.dto.time_schedule.TimeScheduleRequestDto;
 import com.primary_education_system.service.TimeScheduleService;
+import com.primary_education_system.util.PageableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +19,7 @@ public class TimeSchedule_API {
 
     @Autowired
     private TimeScheduleService timeScheduleService;
+
 
     @GetMapping("/getTimeSchedule/{classId}")
     public ResponseEntity<ServerResponseDto> getTimeSchedule(@PathVariable Long classId) {
@@ -37,5 +42,13 @@ public class TimeSchedule_API {
     @GetMapping("/detail/{id}")
     public ResponseEntity<ServerResponseDto> detail(@PathVariable Long id) {
         return ResponseEntity.ok(timeScheduleService.detail(id));
+    }
+
+    @GetMapping("/getPageInfoTimeScheduleTeacher")
+    public Page<InfoTimeScheduleTeacherDto> getInfoTimeScheduleTeacher(@RequestParam int size, @RequestParam int page,
+                                                                       @RequestParam String sortDir, @RequestParam String sortField,
+                                                                       @AuthenticationPrincipal CustomUserDetails currentUser) {
+        Pageable pageable = PageableUtils.from(page, size, sortDir, sortField);
+        return timeScheduleService.getInfoTimeScheduleTeacher(currentUser.getUserId(), pageable);
     }
 }

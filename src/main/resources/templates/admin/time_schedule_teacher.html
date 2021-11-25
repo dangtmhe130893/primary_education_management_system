@@ -1,0 +1,85 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/admin_template}"
+      th:with="currentPage='time_schedule_teacher'">
+<head>
+    <title>Home</title>
+    <link th:href="@{/custom/css/frame_time.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" src="/custom/js/admin/time_schedule_teacher/time_schedule_teacher.js"></script>
+    <script type="text/javascript" src="/custom/js/admin/time_schedule_teacher/info_time_schedule_teacher.js"></script>
+    <style>
+        .title-table {
+            text-align: center;
+        }
+        
+        .title-table h3 {
+            font-weight: bold !important;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    
+    <div class="title-table">
+        <h3>Thông tin các lớp có lịch dạy</h3>
+    </div>
+    <div style="margin-bottom: 20px" class="table-content">
+        <table class="table responsive" id="info-time-schedule-teacher-table">
+            <thead>
+            <th style="width: 30% !important" scope="col" class="text-center">Lớp</th>
+            <th style="width: 50% !important" scope="col" class="text-center">Sĩ số</th>
+            <th style="width: 20% !important" scope="col" class="text-center">Phòng học</th>
+            </thead>
+        </table>
+    </div>
+    
+    <div style="margin-bottom: 16px;" class="title-table">
+        <h3>Lịch dạy</h3>
+    </div>
+    <div style="display: flex" id="frame_teach_class">
+        <div class="list_col_time">
+            <div class="col_time"></div>
+            <div class="col_time" th:each="frame : ${listFrame}" th:text="${frame.name}"></div>
+        </div>
+        
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ hai</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_monday_' + ${frame.id}" class="frame-monday"></div>
+        </div>
+        
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ ba</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_tuesday_' + ${frame.id}" class="frame-tuesday"></div>
+        </div>
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ tư</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_wednesday_' + ${frame.id}" class="frame-wednesday"></div>
+        </div>
+        
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ năm</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_thursday_' + ${frame.id}" class="frame-thursday"></div>
+        </div>
+        
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ sáu</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_friday_' + ${frame.id}" class="frame-friday"></div>
+        </div>
+        
+        <div class="list-subject">
+            <div class="subject-item-title">Thứ bảy</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_saturday_' + ${frame.id}" class="frame-saturday"></div>
+        </div>
+        
+        <div class="list-subject">
+            <div class="subject-item-title">Chủ nhật</div>
+            <div th:each="frame : ${listFrame}" th:id="'frame_sunday_' + ${frame.id}" class="frame-sunday"></div>
+        </div>
+    
+    </div>
+
+</div>
+</body>
+</html>

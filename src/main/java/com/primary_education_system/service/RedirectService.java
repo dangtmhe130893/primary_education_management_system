@@ -53,7 +53,7 @@ public class RedirectService {
             return "/admin/tuition_status";
         }
         if (isTeacher) {
-            return "/admin/teach_class";
+            return "/admin/time_schedule_teacher";
         }
         if (isAcademicHead) {
             return "/admin/time_schedule";

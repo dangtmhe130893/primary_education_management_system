@@ -19,4 +19,7 @@ public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
 
     List<SubjectEntity> findByIdInAndIsDeletedFalse(List<Long> listSubjectId);
 
+    @Query(value = "select s.name from SubjectEntity s " +
+            "where s.id = ?1 and s.isDeleted = false")
+    String getNameSubjectById(Long teachSubjectId);
 }

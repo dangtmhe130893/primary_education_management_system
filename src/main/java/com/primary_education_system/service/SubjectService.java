@@ -109,4 +109,7 @@ public class SubjectService {
         return result;
     }
 
+    public String getNameSubjectById(Long teachSubjectId) {
+        return subjectRepository.getNameSubjectById(teachSubjectId);
+    }
 }

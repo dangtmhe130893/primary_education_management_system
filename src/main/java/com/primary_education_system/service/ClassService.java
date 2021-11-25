@@ -1,5 +1,6 @@
 package com.primary_education_system.service;
 
+import com.github.slugify.Slugify;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.classs.ClassDto;
@@ -41,6 +42,7 @@ public class ClassService {
             classEntity = new ClassEntity();
             classEntity.setCreatedTime(new Date());
         }
+        classEntity.setSeo(new Slugify().slugify(classDto.getNameClass()));
         classEntity.setUpdatedTime(new Date());
         classEntity.setName(classDto.getNameClass());
         classEntity.setGrade(classDto.getGrade());
@@ -86,7 +88,6 @@ public class ClassService {
     public ServerResponseDto getListByGradeIdStr(String grade) {
         List<ClassEntity> listClass;
         if ("0".equals(grade)) {
-            System.out.println("testtt");
             listClass = classRepository.findByIsDeletedFalse();
         } else {
             listClass = classRepository.findByGradeAndIsDeletedFalse(grade);
@@ -118,5 +119,9 @@ public class ClassService {
                 .stream()
                 .map(ClassEntity::getId)
                 .collect(Collectors.toList());
+    }
+
+    public ClassEntity getBySeo(String seoNameClass) {
+        return classRepository.findBySeoAndIsDeletedFalse(seoNameClass);
     }
 }

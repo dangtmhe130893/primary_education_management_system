@@ -46,6 +46,8 @@ public class MaterialService {
         } else {
             listSubjectIdForSearch.add(subjectId);
         }
+
+
         Page<MaterialEntity> result = materialRepository.getPage(keyword, listSubjectIdForSearch, grade, type, pageable);
         if (result.getContent().isEmpty()) {
             return result;

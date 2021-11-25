@@ -1,5 +1,6 @@
 package com.primary_education_system.repository;
 
+import com.primary_education_system.dto.pupil_account.ClassIdAndNumberPupil;
 import com.primary_education_system.entity.pupil.PupilAccountEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity, Long> {
 
@@ -18,5 +20,7 @@ public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity
 
     PupilAccountEntity findByIdAndIsDeletedFalse(Long id);
 
-
+    @Query(value = "select p.classId as classId, count(p.id) as numberPupil from PupilAccountEntity p " +
+            "where p.isDeleted = false group by p.classId having p.classId in ?1")
+    List<ClassIdAndNumberPupil> getClassIdAndNumberPupil(List<Long> listClassId);
 }

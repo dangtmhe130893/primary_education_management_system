@@ -20,4 +20,6 @@ public interface ClassRepository extends JpaRepository<ClassEntity, Long> {
     List<ClassEntity> findByGradeAndIsDeletedFalse(String grade);
 
     List<ClassEntity> findByIdInAndIsDeletedFalse(List<Long> listClassId);
+
+    ClassEntity findBySeoAndIsDeletedFalse(String seoNameClass);
 }

@@ -17,6 +17,7 @@ public class ClassEntity {
     private String name;
     private String grade;
     private String room;
+    private String seo;
 
     private boolean isDeleted;
     private Date createdTime;
