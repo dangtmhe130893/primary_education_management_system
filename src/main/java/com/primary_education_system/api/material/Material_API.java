@@ -28,9 +28,10 @@ public class Material_API {
                                                 @RequestParam String search,
                                                 @RequestParam Long subjectId,
                                                 @RequestParam String grade,
+                                                @RequestParam Long classId,
                                                 @RequestParam String type) {
         Pageable pageable = PageableUtils.from(page, size, sortDir, sortField);
-        return materialService.getPageMaterial(pageable, search, subjectId, grade, type);
+        return materialService.getPageMaterial(pageable, search, subjectId, grade, classId, type);
     }
 
     @PostMapping("/save")

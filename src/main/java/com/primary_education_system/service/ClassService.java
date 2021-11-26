@@ -104,7 +104,7 @@ public class ClassService {
 
     public ServerResponseDto getListByGradeIdStr(String grade) {
         List<ClassEntity> listClass;
-        if ("0".equals(grade)) {
+        if ("0".equals(grade) || "".equals(grade)) {
             listClass = classRepository.findByIsDeletedFalse();
         } else {
             listClass = classRepository.findByGradeAndIsDeletedFalse(grade);
@@ -140,5 +140,13 @@ public class ClassService {
 
     public ClassEntity getBySeo(String seoNameClass) {
         return classRepository.findBySeoAndIsDeletedFalse(seoNameClass);
+    }
+
+    public List<Long> getListClassIdByGrade(String grade) {
+        List<ClassEntity> listClass = getListByGrade(grade);
+        return listClass
+                .stream()
+                .map(ClassEntity::getId)
+                .collect(Collectors.toList());
     }
 }

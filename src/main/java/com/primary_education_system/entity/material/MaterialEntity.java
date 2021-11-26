@@ -1,13 +1,11 @@
 package com.primary_education_system.entity.material;
 
-import com.primary_education_system.entity.ClassEntity;
-import com.primary_education_system.entity.user.RoleEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "material")
@@ -39,5 +37,8 @@ public class MaterialEntity {
 
     @Transient
     private String creator;
+
+    @Transient
+    private List<String> listNameClass;
 
 }

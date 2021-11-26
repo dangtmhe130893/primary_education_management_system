@@ -1,6 +1,7 @@
 $(document).ready(function () {
     let grade = $("#grade").val();
     let subjectId = $("#subject_id").val();
+    let classId = $("#class_id").val();
 
 
     let columnDefinitions = [
@@ -20,6 +21,7 @@ $(document).ready(function () {
             "search": "",
             "type": "",
             "grade": grade,
+            "classId": classId,
             "subjectId": subjectId,
         };
 

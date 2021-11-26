@@ -1,11 +1,15 @@
 package com.primary_education_system.service.material;
 
+import com.google.common.collect.Lists;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.material.SaveMaterialDto;
+import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.SubjectEntity;
+import com.primary_education_system.entity.material.ClassMaterialEntity;
 import com.primary_education_system.entity.material.MaterialEntity;
 import com.primary_education_system.repository.material.MaterialRepository;
+import com.primary_education_system.service.ClassService;
 import com.primary_education_system.service.FileService;
 import com.primary_education_system.service.SubjectService;
 import com.primary_education_system.service.UserService;
@@ -35,23 +39,38 @@ public class MaterialService {
     @Autowired
     private UserService userService;
 
-    public Page<MaterialEntity> getPageMaterial(Pageable pageable, String keyword, Long subjectId, String grade, String type) {
-        List<Long> listSubjectIdForSearch = new ArrayList<>();
+    @Autowired
+    private ClassService classService;
+
+    @Autowired
+    private ClassMaterialService classMaterialService;
+
+    public Page<MaterialEntity> getPageMaterial(Pageable pageable, String keyword, Long subjectId, String grade, Long classId, String type) {
+        List<Long> listSubjectIdFilter = new ArrayList<>();
+        List<Long> listClassIdFilter = new ArrayList<>();
+
         if (subjectId == 0) {
-            listSubjectIdForSearch = subjectService
+            listSubjectIdFilter = subjectService
                     .getList()
                     .stream()
                     .map(SubjectEntity::getId)
                     .collect(Collectors.toList());
         } else {
-            listSubjectIdForSearch.add(subjectId);
+            listSubjectIdFilter.add(subjectId);
+        }
+
+        if (classId == 0) {
+            listClassIdFilter = classService.getALlClassId();
+        } else {
+            listClassIdFilter.add(classId);
         }
 
 
-        Page<MaterialEntity> result = materialRepository.getPage(keyword, listSubjectIdForSearch, grade, type, pageable);
+        Page<MaterialEntity> result = materialRepository.getPage(keyword, listSubjectIdFilter, listClassIdFilter, grade, type, pageable);
         if (result.getContent().isEmpty()) {
             return result;
         }
+
         List<Long> listSubjectId = result.getContent()
                 .stream()
                 .map(MaterialEntity::getSubjectId)
@@ -62,16 +81,36 @@ public class MaterialService {
                 .map(MaterialEntity::getCreatedByUserId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+        List<Long> listMaterialId = result.getContent()
+                .stream()
+                .map(MaterialEntity::getId)
+                .collect(Collectors.toList());
         Map<Long, String> mapNameSubjectById = subjectService.getMapNameSubjectById(listSubjectId);
         Map<Long, String> mapUserNameById = userService.getMapNameById(listUserCreateId);
+        Map<Long, List<String>> mapListNameClassByMaterialId = classMaterialService.getMapListNameClassByMaterialId(listMaterialId);
         result.getContent().forEach(material -> {
             material.setSubjectName(mapNameSubjectById.get(material.getSubjectId()));
             material.setCreator(mapUserNameById.get(material.getCreatedByUserId()));
+            material.setListNameClass(mapListNameClassByMaterialId.get(material.getId()));
         });
         return result;
     }
 
     public ServerResponseDto save(SaveMaterialDto saveDto, Long useId) throws IOException {
+        String grade = saveDto.getGrade();
+        List<Long> listClassId;
+
+        String stringListClassId = saveDto.getStringListClassId();
+        if ("".equals(stringListClassId)) {
+            listClassId = classService.getListClassIdByGrade(grade);
+        } else {
+            List<String> listClassIdString = Arrays.asList(stringListClassId.split(","));
+            listClassId = listClassIdString
+                    .stream()
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+        }
+
         Long materialId = saveDto.getId();
 
         MaterialEntity materialEntity;
@@ -85,7 +124,7 @@ public class MaterialService {
         }
         materialEntity.setUpdatedTime(new Date());
         materialEntity.setSubjectId(saveDto.getSubjectId());
-        materialEntity.setGrade(saveDto.getGrade());
+        materialEntity.setGrade(grade);
         materialEntity.setName(saveDto.getName());
         materialEntity.setType(saveDto.getType());
         materialEntity.setContent(saveDto.getContent());
@@ -96,8 +135,25 @@ public class MaterialService {
             materialEntity.setFileName(file.getOriginalFilename());
             materialEntity.setLinkFile(pathFile);
         }
-        materialRepository.save(materialEntity);
+        materialEntity = materialRepository.save(materialEntity);
+        Long materialIdSaved = materialEntity.getId();
+
+        saveClassMaterial(materialIdSaved, listClassId);
+
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    private void saveClassMaterial(Long materialId, List<Long> listClassId) {
+        if (listClassId.isEmpty()) {
+            return;
+        }
+        List<ClassMaterialEntity> listClassMaterial = Lists.newArrayListWithCapacity(listClassId.size());
+        listClassId.forEach(classId -> {
+            ClassMaterialEntity classMaterial = new ClassMaterialEntity(classId, materialId, new Date());
+            listClassMaterial.add(classMaterial);
+        });
+
+        classMaterialService.saveAll(listClassMaterial);
     }
 
     private String generateCode() {

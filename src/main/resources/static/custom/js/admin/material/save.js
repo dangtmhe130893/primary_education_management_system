@@ -7,16 +7,20 @@ $(document).ready(function () {
         data: {
             id: "",
             grade: "Khối 1",
+            listClass: [],
             type: "Bài giảng",
             name: '',
             subjectId: '',
             isUpdate: false,
-            isShowBtnUploadFile: true
+            isShowBtnUploadFile: true,
         },
         watch: {
             id(value) {
                 this.isUpdate = !!value;
             },
+            grade() {
+                this.loadListClass();
+            }
         },
         methods: {
             resetPopup() {
@@ -26,6 +30,27 @@ $(document).ready(function () {
                 this.name = "";
                 this.subjectId = "";
                 this.isShowBtnUploadFile = true;
+                CKEDITOR.instances['content'].setData("");
+                $("#select-class").val("").trigger("change");
+
+            },
+            loadListClass() {
+                let self = this;
+                $("#select-class").empty();
+
+                $.ajax({
+                    type: "GET",
+                    url: "/api/class/getListByGrade?grade=" + self.grade,
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            self.listClass = response.data;
+                            self.listClass.forEach(function (classs) {
+                                let html = `<option value="${classs.id}">${classs.name}</option>`;
+                                $("#select-class").append(html);
+                            });
+                        }
+                    }
+                })
             },
             detail() {
                 let self = this;
@@ -66,6 +91,7 @@ $(document).ready(function () {
                 formData.append("id", vm.id);
                 formData.append("content", CKEDITOR.instances['content'].getData());
                 formData.append("file", file);
+                formData.append("stringListClassId", $("#select-class").val().toString());
 
                 $.ajax({
                     type: "POST",
@@ -94,6 +120,11 @@ $(document).ready(function () {
         mounted() {
 
             let self = this;
+
+            $("#select-class").select2({
+                placeholder: '',
+            });
+
             if ($("#modal_select_subject").val() == null) {
                 self.subjectId = $("#modal_select_subject option:first").val();
             }

@@ -1,7 +1,6 @@
 $(document).ready(function () {
     let grade = $("#grade").val();
     let classId = $("#class_id").val();
-    let subjectId = $("#subject_id").val();
 
 
     let columnDefinitions = [

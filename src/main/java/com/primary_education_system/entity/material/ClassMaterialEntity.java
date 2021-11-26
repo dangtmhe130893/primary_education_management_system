@@ -20,4 +20,12 @@ public class ClassMaterialEntity {
     private Long materialId;
     private Date createdTime;
 
+    public ClassMaterialEntity() {
+    }
+
+    public ClassMaterialEntity(Long classId, Long materialId, Date createdTime) {
+        this.classId = classId;
+        this.materialId = materialId;
+        this.createdTime = createdTime;
+    }
 }

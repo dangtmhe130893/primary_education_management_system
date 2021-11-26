@@ -7,15 +7,30 @@ $(document).ready(function () {
         el: "#filter_material",
         data: {
             grade: '',
+            classId: '0',
+            listClass: [],
             type: '',
             subjectId: 0,
         },
         methods: {
-
+            loadListClass() {
+                let self = this;
+                $.ajax({
+                    type: "GET",
+                    url: "/api/class/getListByGrade?grade=" + self.grade,
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            self.listClass = response.data;
+                            self.classId = "0";
+                        }
+                    }
+                })
+            },
         },
         watch: {
             grade() {
                 listMaterialTable.ajax.reload();
+                this.loadListClass();
             },
             type() {
                 listMaterialTable.ajax.reload();
@@ -26,6 +41,8 @@ $(document).ready(function () {
         },
         mounted() {
             let self = this;
+            self.loadListClass();
+
             if ($("#select_subject").val() == null) {
                 self.subjectId = $("#select_subject option:first").val();
             }
@@ -38,9 +55,10 @@ $(document).ready(function () {
         let params = {
             "page": (requestData.start / requestData.length) + 1,
             "size": requestData.length,
-            "sortField": "createdTime",
+            "sortField": "created_time",
             "sortDir": sortDir,
             "grade": filterVue.grade,
+            "classId": filterVue.classId,
             "type": filterVue.type,
             "subjectId": filterVue.subjectId,
             "search": $("#search_material").val(),
@@ -53,6 +71,7 @@ $(document).ready(function () {
                 "recordsFiltered": response.totalElements,
                 "data": response.content
             };
+            console.log(response.content);
             renderFunction(content);
             window.loader.hide();
         });
@@ -63,6 +82,7 @@ $(document).ready(function () {
         {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "subjectName", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "grade", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "type", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'},
@@ -92,22 +112,34 @@ $(document).ready(function () {
         columnDefs: [
             {
                 "render": function (data) {
+                    let result = `<ul>`;
+                    data.listNameClass.forEach(nameClass => {
+                        result += `<li>${nameClass}</li>`
+                    })
+                    result += `</ul>`;
+
+                    return result;
+                },
+                "targets": 4
+            },
+            {
+                "render": function (data) {
                     return `<p class="btn-show-content" style="color: blue; text-decoration: underline; cursor: pointer" data-name="${data.name}" data-content="${data.content}">Hiển thị</p>`;
                 },
-                "targets": 5
+                "targets": 6
             },
             {
                 "render": function (data) {
                     return '<a class="download_material" target="_blank" href="' + "/api/material/download/" + data.code  + '" >Tải xuống</a>'
                 },
-                "targets": 6,
+                "targets": 7,
             },
             {
                 "render": function (data) {
                     return `<button type="button" data-toggle="modal" data-target="#modal_add_material" id="btn_detail_${data.id}" class="btn btn-sm btn-primary detail-material">Chi tiết</button>
                             <button style="margin-left: 10px" data-toggle="modal" data-id="${data.id}" data-target="#modal_delete_material" class="btn btn-sm btn-danger delete-material">Xóa</button>`;
                 },
-                "targets": 9
+                "targets": 10
             },
         ],
         "drawCallback": function () {

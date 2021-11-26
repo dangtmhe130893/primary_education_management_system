@@ -14,4 +14,5 @@ public class SaveMaterialDto {
     private String type;
     private String content;
     private MultipartFile file;
+    private String stringListClassId;
 }
