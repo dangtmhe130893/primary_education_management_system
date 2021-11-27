@@ -8,6 +8,7 @@ import com.primary_education_system.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ClassMaterialService {
         classMaterialRepository.save(listClassMaterial);
     }
 
-    public Map<Long, List<String>> getMapListNameClassByMaterialId(List<Long> listMaterialId) {
+    public Map<Long, List<ClassEntity>> getMapListClassByMaterialId(List<Long> listMaterialId) {
         List<ClassMaterialEntity> listClassMaterial = classMaterialRepository.findByMaterialIdIn(listMaterialId);
         Map<Long, List<Long>> mapListClassIdByMaterialId = listClassMaterial
                 .stream()
@@ -36,21 +37,33 @@ public class ClassMaterialService {
                 .stream()
                 .map(ClassMaterialEntity::getClassId)
                 .collect(Collectors.toList());
-        Map<Long, String> mapNameClassByClassId = classService.getMapClassNameByClassId(listClassId);
+        Map<Long, ClassEntity> mapClassEntityByClassId = classService.getMapClassById(listClassId);
 
-        Map<Long, List<String>> result = new HashMap<>();
+        Map<Long, List<ClassEntity>> result = new HashMap<>();
         listClassMaterial.forEach(classMaterial -> {
             List<Long> listClassIdByMaterialId = mapListClassIdByMaterialId.get(classMaterial.getMaterialId());
 
-            List<String> listNameClass = Lists.newArrayListWithCapacity(listClassIdByMaterialId.size());
+            List<ClassEntity> listClass = Lists.newArrayListWithCapacity(listClassIdByMaterialId.size());
             listClassIdByMaterialId.forEach(classId -> {
-                String nameClass = mapNameClassByClassId.get(classId);
-                listNameClass.add(nameClass);
+                listClass.add(mapClassEntityByClassId.get(classId));
             });
 
-            result.put(classMaterial.getMaterialId(), listNameClass);
+            result.put(classMaterial.getMaterialId(), listClass);
         });
 
         return result;
+    }
+
+    public List<Long> getListClassIdByMaterialId(Long materialId) {
+        List<ClassMaterialEntity> listClassMaterial = classMaterialRepository.getByMaterialId(materialId);
+        return listClassMaterial
+                .stream()
+                .map(ClassMaterialEntity::getClassId)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteByListClassId(List<Long> listClassIdRemoved) {
+        classMaterialRepository.deleteByListClassId(listClassIdRemoved);
     }
 }

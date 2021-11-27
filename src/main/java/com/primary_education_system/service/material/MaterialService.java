@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -85,27 +86,30 @@ public class MaterialService {
                 .stream()
                 .map(MaterialEntity::getId)
                 .collect(Collectors.toList());
+
         Map<Long, String> mapNameSubjectById = subjectService.getMapNameSubjectById(listSubjectId);
         Map<Long, String> mapUserNameById = userService.getMapNameById(listUserCreateId);
-        Map<Long, List<String>> mapListNameClassByMaterialId = classMaterialService.getMapListNameClassByMaterialId(listMaterialId);
+        Map<Long, List<ClassEntity>> mapListClassByMaterialId = classMaterialService.getMapListClassByMaterialId(listMaterialId);
         result.getContent().forEach(material -> {
             material.setSubjectName(mapNameSubjectById.get(material.getSubjectId()));
             material.setCreator(mapUserNameById.get(material.getCreatedByUserId()));
-            material.setListNameClass(mapListNameClassByMaterialId.get(material.getId()));
+            material.setListClassSelected(mapListClassByMaterialId.get(material.getId()));
         });
         return result;
     }
 
+    @Transactional
     public ServerResponseDto save(SaveMaterialDto saveDto, Long useId) throws IOException {
         String grade = saveDto.getGrade();
-        List<Long> listClassId;
+        List<Long> listClassIdAfter;
+        List<Long> listClassIdBefore;
 
         String stringListClassId = saveDto.getStringListClassId();
         if ("".equals(stringListClassId)) {
-            listClassId = classService.getListClassIdByGrade(grade);
+            listClassIdAfter = classService.getListClassIdByGrade(grade);
         } else {
             List<String> listClassIdString = Arrays.asList(stringListClassId.split(","));
-            listClassId = listClassIdString
+            listClassIdAfter = listClassIdString
                     .stream()
                     .map(Long::parseLong)
                     .collect(Collectors.toList());
@@ -116,11 +120,13 @@ public class MaterialService {
         MaterialEntity materialEntity;
         if (materialId != null) {
             materialEntity = materialRepository.findByIdAndIsDeletedFalse(materialId);
+            listClassIdBefore = classMaterialService.getListClassIdByMaterialId(materialId);
         } else {
             materialEntity = new MaterialEntity();
             materialEntity.setCreatedTime(new Date());
             materialEntity.setCode(generateCode());
             materialEntity.setCreatedByUserId(useId);
+            listClassIdBefore = Collections.EMPTY_LIST;
         }
         materialEntity.setUpdatedTime(new Date());
         materialEntity.setSubjectId(saveDto.getSubjectId());
@@ -138,22 +144,39 @@ public class MaterialService {
         materialEntity = materialRepository.save(materialEntity);
         Long materialIdSaved = materialEntity.getId();
 
-        saveClassMaterial(materialIdSaved, listClassId);
+        saveClassMaterial(materialIdSaved, listClassIdBefore, listClassIdAfter);
 
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
-    private void saveClassMaterial(Long materialId, List<Long> listClassId) {
-        if (listClassId.isEmpty()) {
-            return;
-        }
-        List<ClassMaterialEntity> listClassMaterial = Lists.newArrayListWithCapacity(listClassId.size());
-        listClassId.forEach(classId -> {
-            ClassMaterialEntity classMaterial = new ClassMaterialEntity(classId, materialId, new Date());
-            listClassMaterial.add(classMaterial);
+    private void saveClassMaterial(Long materialId, List<Long> listClassIdBefore, List<Long> listClassIdAfter) {
+        /* add new */
+        List<Long> listClassIdNew = Lists.newArrayListWithCapacity(listClassIdAfter.size());
+        listClassIdAfter.forEach(classIdAfter -> {
+            if (!listClassIdBefore.contains(classIdAfter)) {
+                listClassIdNew.add(classIdAfter);
+            }
         });
+        List<ClassMaterialEntity> listClassMaterialNew = Lists.newArrayListWithCapacity(listClassIdNew.size());
+        listClassIdNew.forEach(classIdNew -> {
+            ClassMaterialEntity classMaterialEntity = new ClassMaterialEntity(classIdNew, materialId, new Date());
+            listClassMaterialNew.add(classMaterialEntity);
+        });
+        classMaterialService.saveAll(listClassMaterialNew);
+        /**/
 
-        classMaterialService.saveAll(listClassMaterial);
+        /* remove */
+        List<Long> listClassIdRemoved = Lists.newArrayListWithCapacity(listClassIdBefore.size());
+        listClassIdBefore.forEach(classIdBefore -> {
+            if (!listClassIdAfter.contains(classIdBefore)) {
+                listClassIdRemoved.add(classIdBefore);
+            }
+        });
+        if (!listClassIdRemoved.isEmpty()) {
+            classMaterialService.deleteByListClassId(listClassIdRemoved);
+        }
+        /**/
+
     }
 
     private String generateCode() {
@@ -182,6 +205,13 @@ public class MaterialService {
         if (materialEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
+        List<ClassEntity> listClassCanSelect = classService.getListByGrade(materialEntity.getGrade());
+        materialEntity.setListClassCanSelect(listClassCanSelect);
+
+        List<Long> listMaterialId = Arrays.asList(materialEntity.getId());
+        Map<Long, List<ClassEntity>> mapListClassByMaterialId = classMaterialService.getMapListClassByMaterialId(listMaterialId);
+        materialEntity.setListClassSelected(mapListClassByMaterialId.get(materialEntity.getId()));
+
         return new ServerResponseDto(ResponseCase.SUCCESS, materialEntity);
     }
 

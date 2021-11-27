@@ -1,5 +1,6 @@
 package com.primary_education_system.entity.material;
 
+import com.primary_education_system.entity.ClassEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,6 +40,9 @@ public class MaterialEntity {
     private String creator;
 
     @Transient
-    private List<String> listNameClass;
+    private List<ClassEntity> listClassSelected;
+
+    @Transient
+    private List<ClassEntity> listClassCanSelect;
 
 }

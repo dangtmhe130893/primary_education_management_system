@@ -22,4 +22,8 @@ public interface ClassRepository extends JpaRepository<ClassEntity, Long> {
     List<ClassEntity> findByIdInAndIsDeletedFalse(List<Long> listClassId);
 
     ClassEntity findBySeoAndIsDeletedFalse(String seoNameClass);
+
+    @Query(value = "select c from ClassEntity c " +
+            "where c.grade in ?1 and c.isDeleted = false")
+    List<ClassEntity> findByListGrade(List<String> listGrade);
 }

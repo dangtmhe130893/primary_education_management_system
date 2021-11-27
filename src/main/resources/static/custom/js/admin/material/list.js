@@ -37,7 +37,10 @@ $(document).ready(function () {
             },
             subjectId() {
                 listMaterialTable.ajax.reload();
-            }
+            },
+            classId() {
+                listMaterialTable.ajax.reload();
+            },
         },
         mounted() {
             let self = this;
@@ -71,7 +74,6 @@ $(document).ready(function () {
                 "recordsFiltered": response.totalElements,
                 "data": response.content
             };
-            console.log(response.content);
             renderFunction(content);
             window.loader.hide();
         });
@@ -113,7 +115,9 @@ $(document).ready(function () {
             {
                 "render": function (data) {
                     let result = `<ul>`;
-                    data.listNameClass.forEach(nameClass => {
+                    let listNameClass = data.listClassSelected.map(classs => classs.name);
+
+                    listNameClass.forEach(nameClass => {
                         result += `<li>${nameClass}</li>`
                     })
                     result += `</ul>`;

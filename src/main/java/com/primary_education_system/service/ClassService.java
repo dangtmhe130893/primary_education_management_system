@@ -149,4 +149,11 @@ public class ClassService {
                 .map(ClassEntity::getId)
                 .collect(Collectors.toList());
     }
+
+    public Map<String, List<ClassEntity>> getMapListClassByGrade(List<String> listGrade) {
+        List<ClassEntity> listClass = classRepository.findByListGrade(listGrade);
+        return listClass
+                .stream()
+                .collect(Collectors.groupingBy(ClassEntity::getGrade));
+    }
 }

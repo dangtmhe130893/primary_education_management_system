@@ -54,6 +54,8 @@ $(document).ready(function () {
             },
             detail() {
                 let self = this;
+
+                $("#select-class").empty();
                 $.ajax({
                     type: "GET",
                     url: "/api/material/detail/" + self.id,
@@ -64,6 +66,9 @@ $(document).ready(function () {
                             self.type = data.type;
                             self.name = data.name;
                             self.subjectId = data.subjectId;
+
+                            let listClassIdSelected = data.listClassSelected.map(classs => classs.id);
+
                             CKEDITOR.instances['content'].setData(data.content);
                             $("#container_selected_file").children().remove();
                             if (data.fileName) {
@@ -76,6 +81,11 @@ $(document).ready(function () {
                             } else {
                                 self.isShowBtnUploadFile = true
                             }
+
+                            setTimeout(function () {
+                                $("#select-class").val(listClassIdSelected).trigger("change");
+                            }, 100)
+
                         }
                     }
                 })

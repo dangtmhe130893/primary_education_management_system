@@ -19,7 +19,7 @@
 	width: 12.5%;
 }
 
-.subject-item, .subject-item-title, .time-schedule-cell{
+.subject-item, .subject-item-title, .time-schedule-cell, .time-schedule-teacher-cell{
 	height: 50px;
 	width: 100%;
 	border: 1px solid #ccc;

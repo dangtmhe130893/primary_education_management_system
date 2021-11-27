@@ -74,11 +74,11 @@ $(document).ready(function () {
                     listTimeSchedule.forEach(function (time) {
                         if (time.frameTimeId == frameId) {
                             isHasClass = true;
-                            $("#frame_" + day + "_" + frameId).append('<div class="time-schedule-cell">' + time.className + " - " + time.classRoom + '</div')
+                            $("#frame_" + day + "_" + frameId).append('<div class="time-schedule-teacher-cell">' + time.className + " - " + time.classRoom + '</div')
                         }
                     })
                     if (!isHasClass) {
-                        $("#frame_" + day + "_" + frameId).append('<div class="time-schedule-cell"> - </div')
+                        $("#frame_" + day + "_" + frameId).append('<div class="time-schedule-teacher-cell"> - </div')
                     }
                 })
             }

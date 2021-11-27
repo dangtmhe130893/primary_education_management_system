@@ -80,14 +80,15 @@ $(document).ready(function () {
                             self.id = data.id;
                             self.subject = data.name;
 
-                            let listNameTeacherTeaching = data.listTeacherTeaching.map(teacher => teacher.id);
+                            let listTeacherIdTeaching = data.listTeacherTeaching.map(teacher => teacher.id);
+                            console.log(listTeacherIdTeaching);
 
                             data.listTeacherCanTeach.forEach(function (teacher) {
                                 let html = `<option value="${teacher.id}">${teacher.name}</option>`;
                                 $("#select-teacher").append(html);
                             });
 
-                            $("#select-teacher").val(listNameTeacherTeaching).trigger("change");
+                            $("#select-teacher").val(listTeacherIdTeaching).trigger("change");
                         }
                     }
                 })
