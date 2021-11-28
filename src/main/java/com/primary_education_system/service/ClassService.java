@@ -5,6 +5,7 @@ import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.classs.ClassDto;
 import com.primary_education_system.entity.ClassEntity;
+import com.primary_education_system.entity.RoomEntity;
 import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.ClassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +63,13 @@ public class ClassService {
 
         ClassEntity classEntity;
         String oldNameClass;
+        Long homeroomTeacherIdOld = null;
+        Long roomIdOld = null;
         if (isUpdate) {
             classEntity = classRepository.findByIdAndIsDeletedFalse(classId);
             oldNameClass = classEntity.getName();
+            homeroomTeacherIdOld = classEntity.getHomeroomTeacherId();
+            roomIdOld = classEntity.getRoomId();
         } else {
             classEntity = new ClassEntity();
             classEntity.setCreatedTime(new Date());
@@ -79,12 +84,20 @@ public class ClassService {
         classEntity.setUpdatedTime(new Date());
         classEntity.setName(classDto.getNameClass());
         classEntity.setGrade(classDto.getGrade());
-        classEntity.setRoomId(classDto.getRoomId());
-        Long homeroomTeacherId = classDto.getHomeroomTeacherId();
-        classEntity.setHomeroomTeacherId(homeroomTeacherId);
+        Long roomIdNew = classDto.getRoomId();
+        classEntity.setRoomId(roomIdNew);
+        Long homeroomTeacherIdNew = classDto.getHomeroomTeacherId();
+        classEntity.setHomeroomTeacherId(homeroomTeacherIdNew);
 
-        /* set teacher is homeroomTeacher */
-        userService.setTeacherIsHomeRoomTeacher(homeroomTeacherId);
+        /* set teacherNew is homeroomTeacher and remove teacherOld is homeroomTeacher */
+        if (homeroomTeacherIdOld != homeroomTeacherIdNew) {
+            userService.setTeacherIsHomeRoomTeacher(homeroomTeacherIdOld, homeroomTeacherIdNew);
+        }
+
+        /* set room is selected */
+        if (roomIdOld != roomIdNew) {
+            roomService.setRoomIsSelected(roomIdOld, roomIdNew);
+        }
 
         classEntity = classRepository.save(classEntity);
 
@@ -110,6 +123,9 @@ public class ClassService {
         }
         UserEntity homeroomTeacherCurrent = userService.findByIdAndIsDeletedFalse(classEntity.getHomeroomTeacherId());
         classEntity.setHomeroomTeacherCurrent(homeroomTeacherCurrent);
+
+        RoomEntity roomCurrent = roomService.findByIdAndIsDeletedFalse(classEntity.getRoomId());
+        classEntity.setRoomCurrent(roomCurrent);
 
         return new ServerResponseDto(ResponseCase.SUCCESS, classEntity);
     }

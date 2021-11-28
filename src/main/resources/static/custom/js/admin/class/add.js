@@ -38,7 +38,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     type: "GET",
-                    url: "/api/room/getList",
+                    url: "/api/room/getListForClass",
                     success: function (response) {
                         if (response.status.code === 1000) {
                             self.listRoom = response.data;
@@ -79,6 +79,7 @@ $(document).ready(function () {
                             $("#modal_add_class").modal("hide");
                             window.alert.show("success", "Lưu thành công", 2000);
                             self.loadListHomeroomTeacher();
+                            self.loadListRoom();
                         } else if (response.status.code === 1004) {
                             window.alert.show("error", "Tên lớp đã tồn tại", 2000);
                         } else {
@@ -98,6 +99,7 @@ $(document).ready(function () {
                         if (response.status.code === 1000) {
                             let data = response.data;
                             self.listTeacher.push(data.homeroomTeacherCurrent);
+                            self.listRoom.push(data.roomCurrent);
 
                             self.id = data.id;
                             self.nameClass = data.name;

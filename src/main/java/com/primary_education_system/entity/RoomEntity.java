@@ -15,6 +15,7 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private boolean isSelected;
 
     private boolean isDeleted;
     private Date createdTime;

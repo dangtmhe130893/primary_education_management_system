@@ -83,7 +83,31 @@ public class RoomService {
         return new ServerResponseDto(ResponseCase.SUCCESS, roomRepository.findByIsDeletedFalse());
     }
 
+    public ServerResponseDto getListRoomForClass() {
+        return new ServerResponseDto(ResponseCase.SUCCESS, roomRepository.getListRoomForClass());
+    }
+
     public String getNameById(Long roomId) {
         return roomRepository.getNameById(roomId);
+    }
+
+
+    public void setRoomIsSelected(Long roomIdOld, Long roomIdNew) {
+        if (roomIdOld != null) {
+            RoomEntity roomOld = roomRepository.findByIdAndIsDeletedFalse(roomIdOld);
+            roomOld.setSelected(false);
+            roomRepository.save(roomOld);
+        }
+
+        RoomEntity roomNew = roomRepository.findByIdAndIsDeletedFalse(roomIdNew);
+        if (roomNew == null) {
+            return;
+        }
+        roomNew.setSelected(true);
+        roomRepository.save(roomNew);
+    }
+
+    public RoomEntity findByIdAndIsDeletedFalse(Long roomId) {
+        return roomRepository.findByIdAndIsDeletedFalse(roomId);
     }
 }

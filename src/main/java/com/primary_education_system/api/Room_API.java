@@ -45,4 +45,9 @@ public class Room_API {
     public ResponseEntity<ServerResponseDto> getList() {
         return ResponseEntity.ok(roomService.getList());
     }
+
+    @GetMapping("/getListForClass")
+    public ResponseEntity<ServerResponseDto> getListRoomForClass() {
+        return ResponseEntity.ok(roomService.getListRoomForClass());
+    }
 }

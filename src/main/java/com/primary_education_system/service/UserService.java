@@ -298,12 +298,18 @@ public class UserService {
         return userRepository.getListHomeroomTeacher();
     }
 
-    public void setTeacherIsHomeRoomTeacher(Long homeroomTeacherId) {
-        UserEntity teacher = userRepository.findByIdAndIsDeletedFalse(homeroomTeacherId);
-        if (teacher == null) {
+    public void setTeacherIsHomeRoomTeacher(Long homeroomTeacherIdOld, Long homeroomTeacherIdNew) {
+        if (homeroomTeacherIdOld != null) {
+            UserEntity teacherOld = userRepository.findByIdAndIsDeletedFalse(homeroomTeacherIdOld);
+            teacherOld.setHomeroomTeacher(false);
+            userRepository.save(teacherOld);
+        }
+
+        UserEntity teacherNew = userRepository.findByIdAndIsDeletedFalse(homeroomTeacherIdNew);
+        if (teacherNew == null) {
             return;
         }
-        teacher.setHomeroomTeacher(true);
-        userRepository.save(teacher);
+        teacherNew.setHomeroomTeacher(true);
+        userRepository.save(teacherNew);
     }
 }

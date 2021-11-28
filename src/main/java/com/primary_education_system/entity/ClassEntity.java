@@ -35,4 +35,7 @@ public class ClassEntity {
     @Transient
     private UserEntity homeroomTeacherCurrent;
 
+    @Transient
+    private RoomEntity roomCurrent;
+
 }
