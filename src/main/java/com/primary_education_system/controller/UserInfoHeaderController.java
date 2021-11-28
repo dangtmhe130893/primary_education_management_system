@@ -22,9 +22,8 @@ public class UserInfoHeaderController {
 
     @ModelAttribute()
     public void getCurrentUser(@AuthenticationPrincipal CustomUserDetails currentUser,
-                               Model model, HttpServletResponse response) throws IOException {
+                               Model model) throws IOException {
         if (currentUser == null) {
-            response.sendRedirect("/login");
             return;
         }
         UserEntity userEntity = userRepository.findOne(currentUser.getUserId());
