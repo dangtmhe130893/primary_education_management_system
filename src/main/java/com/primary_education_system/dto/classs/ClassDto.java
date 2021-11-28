@@ -8,6 +8,8 @@ import lombok.Setter;
 public class ClassDto {
     private Long id;
     private String grade;
-    private String room;
+    private Long roomId;
     private String nameClass;
+
+    private Long homeroomTeacherId;
 }

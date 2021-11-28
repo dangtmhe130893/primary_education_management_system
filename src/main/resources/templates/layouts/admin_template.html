@@ -127,6 +127,12 @@
                 <span>Quản lý học sinh</span>
             </div>
         </a>
+        <a href="/admin/room">
+            <div th:class=" ${currentPage} == 'list_room' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý danh sách phòng học</span>
+            </div>
+        </a>
     </div>
     <div class="block-menu" th:if="${isCanShowHeadMasterMenu}">
         <div class="control-block-menu">

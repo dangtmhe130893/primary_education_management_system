@@ -7,11 +7,12 @@ import lombok.Setter;
 @Setter
 @Getter
 public class InfoTimeScheduleTeacherDto {
+    private Long classId;
     private String nameClass;
+
     private String seoNameClass;
     private int numberPupil;
     private String nameRoom;
-    private Long classId;
 
     public InfoTimeScheduleTeacherDto(Long classId) {
         this.classId = classId;

@@ -122,4 +122,10 @@ public class AdminController {
         return "admin/tuition";
     }
 
+
+    @GetMapping("/room")
+    public String getRoom() {
+        return "admin/room";
+    }
+
 }

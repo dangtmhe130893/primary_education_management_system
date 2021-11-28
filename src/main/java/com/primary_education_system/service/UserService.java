@@ -288,4 +288,22 @@ public class UserService {
         TokenEntity tokenEntity = tokenService.validateToken(token, 4);
         return tokenEntity != null;
     }
+
+    public String getNameUserById(Long homeroomTeacherId) {
+        UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(homeroomTeacherId);
+        return userEntity.getName();
+    }
+
+    public List<UserEntity> getListHomeroomTeacher() {
+        return userRepository.getListHomeroomTeacher();
+    }
+
+    public void setTeacherIsHomeRoomTeacher(Long homeroomTeacherId) {
+        UserEntity teacher = userRepository.findByIdAndIsDeletedFalse(homeroomTeacherId);
+        if (teacher == null) {
+            return;
+        }
+        teacher.setHomeroomTeacher(true);
+        userRepository.save(teacher);
+    }
 }

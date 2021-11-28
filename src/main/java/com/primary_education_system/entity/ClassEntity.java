@@ -1,5 +1,6 @@
 package com.primary_education_system.entity;
 
+import com.primary_education_system.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,11 +18,21 @@ public class ClassEntity {
     private Long id;
     private String name;
     private String grade;
-    private String room;
+    private Long roomId;
     private String seo;
+    private Long homeroomTeacherId;
 
     private boolean isDeleted;
     private Date createdTime;
     private Date updatedTime;
+
+    @Transient
+    private String roomName;
+
+    @Transient
+    private String homeroomTeacher;
+
+    @Transient
+    private UserEntity homeroomTeacherCurrent;
 
 }

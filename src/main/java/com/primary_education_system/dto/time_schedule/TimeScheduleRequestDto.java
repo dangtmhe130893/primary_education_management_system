@@ -9,4 +9,5 @@ public class TimeScheduleRequestDto {
     private Long timeScheduleId;
     private Long subjectId;
     private Long teacherId;
+    private Long roomId;
 }

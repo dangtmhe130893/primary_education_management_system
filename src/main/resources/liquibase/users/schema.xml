@@ -20,6 +20,7 @@
             <column name="address" type="text"/>
             <column name="job" type="text"/>
             <column name="teach_subject_id" type="int(11)"/>
+            <column name="is_homeroom_teacher" type="boolean" defaultValueBoolean="false"/>
 
             <column name="is_change_password" type="boolean" defaultValue="false"/>
             <column name="status_user" type="tinyint" defaultValue="1"/>

@@ -24,6 +24,7 @@ public class TimeScheduleEntity {
     private Long subjectId;
     private Long teacherId;
     private Long classId;
+    private Long roomId;
 
     private boolean isDeleted;
     private Date createdTime;
@@ -42,7 +43,10 @@ public class TimeScheduleEntity {
     private String className;
 
     @Transient
-    private String classRoom;
+    private String roomName;
+
+    @Transient
+    private boolean isShowRoomName;
 
     @Transient
     private List<UserEntity> listTeacher;

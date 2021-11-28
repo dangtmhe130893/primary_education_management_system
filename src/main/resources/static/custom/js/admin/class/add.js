@@ -7,16 +7,48 @@ $(document).ready(function () {
             id: "",
             nameClass: "",
             grade: "",
-            room: "",
+            roomId: "",
+            listRoom: [],
+            homeroomTeacherId: "",
+            listTeacher: [],
 
             isShowErrorNameClass: false,
             isShowErrorNameClassLength: false,
             isShowErrorGrade: false,
             isShowErrorRoom: false,
-            isShowErrorRoomLength: false,
+            isShowErrorHomeroomTeacher: false,
+
         },
         methods: {
+            loadListHomeroomTeacher() {
+                let self = this;
+
+                $.ajax({
+                    type: "GET",
+                    url: "/api/user/getListHomeroomTeacher",
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            self.listTeacher = response.data;
+                        }
+                    }
+                })
+            },
+            loadListRoom() {
+                let self = this;
+
+                $.ajax({
+                    type: "GET",
+                    url: "/api/room/getList",
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            self.listRoom = response.data;
+                        }
+                    }
+                })
+            },
             saveClass() {
+                let self = this;
+
                 if (!this.validateForm()) {
                     return;
                 }
@@ -24,7 +56,8 @@ $(document).ready(function () {
                 let data = {
                     nameClass: this.nameClass,
                     grade: this.grade,
-                    room: this.room,
+                    roomId: this.roomId,
+                    homeroomTeacherId: this.homeroomTeacherId,
                 }
                 if (this.id) {
                     data.id = this.id;
@@ -45,6 +78,7 @@ $(document).ready(function () {
                             tableClass.ajax.reload();
                             $("#modal_add_class").modal("hide");
                             window.alert.show("success", "Lưu thành công", 2000);
+                            self.loadListHomeroomTeacher();
                         } else if (response.status.code === 1004) {
                             window.alert.show("error", "Tên lớp đã tồn tại", 2000);
                         } else {
@@ -63,10 +97,13 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response.status.code === 1000) {
                             let data = response.data;
+                            self.listTeacher.push(data.homeroomTeacherCurrent);
+
                             self.id = data.id;
                             self.nameClass = data.name;
-                            self.room = data.room;
+                            self.roomId = data.roomId;
                             self.grade = data.grade;
+                            self.homeroomTeacherId = data.homeroomTeacherId;
                         }
                     }
                 })
@@ -98,10 +135,11 @@ $(document).ready(function () {
             validateForm() {
                 this.validateNameClass();
                 this.validateNameClassLength();
-                this.validateNameRoom();
-                this.validateNameRoomLength();
+                this.validateRoom();
                 this.validateGrade();
-                return !this.isShowErrorNameClass && !this.isShowErrorNameClassLength && !this.isShowErrorRoom && !this.isShowErrorRoomLength;
+                this.validateHomeroomTeacher();
+                return !this.isShowErrorNameClass && !this.isShowErrorNameClassLength
+                    && !this.isShowErrorRoom && !this.isShowErrorHomeroomTeacher && !this.isShowErrorGrade;
             },
             validateNameClass() {
                 this.isShowErrorNameClass = this.nameClass.trim() == "";
@@ -109,30 +147,34 @@ $(document).ready(function () {
             validateNameClassLength() {
                 this.isShowErrorNameClassLength = this.nameClass.length > 20;
             },
-            validateNameRoom() {
-                this.isShowErrorRoom = this.room.trim() == "";
-            },
-            validateNameRoomLength() {
-                this.isShowErrorRoomLength = this.room.length > 20;
+            validateRoom() {
+                this.isShowErrorRoom = !this.roomId;
             },
             validateGrade() {
                 this.isShowErrorGrade = !this.grade;
+            },
+            validateHomeroomTeacher() {
+                this.isShowErrorHomeroomTeacher = !this.homeroomTeacherId;
             },
             resetPopup() {
                 this.id = "";
                 this.nameClass = "";
                 this.grade = "";
-                this.room = "";
+                this.roomId = "";
+                this.homeroomTeacherId = "";
 
                 this.isShowErrorNameClass = false;
                 this.isShowErrorNameClassLength = false;
                 this.isShowErrorGrade = false;
                 this.isShowErrorRoom = false;
-                this.isShowErrorRoomLength = false;
+                this.isShowErrorHomeroomTeacher = false;
             }
         },
         mounted() {
             let self = this;
+
+            self.loadListRoom();
+            self.loadListHomeroomTeacher();
 
             $('#modal_add_class').on('hidden.bs.modal', function () {
                 self.resetPopup();

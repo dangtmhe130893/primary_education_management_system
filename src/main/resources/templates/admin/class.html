@@ -40,9 +40,10 @@
         <div class="table-content">
             <table class="table responsive" id="class_table">
                 <thead>
-                <th style="width: 10% !important" scope="col" class="text-center">Tên lớp</th>
-                <th style="width: 10% !important" scope="col" class="text-center">Tên khối</th>
-                <th style="width: 10% !important" scope="col" class="text-center">Tên phòng học</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Lớp</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Khối</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Phòng học mặc định</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Giáo viên chủ nhiệm</th>
                 <th style="width: 10% !important" scope="col" class="text-center">Thời gian tạo</th>
                 <th style="width: 10% !important" scope="col" class="text-center"></th>
                 </thead>
@@ -90,14 +91,22 @@
                                 <label>Phòng học:</label><sup style="color: red"> *</sup>
                                 <p class="error-message" v-bind:class="{ hidden : !isShowErrorRoom}">
                                     Trường này là bắt buộc</p>
-                                <p class="error-message" v-bind:class="{ hidden : !isShowErrorRoomLength}">
-                                    Tối đa 20 ký tự</p>
                                 
-                                <input v-model="room" class="form-control input" type="text"
-                                       v-on:blur="validateNameRoom(); validateNameRoomLength()"
-                                       v-on:keyup="validateNameRoom(); validateNameRoomLength()"/>
+                                <select style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="roomId">
+                                    <option v-for="room in listRoom" :value="room.id">{{room.name}}</option>
+                                </select>
                             </div>
     
+                            <div class="form-group">
+                                <label>Giáo viên chủ nhiệm:</label><sup style="color: red"> *</sup>
+                                <p class="error-message" v-bind:class="{ hidden : !isShowErrorHomeroomTeacher}">
+                                    Trường này là bắt buộc</p>
+        
+                                <select style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="homeroomTeacherId">
+                                    <option v-for="teacher in listTeacher" :value="teacher.id">{{teacher.name}}</option>
+                                </select>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

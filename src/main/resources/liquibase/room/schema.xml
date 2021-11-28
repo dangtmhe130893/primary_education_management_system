@@ -4,24 +4,12 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 
-	<changeSet id="create_table_class" author="dangtm">
-		<createTable tableName="class">
+	<changeSet id="create_table_room" author="dangtm">
+		<createTable tableName="room">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" />
 			</column>
 			<column name="name" type="varchar(200)">
-				<constraints nullable="false" />
-			</column>
-			<column name="grade" type="varchar(200)">
-				<constraints nullable="false" />
-			</column>
-			<column name="room_id" type="int(11)">
-				<constraints nullable="false" />
-			</column>
-			<column name="seo" type="varchar(200)">
-				<constraints nullable="false" />
-			</column>
-			<column name="homeroom_teacher_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 

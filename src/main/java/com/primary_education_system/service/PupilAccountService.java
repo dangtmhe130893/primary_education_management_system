@@ -26,13 +26,8 @@ public class PupilAccountService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     @Autowired
     private ClassService classService;
-
-//    public Page<PupilAccountEntity> getPagePupilAccountNotKeyword(Pageable pageable, String grade, Long classId) {
-//
-//    }
 
     public Page<PupilAccountEntity> getPagePupilAccount(Pageable pageable, String keyword, String grade, Long classId) {
         List<String> listGradeFilter = Lists.newArrayListWithExpectedSize(5);
@@ -49,6 +44,7 @@ public class PupilAccountService {
 
         if (classId == 0) {
             listClassIdFilter = classService.getALlClassId();
+            listClassIdFilter.add(0L);
         } else {
             listClassIdFilter.add(classId);
         }

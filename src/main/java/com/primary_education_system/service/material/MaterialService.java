@@ -56,12 +56,14 @@ public class MaterialService {
                     .stream()
                     .map(SubjectEntity::getId)
                     .collect(Collectors.toList());
+            listSubjectIdFilter.add(0L);
         } else {
             listSubjectIdFilter.add(subjectId);
         }
 
         if (classId == 0) {
             listClassIdFilter = classService.getALlClassId();
+            listClassIdFilter.add(0L);
         } else {
             listClassIdFilter.add(classId);
         }

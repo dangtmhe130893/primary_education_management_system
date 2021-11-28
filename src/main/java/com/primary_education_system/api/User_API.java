@@ -86,4 +86,8 @@ public class User_API {
         return ResponseEntity.ok(userService.forgotPassword(email));
     }
 
+    @GetMapping("/getListHomeroomTeacher")
+    public ResponseEntity<ServerResponseDto> getListHomeroomTeacher() {
+        return ResponseEntity.ok(new ServerResponseDto(ResponseCase.SUCCESS, userService.getListHomeroomTeacher()));
+    }
 }

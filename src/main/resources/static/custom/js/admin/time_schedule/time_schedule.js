@@ -4,9 +4,13 @@ $(document).ready(function () {
         el: "#time_schedule",
         data: {
 
+
             listClass: [],
             className: "",
             classId: "",
+
+            homeroomTeacher: "",
+            roomNameDefault: "",
 
             listSubject: [],
 
@@ -58,7 +62,10 @@ $(document).ready(function () {
                     url: "/api/timeSchedule/getTimeSchedule/" + self.classId,
                     success: function (response) {
                         if (response.status.code === 1000) {
-                            self.listTimeSchedule = response.data;
+                            let data = response.data;
+                            self.roomNameDefault = data.roomNameDefault;
+                            self.homeroomTeacher = data.homeroomTeacher;
+                            self.listTimeSchedule = data.listTimeSchedule;
 
                             self.listTimeScheduleMonday = self.listTimeSchedule.filter(timeSchedule => {
                                 return timeSchedule.dayOfWeek === "MONDAY";
@@ -122,6 +129,8 @@ $(document).ready(function () {
             listTeacher: [],
             subjectId: null,
             teacherId: null,
+            roomId: 0,
+            listRoom: [],
         },
         watch: {
             subjectId(value) {
@@ -165,6 +174,18 @@ $(document).ready(function () {
                 })
             },
 
+            loadListRoom() {
+                let self = this;
+                $.ajax({
+                    type: "GET",
+                    url: "/api/room/getList",
+                    success: function (response) {
+                        if (response.status.code === 1000) {
+                            self.listRoom = response.data;
+                        }
+                    }
+                })
+            },
             loadListTeacher(subjectId) {
                 if (!subjectId) {
                     return;
@@ -244,6 +265,7 @@ $(document).ready(function () {
                     timeScheduleId: self.timeScheduleId,
                     subjectId: self.subjectId,
                     teacherId: self.teacherId,
+                    roomId: self.roomId ? self.roomId : null,
                 }
 
                 $.ajax({
@@ -277,6 +299,7 @@ $(document).ready(function () {
                 this.listTeacher = [];
                 this.subjectId = null;
                 this.teacherId = null;
+                this.roomId = 0;
 
                 this.isShowErrorSubject = false;
                 this.isShowErrorTeacher = false;
@@ -286,6 +309,7 @@ $(document).ready(function () {
         mounted() {
             let self = this;
             self.loadListSubject();
+            self.loadListRoom();
 
             $('#modal_add_time_schedule').on('hidden.bs.modal', function () {
                 self.resetPopup();

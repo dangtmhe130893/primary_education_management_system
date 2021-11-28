@@ -4,6 +4,7 @@ import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.time_schedule.InfoTimeScheduleTeacherDto;
 import com.primary_education_system.dto.time_schedule.TimeScheduleRequestDto;
+import com.primary_education_system.dto.time_schedule.TimeScheduleResponseDto;
 import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.FrameTimeScheduleEntity;
 import com.primary_education_system.entity.TimeScheduleEntity;
@@ -38,7 +39,14 @@ public class TimeScheduleService {
     @Autowired
     private PupilAccountService pupilAccountService;
 
+    @Autowired
+    private RoomService roomService;
+
     public ServerResponseDto getTimeSchedule(Long classId) {
+        ClassEntity classEntity = classService.findById(classId);
+        String roomNameDefault = classService.getRoomNameByClassId(classEntity.getId());
+        String homeRoomTeacher = userService.getNameUserById(classEntity.getHomeroomTeacherId());
+
         List<TimeScheduleEntity> listTimeSchedule = timeScheduleRepository.findByClassIdAndIsDeletedFalse(classId);
 
         List<Long> listSubjectId = listTimeSchedule
@@ -46,20 +54,23 @@ public class TimeScheduleService {
                 .map(TimeScheduleEntity::getSubjectId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-        Map<Long, String> mapNameSubjectById = subjectService.getMapNameSubjectById(listSubjectId);
 
         List<Long> listTeacherId = listTimeSchedule
                 .stream()
                 .map(TimeScheduleEntity::getTeacherId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+
+        Map<Long, String> mapNameSubjectById = subjectService.getMapNameSubjectById(listSubjectId);
         Map<Long, String> mapNameTeacherById = userService.getMapNameTeacherById(listTeacherId);
 
         listTimeSchedule.forEach(timeScheduleEntity -> {
             timeScheduleEntity.setNameSubject(mapNameSubjectById.getOrDefault(timeScheduleEntity.getSubjectId(), ""));
             timeScheduleEntity.setNameTeacher(mapNameTeacherById.getOrDefault(timeScheduleEntity.getTeacherId(), ""));
         });
-        return new ServerResponseDto(ResponseCase.SUCCESS, listTimeSchedule);
+        setRoomNameForTimeSchedule(listTimeSchedule);
+
+        return new ServerResponseDto(ResponseCase.SUCCESS, new TimeScheduleResponseDto(homeRoomTeacher, roomNameDefault, listTimeSchedule));
     }
 
     public ServerResponseDto getTimeScheduleForTeacher(Long teacherId) {
@@ -70,13 +81,47 @@ public class TimeScheduleService {
                 .map(TimeScheduleEntity::getClassId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+
+
         Map<Long, ClassEntity> mapClassById = classService.getMapClassById(listClassId);
 
         listTimeSchedule.forEach(timeScheduleEntity -> {
             timeScheduleEntity.setClassName(mapClassById.get(timeScheduleEntity.getClassId()).getName());
-            timeScheduleEntity.setClassRoom(mapClassById.get(timeScheduleEntity.getClassId()).getRoom());
         });
+        setRoomNameForTimeSchedule(listTimeSchedule);
+
         return new ServerResponseDto(ResponseCase.SUCCESS, listTimeSchedule);
+    }
+
+    private List<TimeScheduleEntity> setRoomNameForTimeSchedule(List<TimeScheduleEntity> listTimeSchedule) {
+        List<Long> listClassId = listTimeSchedule
+                .stream()
+                .map(TimeScheduleEntity::getClassId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        List<Long> listRoomId = listTimeSchedule
+                .stream()
+                .map(TimeScheduleEntity::getRoomId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        Map<Long, String> mapNameRoomByRoomId = roomService.getMapNameRoomByRoomId(listRoomId);
+        Map<Long, String> mapNameRoomByClassId = classService.getMapNameRoomByClassId(listClassId);
+
+        listTimeSchedule.forEach(timeScheduleEntity -> {
+            Long roomId = timeScheduleEntity.getRoomId();
+            if (roomId != null) {
+                // roomName get by roomId
+                timeScheduleEntity.setShowRoomName(true);
+                timeScheduleEntity.setRoomName(mapNameRoomByRoomId.get(roomId));
+            } else {
+                // roomName default
+                timeScheduleEntity.setShowRoomName(false);
+                timeScheduleEntity.setRoomName(mapNameRoomByClassId.get(timeScheduleEntity.getClassId()));
+            }
+        });
+        return listTimeSchedule;
     }
 
     public void createTimeSchedule(Long classId) {
@@ -122,6 +167,7 @@ public class TimeScheduleService {
         }
         timeScheduleEntity.setSubjectId(timeScheduleRequestDto.getSubjectId());
         timeScheduleEntity.setTeacherId(timeScheduleRequestDto.getTeacherId());
+        timeScheduleEntity.setRoomId(timeScheduleRequestDto.getRoomId());
 
         timeScheduleRepository.save(timeScheduleEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
@@ -166,11 +212,13 @@ public class TimeScheduleService {
 
         Map<Long, Integer> mapNumberPupilByClassId = pupilAccountService.getMapNumberPupilByClassId(listClassId);
 
+        Map<Long, String> mapNameRoomByRoomId = roomService.getMapNameRoomByRoomId();
+
         page.forEach(row -> {
             ClassEntity classEntity = mapClassById.get(row.getClassId());
             row.setNameClass(classEntity.getName());
             row.setSeoNameClass(classEntity.getSeo());
-            row.setNameRoom(classEntity.getRoom());
+            row.setNameRoom(mapNameRoomByRoomId.get(classEntity.getRoomId()));
             row.setNumberPupil(mapNumberPupilByClassId.getOrDefault(classEntity.getId(), 0));
         });
         return page;

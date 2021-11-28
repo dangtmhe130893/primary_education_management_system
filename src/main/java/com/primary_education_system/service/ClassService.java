@@ -5,6 +5,7 @@ import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.classs.ClassDto;
 import com.primary_education_system.entity.ClassEntity;
+import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.ClassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -26,13 +28,34 @@ public class ClassService {
     @Autowired
     private TimeScheduleService timeScheduleService;
 
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    private UserService userService;
+
     public Page<ClassEntity> getPage(Pageable pageable, String keyword) {
-        return classRepository.getPage(keyword, pageable);
+        Page<ClassEntity> pageResult = classRepository.getPage(keyword, pageable);
+        List<Long> listRoomId = pageResult.getContent()
+                .stream()
+                .map(ClassEntity::getRoomId)
+                .collect(Collectors.toList());
+        List<Long> listHomeroomTeacherId = pageResult.getContent()
+                .stream()
+                .map(ClassEntity::getHomeroomTeacherId)
+                .collect(Collectors.toList());
+        Map<Long, String> mapRoomNameByRoomId = roomService.getMapNameRoomByRoomId(listRoomId);
+        Map<Long, String> mapHomeRoomTeacherById = userService.getMapNameTeacherById(listHomeroomTeacherId);
+
+        pageResult.forEach(classs -> {
+            classs.setRoomName(mapRoomNameByRoomId.get(classs.getRoomId()));
+            classs.setHomeroomTeacher(mapHomeRoomTeacherById.get(classs.getHomeroomTeacherId()));
+        });
+        return pageResult;
     }
 
     @Transactional
     public ServerResponseDto save(ClassDto classDto) {
-
 
         Long classId = classDto.getId();
         boolean isUpdate = classId != null;
@@ -56,7 +79,12 @@ public class ClassService {
         classEntity.setUpdatedTime(new Date());
         classEntity.setName(classDto.getNameClass());
         classEntity.setGrade(classDto.getGrade());
-        classEntity.setRoom(classDto.getRoom());
+        classEntity.setRoomId(classDto.getRoomId());
+        Long homeroomTeacherId = classDto.getHomeroomTeacherId();
+        classEntity.setHomeroomTeacherId(homeroomTeacherId);
+
+        /* set teacher is homeroomTeacher */
+        userService.setTeacherIsHomeRoomTeacher(homeroomTeacherId);
 
         classEntity = classRepository.save(classEntity);
 
@@ -80,6 +108,9 @@ public class ClassService {
         if (classEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
+        UserEntity homeroomTeacherCurrent = userService.findByIdAndIsDeletedFalse(classEntity.getHomeroomTeacherId());
+        classEntity.setHomeroomTeacherCurrent(homeroomTeacherCurrent);
+
         return new ServerResponseDto(ResponseCase.SUCCESS, classEntity);
     }
 
@@ -155,5 +186,30 @@ public class ClassService {
         return listClass
                 .stream()
                 .collect(Collectors.groupingBy(ClassEntity::getGrade));
+    }
+
+    public ClassEntity findById(Long classId) {
+        return classRepository.findByIdAndIsDeletedFalse(classId);
+    }
+
+    public Map<Long, String> getMapNameRoomByClassId(List<Long> listClassId) {
+        List<ClassEntity> listClass = classRepository.findByIdInAndIsDeletedFalse(listClassId);
+        List<Long> listRoomId = listClass
+                .stream()
+                .map(ClassEntity::getRoomId)
+                .collect(Collectors.toList());
+        Map<Long, String> mapNameRoomByRoomId = roomService.getMapNameRoomByRoomId(listRoomId);
+
+        Map<Long, String> mapResult = new HashMap<>();
+        listClass.forEach(classs -> {
+            mapResult.put(classs.getId(), mapNameRoomByRoomId.get(classs.getRoomId()));
+        });
+
+        return mapResult;
+    }
+
+    public String getRoomNameByClassId(Long id) {
+        ClassEntity classEntity = classRepository.findByIdAndIsDeletedFalse(id);
+        return roomService.getNameById(classEntity.getRoomId());
     }
 }

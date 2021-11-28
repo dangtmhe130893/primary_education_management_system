@@ -37,6 +37,7 @@ public class UserEntity {
     private Date updatedTime;
     private boolean isChangePassword;
     private Long teachSubjectId;
+    private boolean isHomeroomTeacher;
 
     private Integer statusUser; //1 un_active, 2 active
 

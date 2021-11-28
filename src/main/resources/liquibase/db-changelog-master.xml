@@ -27,5 +27,8 @@
 
     <include file="liquibase/token/schema.xml"/>
 
+    <include file="liquibase/room/schema.xml"/>
+
+
 
 </databaseChangeLog>
