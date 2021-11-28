@@ -4,15 +4,13 @@ import com.primary_education_system.config.security.CustomUserDetails;
 import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.FrameTimeScheduleEntity;
 import com.primary_education_system.entity.SubjectEntity;
-import com.primary_education_system.entity.material.MaterialEntity;
-import com.primary_education_system.entity.pupil.PupilAccountEntity;
 import com.primary_education_system.entity.user.UserEntity;
-import com.primary_education_system.service.*;
-import com.primary_education_system.service.material.MaterialService;
-import com.primary_education_system.util.PageableUtils;
+import com.primary_education_system.service.ClassService;
+import com.primary_education_system.service.FrameTimeScheduleService;
+import com.primary_education_system.service.SubjectService;
+import com.primary_education_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,32 +36,30 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private MaterialService materialService;
-
-    @Autowired
-    private PupilAccountService pupilAccountService;
-
     @GetMapping("/home")
     public String getHome() {
         return "admin/home";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('SYSTEM_ADMIN')")
     @GetMapping("/account")
     public String getAccount() {
         return "admin/account";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('STAFF')")
     @GetMapping("/tuition_status")
     public String getTuitionStatus() {
         return "admin/tuition_status";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('ACADEMIC_HEAD')")
     @GetMapping("/pupil_account")
     public String getPupilAccount() {
         return "admin/pupil_account";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('TEACHER')")
     @GetMapping("/material")
     public String getMaterial(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
         if (currentUser == null) {
@@ -77,6 +73,7 @@ public class AdminController {
         return "admin/material";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('TEACHER')")
     @GetMapping("/time_schedule_teacher")
     public String getTeachClass(Model model) {
         List<FrameTimeScheduleEntity> listFrame = frameTimeScheduleService.findAll();
@@ -84,11 +81,13 @@ public class AdminController {
         return "admin/time_schedule_teacher";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('ACADEMIC_HEAD')")
     @GetMapping("/class")
     public String getClassRoom() {
         return "admin/class";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('ACADEMIC_HEAD')")
     @GetMapping("/time_schedule")
     public String getTimeSchedule(Model model) {
         List<FrameTimeScheduleEntity> listFrame = frameTimeScheduleService.findAll();
@@ -96,16 +95,17 @@ public class AdminController {
         return "admin/time_schedule";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('ACADEMIC_HEAD')")
     @GetMapping("/subject")
     public String getSubject() {
         return "admin/subject";
     }
 
+    @PreAuthorize("@authorizationService.hasPermissionAccess('TEACHER')")
     @GetMapping("/teach_class/{seoNameClass}")
     public String getDetailTeachClass(@PathVariable String seoNameClass, Model model,
                                       @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ClassEntity classEntity = classService.getBySeo(seoNameClass);
-        String grade = classEntity.getGrade();
         model.addAttribute("classs", classEntity);
         model.addAttribute("grade", classEntity.getGrade());
 
@@ -117,12 +117,14 @@ public class AdminController {
 
         return "admin/teach_class";
     }
+
+    @PreAuthorize("@authorizationService.hasPermissionAccess('HEAD_MASTER')")
     @GetMapping("/tuition")
     public String getTuition() {
         return "admin/tuition";
     }
 
-
+    @PreAuthorize("@authorizationService.hasPermissionAccess('ACADEMIC_HEAD')")
     @GetMapping("/room")
     public String getRoom() {
         return "admin/room";
