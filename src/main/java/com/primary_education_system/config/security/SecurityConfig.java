@@ -39,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationFailureHandler restApiAuthenticationFailureHandler;
 
-
     @Autowired
     private ChangePasswordFilter changePasswordFilter;
 

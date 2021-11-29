@@ -100,7 +100,9 @@ $(document).ready(function () {
                 formData.append("type", vm.type);
                 formData.append("id", vm.id);
                 formData.append("content", CKEDITOR.instances['content'].getData());
-                formData.append("file", file);
+                if (file && file !== undefined) {
+                    formData.append("file", file);
+                }
                 formData.append("stringListClassId", $("#select-class").val().toString());
 
                 $.ajax({
@@ -130,7 +132,7 @@ $(document).ready(function () {
         mounted() {
 
             let self = this;
-
+            self.loadListClass()
             $("#select-class").select2({
                 placeholder: '',
             });

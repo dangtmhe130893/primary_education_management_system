@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Set;
 
 @ControllerAdvice
@@ -19,7 +21,8 @@ public class UserInfoHeaderController {
     private UserRepository userRepository;
 
     @ModelAttribute()
-    public void getCurrentUser(@AuthenticationPrincipal CustomUserDetails currentUser, Model model) {
+    public void getCurrentUser(@AuthenticationPrincipal CustomUserDetails currentUser,
+                               Model model) throws IOException {
         if (currentUser == null) {
             return;
         }
