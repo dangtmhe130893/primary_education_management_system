@@ -143,6 +143,9 @@ $(document).ready(function () {
             })
 
             $(document).on("change", "#input-file-excel", function () {
+                if (this.files[0] == undefined) {
+                    return;
+                }
                 let formData = new FormData();
                 formData.append("file", this.files[0]);
                 $.ajax({
