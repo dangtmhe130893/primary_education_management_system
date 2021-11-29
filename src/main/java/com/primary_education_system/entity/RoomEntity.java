@@ -20,4 +20,13 @@ public class RoomEntity {
     private boolean isDeleted;
     private Date createdTime;
     private Date updatedTime;
+
+    public RoomEntity() {
+    }
+
+    public RoomEntity(String name, Date createdTime, Date updatedTime) {
+        this.name = name;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
+    }
 }

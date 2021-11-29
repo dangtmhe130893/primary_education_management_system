@@ -18,10 +18,14 @@
     <div th:replace="layouts/import :: import_lib_datatable"></div>
     <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
     <div th:fragment="table-admin">
+    
+        <input hidden type="file" id="input-file-excel" accept=".xsl,.xlsx">
         <div style="margin-bottom: 10px;">
             <button data-toggle="modal" data-target="#modal_add_room"
                     class="btn btn-primary btn-sm" id="btn_add_room"
                     @click="">Thêm mới
+            </button>
+            <button class="btn btn-primary btn-sm" id="btn_import">Import excel
             </button>
         </div>
         
@@ -45,6 +49,27 @@
                 <th style="width: 10% !important" scope="col" class="text-center"></th>
                 </thead>
             </table>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="modal_preview_room" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lineModalLabel">Xem trước</h3>
+                </div>
+                
+                <div class="modal-body">
+                    <div id="preview">
+                    
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn btn-outline-warning btn-sm" data-dismiss="modal">Hủy bỏ</button>
+                    <button style="background-color: blue; color: white" class="btn btn-orange btn-sm" id="save_list_room">Lưu</button>
+                </div>
+            </div>
         </div>
     </div>
     

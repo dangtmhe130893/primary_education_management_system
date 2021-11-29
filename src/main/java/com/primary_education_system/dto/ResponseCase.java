@@ -11,6 +11,10 @@ public interface ResponseCase {
 
     ResponseStatus SAME_NAME_CLASS = new ResponseStatus(1004, "Same name class");
 
+    ResponseStatus NAME_ROOM_EXIST = new ResponseStatus(1005, "Name room exist");
+
+    ResponseStatus SAME_NAME_ROOM = new ResponseStatus(1006, "Same name room");
+
     ResponseStatus ERROR = new ResponseStatus(4, "ERROR");
 
 }

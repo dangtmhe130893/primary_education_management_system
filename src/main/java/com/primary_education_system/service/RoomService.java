@@ -1,21 +1,21 @@
 package com.primary_education_system.service;
 
+import com.google.common.collect.Lists;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.room.RoomDto;
-import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.RoomEntity;
 import com.primary_education_system.repository.RoomRepository;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -109,5 +109,53 @@ public class RoomService {
 
     public RoomEntity findByIdAndIsDeletedFalse(Long roomId) {
         return roomRepository.findByIdAndIsDeletedFalse(roomId);
+    }
+
+    public ServerResponseDto importExcel(MultipartFile file) throws IOException, InvalidFormatException {
+
+        Workbook workbook = WorkbookFactory.create(file.getInputStream());
+        Sheet sheet = workbook.getSheetAt(0);
+        DataFormatter df = new DataFormatter();
+
+        Set<String> setRoom = new HashSet<>();
+        int numberRow = 0;
+        for (Row row : sheet) {
+            String nameRoom = df.formatCellValue(row.getCell(0)).trim();
+            if ("".equals(nameRoom)) continue;
+
+            if (isRoomExist(nameRoom)) {
+                return new ServerResponseDto(ResponseCase.NAME_ROOM_EXIST);
+            }
+            setRoom.add(nameRoom);
+            numberRow++;
+        }
+
+        if (numberRow > setRoom.size()) {
+            return new ServerResponseDto(ResponseCase.SAME_NAME_ROOM);
+        }
+        return new ServerResponseDto(ResponseCase.SUCCESS, setRoom);
+    }
+
+    private boolean isRoomExist(String roomName) {
+        List<RoomEntity> listRoomExist = roomRepository.findByIsDeletedFalse();
+        List<String> listNameRoomExist = listRoomExist
+                .stream()
+                .map(RoomEntity::getName)
+                .collect(Collectors.toList());
+
+        return listNameRoomExist
+                .stream()
+                .anyMatch(r -> r.equals(roomName));
+    }
+
+    public ServerResponseDto saveList(List<String> listRoom) {
+        List<RoomEntity> listRoomEntity = Lists.newArrayListWithCapacity(listRoom.size());
+        listRoom.forEach(room -> {
+            RoomEntity roomEntity = new RoomEntity(room, new Date(), new Date());
+            listRoomEntity.add(roomEntity);
+        });
+
+        roomRepository.save(listRoomEntity);
+        return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 }
