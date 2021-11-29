@@ -5,10 +5,7 @@ import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.FrameTimeScheduleEntity;
 import com.primary_education_system.entity.SubjectEntity;
 import com.primary_education_system.entity.user.UserEntity;
-import com.primary_education_system.service.ClassService;
-import com.primary_education_system.service.FrameTimeScheduleService;
-import com.primary_education_system.service.SubjectService;
-import com.primary_education_system.service.UserService;
+import com.primary_education_system.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,6 +32,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PupilAccountService pupilAccountService;
 
     @GetMapping("/home")
     public String getHome() {
