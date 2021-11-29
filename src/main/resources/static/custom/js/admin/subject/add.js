@@ -20,7 +20,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     type: "GET",
-                    url: "/api/user/getListTeacherCanTeach",
+                    url: "/api/user/getListTeacher",
                     success: function (response) {
                         if (response.status.code === 1000) {
                             self.listTeacherCanTeach = response.data;

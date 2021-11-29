@@ -194,7 +194,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     type: "GET",
-                    url: "/api/user/listTeacherForSubject/" + Number(subjectId),
+                    url: "/api/user/getListTeacherForSubject/" + subjectId,
                     success: function (response) {
                         self.listTeacher = response;
                     }

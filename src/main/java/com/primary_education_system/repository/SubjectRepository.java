@@ -22,4 +22,10 @@ public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
     @Query(value = "select s.name from SubjectEntity s " +
             "where s.id = ?1 and s.isDeleted = false")
     String getNameSubjectById(Long teachSubjectId);
+
+    @Query(value = "select s.* from subject as s " +
+            "inner join subject_teacher as sb on s.id = sb.subject_id " +
+            "inner join user as u on u.id = sb.teacher_id " +
+            "where u.id = ?1 and u.is_deleted = false and s.is_deleted = false", nativeQuery = true)
+    List<SubjectEntity> getListSubjectByTeacherId(Long userId);
 }

@@ -69,7 +69,7 @@ public class AdminController {
         if (currentUser == null) {
             return "/login";
         }
-        List<SubjectEntity> listSubject = subjectService.getListByUser(currentUser.getUserId());
+        List<SubjectEntity> listSubject = subjectService.getListByUserId(currentUser.getUserId());
         if (listSubject == null) {
             return "/login";
         }
@@ -110,10 +110,6 @@ public class AdminController {
         model.addAttribute("grade", classEntity.getGrade());
 
         UserEntity userEntity = userService.findByIdAndIsDeletedFalse(customUserDetails.getUserId());
-        Long teachSubjectId = userEntity.getTeachSubjectId();
-
-        model.addAttribute("nameSubject", subjectService.getNameSubjectById(teachSubjectId));
-        model.addAttribute("teachSubjectId", teachSubjectId);
 
         return "admin/teach_class";
     }
@@ -126,6 +122,20 @@ public class AdminController {
     @GetMapping("/room")
     public String getRoom() {
         return "admin/room";
+    }
+
+    @GetMapping("/my_class")
+    public String myClass(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        ClassEntity classEntity = classService.findByHomeroomTeacherId(customUserDetails.getUserId());
+
+        if (classEntity != null) {
+            int numberPupilInClass = pupilAccountService.countNumberPupilInClass(classEntity.getId());
+            model.addAttribute("class", classEntity);
+            model.addAttribute("numberPupil", numberPupilInClass);
+        } else {
+            model.addAttribute("class", new ClassEntity(""));
+        }
+        return "admin/my_class";
     }
 
 }

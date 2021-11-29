@@ -1,0 +1,159 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/admin_template}"
+      th:with="currentPage='my_class'">
+<head>
+    <title>Học sinh trong lớp</title>
+    <script type="text/javascript" src="/custom/js/admin/my_class/add.js"></script>
+    <script type="text/javascript" src="/custom/js/admin/my_class/list.js"></script>
+    
+    <style>
+        .detail-pupil {
+            width: 56px;
+            height: 28px;
+        }
+        .error-message-select {
+            color: red;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    <div th:fragment="table-account">
+    
+        <div style="text-align: center">
+            <h3 style="font-weight: bold" th:text="'Danh sách học sinh lớp ' + ${class.name}"></h3>
+        </div>
+        <h4 th:text="'Sĩ số: ' + ${numberPupil}"></h4>
+        <div style="float: right; display: flex; width: 70%; justify-content: flex-end;">
+            <div class="input-group" style="width: 40%; float: right">
+                <input class="form-control" type="text" id="input-search_pupil"
+                       placeholder="Tìm kiếm theo tên học sinh" autocomplete="off">
+                <div class="input-group-append" id="btn_search_subject">
+                    <span class="input-group-text amber lighten-3">
+                        <i style="font-size: 14px; cursor: pointer" class="fa fa-search text-grey"
+                           aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    
+        
+        <div class="table-content" style="margin-top: 20px">
+            
+            <table class="table responsive" id="account_table">
+                <thead>
+                <th style="width: 5% !important" scope="col" class="text-center">Mã học sinh</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Họ tên</th>
+                <th style="width: 5% !important" scope="col" class="text-center">Khối</th>
+                <th style="width: 5% !important" scope="col" class="text-center">Lớp</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Email</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Số điện thoại</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Giới tính</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Địa chỉ</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Họ tên bố</th>
+                <th style="width: 10% !important" scope="col" class="text-center">Họ tên mẹ</th>
+                <th style="width: 10% !important" scope="col" class="text-center"></th>
+                </thead>
+            </table>
+        </div>
+    
+        <div class="modal fade bd-example-modal-lg" id="modal_add_pupil_account" role="dialog"
+             aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tài khoản học sinh</h5>
+                    </div>
+    
+                    <div class="modal-body">
+                        <div class="row">
+                            <form id="form-pupil-account" class="col-md-12">
+                                <div class="form-group">
+                                    <label>Khối:</label><sup style="color: red"> *</sup>
+                                    <select disabled style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="grade">
+                                        <option value="Khối 1">Khối 1</option>
+                                        <option value="Khối 2">Khối 2</option>
+                                        <option value="Khối 3">Khối 3</option>
+                                        <option value="Khối 4">Khối 4</option>
+                                        <option value="Khối 5">Khối 5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lớp:</label><sup style="color: red"> *</sup>
+                                    <select disabled style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="classId">
+                                        <option v-for="classs in listClass" v-bind:value="classs.id">{{classs.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Họ tên:</label><sup style="color: red"> *</sup>
+                                    <input disabled v-model="name" name="name" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email:</label><sup style="color: red"> *</sup>
+                                    <input disabled v-model="email" name="email" class="form-control input"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Số điện thoại:</label><sup style="color: red"> *</sup>
+                                    <input disabled v-model="phone" name="phone" class="form-control input" type="number"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Giới tính:</label><sup style="color: red"> *</sup>
+                                    <div>
+                                        <label class="radio-container">
+                                            <span style="font-size: 13px">Nam</span>
+                                            <input disabled type="radio" name="male" v-model="sex"
+                                                   value="1">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">
+                                            <span style="font-size: 13px">Nữ</span>
+                                            <input disabled type="radio" name="female" v-model="sex"
+                                                   value="2">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">
+                                            <span style="font-size: 13px">Khác</span>
+                                            <input disabled type="radio" name="other" v-model="sex"
+                                                   value="9">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Địa chỉ:</label><sup style="color: red"> *</sup>
+                                    <input disabled v-model="address" name="address" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Họ tên bố:</label>
+                                    <input disabled v-model="fatherName" name="fatherName" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Họ tên mẹ:</label>
+                                    <input disabled v-model="motherName" name="motherName" class="form-control"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Đóng</button>
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+    
+        <input hidden="" id="class_id" type="number" th:value="${class.id}">
+    </div>
+
+
+</div>
+</body>
+</html>

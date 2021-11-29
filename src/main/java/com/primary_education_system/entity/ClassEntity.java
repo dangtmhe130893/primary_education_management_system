@@ -38,4 +38,10 @@ public class ClassEntity {
     @Transient
     private RoomEntity roomCurrent;
 
+    public ClassEntity() {
+    }
+
+    public ClassEntity(String name) {
+        this.name = name;
+    }
 }

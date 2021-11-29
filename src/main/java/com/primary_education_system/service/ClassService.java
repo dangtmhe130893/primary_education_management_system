@@ -228,4 +228,8 @@ public class ClassService {
         ClassEntity classEntity = classRepository.findByIdAndIsDeletedFalse(id);
         return roomService.getNameById(classEntity.getRoomId());
     }
+
+    public ClassEntity findByHomeroomTeacherId(Long homeroomTeacherId) {
+        return classRepository.findByHomeroomTeacherIdAndIsDeletedFalse(homeroomTeacherId);
+    }
 }

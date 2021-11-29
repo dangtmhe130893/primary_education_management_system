@@ -1,6 +1,5 @@
 $(document).ready(function () {
     let grade = $("#grade").val();
-    let subjectId = $("#subject_id").val();
     let classId = $("#class_id").val();
 
 
@@ -22,7 +21,7 @@ $(document).ready(function () {
             "type": "",
             "grade": grade,
             "classId": classId,
-            "subjectId": subjectId,
+            "subjectId": 0,
         };
 
         window.loader.show();

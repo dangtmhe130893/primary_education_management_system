@@ -29,6 +29,7 @@ public class PupilAccountService {
     @Autowired
     private ClassService classService;
 
+
     public Page<PupilAccountEntity> getPagePupilAccount(Pageable pageable, String keyword, String grade, Long classId) {
         List<String> listGradeFilter = Lists.newArrayListWithExpectedSize(5);
         List<Long> listClassIdFilter = new ArrayList<>();
@@ -142,5 +143,9 @@ public class PupilAccountService {
             mapNumberPupilByClassId.put(object.getClassId(), object.getNumberPupil());
         });
         return mapNumberPupilByClassId;
+    }
+
+    public int countNumberPupilInClass(Long classId) {
+        return (int) repository.countNumberPupilInClass(classId);
     }
 }

@@ -95,6 +95,12 @@
                 <span>Quản lý lịch dạy</span>
             </div>
         </a>
+        <a href="/admin/my_class">
+            <div th:class=" ${currentPage} == 'my_class' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Thông tin học sinh của lớp</span>
+            </div>
+        </a>
     </div>
     <div class="block-menu" th:if="${isCanShowAcademicHeadMenu}">
         <div class="control-block-menu">

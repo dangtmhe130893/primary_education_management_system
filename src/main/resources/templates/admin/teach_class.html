@@ -31,7 +31,7 @@
     <div th:fragment="table-admin">
         
         <div class="title-page">
-            <h3 th:text="'Quản lý môn ' + ${nameSubject} + ' lớp ' + ${classs.name}"></h3>
+            <h3 th:text="'Quản lý lớp ' + ${classs.name}"></h3>
         </div>
     
         <div class="title-table">
@@ -86,7 +86,6 @@
         
         <input hidden th:value="${grade}" type="text" id="grade">
         <input hidden th:value="${classs.id}" type="text" id="class_id">
-        <input hidden th:value="${teachSubjectId}" type="text" id="subject_id">
     
     </div>
 

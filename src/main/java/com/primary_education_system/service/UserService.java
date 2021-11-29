@@ -7,6 +7,7 @@ import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
 import com.primary_education_system.dto.account.ChangePasswordRequestDto;
+import com.primary_education_system.entity.SubjectTeacherEntity;
 import com.primary_education_system.entity.token.TokenEntity;
 import com.primary_education_system.entity.user.RoleEntity;
 import com.primary_education_system.entity.user.UserEntity;
@@ -45,6 +46,9 @@ public class UserService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private SubjectTeacherService subjectTeacherService;
 
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmailAndIsDeletedFalse(email);
@@ -142,89 +146,8 @@ public class UserService {
     }
 
 
-    public Map<Long, List<UserEntity>> getMapListTeacherBySubjectId(List<Long> listSubjectId) {
-        List<UserEntity> listTeacher = userRepository.getListTeacherByListSubjectId(listSubjectId);
-
-        return listTeacher.stream().collect(Collectors.groupingBy(UserEntity::getTeachSubjectId));
-    }
-
-    public List<UserEntity> getListTeacherCanTeach() {
-        return userRepository.getListTeacherCanTeach();
-    }
-
-    @Transactional
-    public void setTeachSubjectIdForTeacher(Long subjectId, String listTeacherIdString) {
-        String[] arrayId = listTeacherIdString.split(",");
-        List<Long> listTeacherIdAfter = Arrays.stream(arrayId)
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-
-        List<UserEntity> listTeacherEntityBefore = userRepository.getListTeacherBySubjectId(subjectId);
-        List<Long> listTeacherIdBefore = listTeacherEntityBefore.stream().map(UserEntity::getId).collect(Collectors.toList());
-
-        removeTeachSubjectId(listTeacherIdBefore, listTeacherIdAfter);
-
-        addTeachSubjectId(listTeacherIdBefore, listTeacherIdAfter, subjectId);
-
-        List<UserEntity> listTeacher = userRepository.getListUserByListIdAndRole(listTeacherIdAfter, Constant.TEACHER);
-
-        listTeacher.forEach(teacher -> teacher.setTeachSubjectId(subjectId));
-
-        userRepository.save(listTeacher);
-    }
-
-    private void removeTeachSubjectId(List<Long> listTeacherIdBefore, List<Long> listTeacherIdAfter) {
-        if (listTeacherIdBefore.isEmpty()) {
-            return;
-        }
-        List<Long> listIdRemoved = Lists.newArrayListWithExpectedSize(listTeacherIdBefore.size());
-        listTeacherIdBefore.forEach(idBefore -> {
-            if (!listTeacherIdAfter.contains(idBefore)) {
-                listIdRemoved.add(idBefore);
-            }
-        });
-        if (listIdRemoved.isEmpty()) {
-            return;
-        }
-
-        List<UserEntity> listTeacherRemovedSubjectId = userRepository
-                .getListUserByListIdAndRole(listIdRemoved, Constant.TEACHER);
-        listTeacherRemovedSubjectId.forEach(teacher -> teacher.setTeachSubjectId(null));
-
-        userRepository.save(listTeacherRemovedSubjectId);
-    }
-
-    private void addTeachSubjectId(List<Long> listTeacherIdBefore, List<Long> listTeacherIdAfter, Long subjectId) {
-        List<Long> listIdAdded = new ArrayList<>();
-        listTeacherIdAfter.forEach(idAfter -> {
-            if (!listTeacherIdBefore.contains(idAfter)) {
-                listIdAdded.add(idAfter);
-            }
-        });
-
-        if (listIdAdded.isEmpty()) {
-            return;
-        }
-
-        List<UserEntity> listTeacherRemovedSubjectId = userRepository.getListUserByListIdAndRole(listIdAdded, Constant.TEACHER);
-        listTeacherRemovedSubjectId.forEach(teacher -> teacher.setTeachSubjectId(subjectId));
-
-        userRepository.save(listTeacherRemovedSubjectId);
-    }
-
-    public List<UserEntity> getListTeacherBySubjectId(Long subjectId) {
-        return userRepository.getListTeacherBySubjectId(subjectId);
-    }
-
-    public void removeTeachSubjectId(Long subjectId) {
-        List<UserEntity> listTeacher = userRepository.getListTeacherBySubjectId(subjectId);
-        listTeacher.forEach(teacher -> teacher.setTeachSubjectId(null));
-
-        userRepository.save(listTeacher);
-    }
-
-    public List<UserEntity> getListTeacherForSubject(Long subjectId) {
-        return userRepository.getListTeacherBySubjectId(subjectId);
+    public List<UserEntity> getListTeacher() {
+        return userRepository.getListTeacher();
     }
 
     public Map<Long, String> getMapNameTeacherById(List<Long> listTeacherId) {
@@ -311,5 +234,13 @@ public class UserService {
         }
         teacherNew.setHomeroomTeacher(true);
         userRepository.save(teacherNew);
+    }
+
+    public List<UserEntity> findByIdInAndIsDeletedFalse(List<Long> listTeacherId) {
+        return userRepository.findByIdInAndIsDeletedFalse(listTeacherId);
+    }
+
+    public List<UserEntity> getListTeacherForSubject(Long subjectId) {
+        return subjectTeacherService.getListTeacherBySubjectId(subjectId);
     }
 }

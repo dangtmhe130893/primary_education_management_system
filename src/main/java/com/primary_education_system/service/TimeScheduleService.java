@@ -42,6 +42,9 @@ public class TimeScheduleService {
     @Autowired
     private RoomService roomService;
 
+    @Autowired
+    private SubjectTeacherService subjectTeacherService;
+
     public ServerResponseDto getTimeSchedule(Long classId) {
         ClassEntity classEntity = classService.findById(classId);
         String roomNameDefault = classService.getRoomNameByClassId(classEntity.getId());
@@ -81,12 +84,18 @@ public class TimeScheduleService {
                 .map(TimeScheduleEntity::getClassId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-
+        List<Long> listSubjectId = listTimeSchedule
+                .stream()
+                .map(TimeScheduleEntity::getSubjectId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
         Map<Long, ClassEntity> mapClassById = classService.getMapClassById(listClassId);
+        Map<Long, String> mapNameSubjectBySubjectId = subjectService.getMapNameSubjectById(listSubjectId);
 
         listTimeSchedule.forEach(timeScheduleEntity -> {
             timeScheduleEntity.setClassName(mapClassById.get(timeScheduleEntity.getClassId()).getName());
+            timeScheduleEntity.setNameSubject(mapNameSubjectBySubjectId.get(timeScheduleEntity.getSubjectId()));
         });
         setRoomNameForTimeSchedule(listTimeSchedule);
 
@@ -188,7 +197,7 @@ public class TimeScheduleService {
         timeScheduleEntity.setNameFrameTime(nameFrameTime);
 
         Long subjectId = timeScheduleEntity.getSubjectId();
-        List<UserEntity> listTeacher = userService.getListTeacherBySubjectId(subjectId);
+        List<UserEntity> listTeacher = subjectTeacherService.getListTeacherBySubjectId(subjectId);
         timeScheduleEntity.setListTeacher(listTeacher);
         return new ServerResponseDto(ResponseCase.SUCCESS, timeScheduleEntity);
     }

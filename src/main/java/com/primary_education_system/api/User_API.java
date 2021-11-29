@@ -65,12 +65,12 @@ public class User_API {
         return ResponseEntity.ok().body(userService.setPassword(token, password));
     }
 
-    @GetMapping("/getListTeacherCanTeach")
-    public ResponseEntity<ServerResponseDto> getListTeacherCanTeach() {
-        return ResponseEntity.ok(new ServerResponseDto(ResponseCase.SUCCESS, userService.getListTeacherCanTeach()));
+    @GetMapping("/getListTeacher")
+    public ResponseEntity<ServerResponseDto> getListTeacher() {
+        return ResponseEntity.ok(new ServerResponseDto(ResponseCase.SUCCESS, userService.getListTeacher()));
     }
 
-    @GetMapping("/listTeacherForSubject/{subjectId}")
+    @GetMapping("/getListTeacherForSubject/{subjectId}")
     public List<UserEntity> getListTeacherForSubject(@PathVariable Long subjectId) {
         return userService.getListTeacherForSubject(subjectId);
     }

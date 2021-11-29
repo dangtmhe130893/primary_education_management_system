@@ -21,17 +21,19 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "where u.email = ?1 and u.id <> ?2 and u.isDeleted = false ")
     int countByEmailAndId(String email, Long id);
 
-    @Query(value = "select u from UserEntity u " +
-            "where u.teachSubjectId in ?1 and u.isDeleted = false")
+    @Query(value = "select u.* from user as u " +
+            "inner join subject_teacher as sb on u.id = sb.teacher_id " +
+            "inner join subject as b on b.id = sb.subject_id " +
+            "where b.id in ?1 " +
+            "and u.is_deleted = false and b.is_deleted = false", nativeQuery = true)
     List<UserEntity> getListTeacherByListSubjectId(List<Long> listSubjectId);
 
     @Query(value = "select u.* from user as u " +
             "inner join user_role on u.id = user_role.user_id " +
             "inner join role on role.id = user_role.role_id " +
             "where u.is_deleted = false and u.status_user = 2 " +
-            "and role.name = 'TEACHER' " +
-            "and u.teach_subject_id is null", nativeQuery = true)
-    List<UserEntity> getListTeacherCanTeach();
+            "and role.name = 'TEACHER'", nativeQuery = true)
+    List<UserEntity> getListTeacher();
 
     @Query(value = "select u.* from user as u " +
             "inner join user_role on u.id = user_role.user_id " +
@@ -48,13 +50,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "and u.id in ?1 ", nativeQuery = true)
     List<UserEntity> getListUserByListId(List<Long> listTeacherId);
 
-    @Query(value = "select u.* from user as u " +
-            "inner join user_role on u.id = user_role.user_id " +
-            "inner join role on role.id = user_role.role_id " +
-            "where u.is_deleted = false and u.status_user = 2 " +
-            "and u.teach_subject_id = ?1 " +
-            "and role.name = 'TEACHER'", nativeQuery = true)
-    List<UserEntity> getListTeacherBySubjectId(Long subjectId);
 
     @Query(value = "select u.* from user as u " +
             "where u.email = ?1 limit 1", nativeQuery = true)
@@ -67,4 +62,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "and u.is_homeroom_teacher = false " +
             "and role.name = 'TEACHER'", nativeQuery = true)
     List<UserEntity> getListHomeroomTeacher();
+
+    List<UserEntity> findByIdInAndIsDeletedFalse(List<Long> listTeacherId);
 }

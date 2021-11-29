@@ -24,6 +24,9 @@ public class SubjectService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SubjectTeacherService subjectTeacherService;
+
     public List<SubjectEntity> getList() {
         return subjectRepository.findByIsDeletedFalse();
     }
@@ -38,7 +41,7 @@ public class SubjectService {
             return pageSubject;
         }
 
-        Map<Long, List<UserEntity>> mapListTeacherBySubjectId = userService.getMapListTeacherBySubjectId(listSubjectId);
+        Map<Long, List<UserEntity>> mapListTeacherBySubjectId = subjectTeacherService.getMapListTeacherBySubjectId(listSubjectId);
         pageSubject.forEach(subjectEntity -> subjectEntity
                 .setListTeacherTeaching(mapListTeacherBySubjectId.get(subjectEntity.getId())));
         return pageSubject;
@@ -61,17 +64,16 @@ public class SubjectService {
         subject = subjectRepository.save(subject);
 
         if (!"".equals(subjectRequestDto.getListTeacherIdString())) {
-            userService.setTeachSubjectIdForTeacher(subject.getId(), subjectRequestDto.getListTeacherIdString());
+            subjectTeacherService.setTeacherForSubject(subject.getId(), subjectRequestDto.getListTeacherIdString());
         }
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
     public ServerResponseDto detail(Long id) {
         SubjectEntity subject = subjectRepository.findByIdAndIsDeletedFalse(id);
-        List<UserEntity> listTeacherTeaching = userService.getListTeacherBySubjectId(subject.getId());
+        List<UserEntity> listTeacherTeaching = subjectTeacherService.getListTeacherBySubjectId(subject.getId());
 
-        List<UserEntity> listTeachCanTeach = Stream.of(userService.getListTeacherCanTeach(), listTeacherTeaching)
-                .flatMap(Collection::stream).collect(Collectors.toList());
+        List<UserEntity> listTeachCanTeach = userService.getListTeacher();
 
         subject.setListTeacherTeaching(listTeacherTeaching);
         subject.setListTeacherCanTeach(listTeachCanTeach);
@@ -83,7 +85,7 @@ public class SubjectService {
         subject.setDeleted(true);
         subjectRepository.save(subject);
 
-        userService.removeTeachSubjectId(subjectId);
+        subjectTeacherService.removeTeachSubjectId(subjectId);
 
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
@@ -95,21 +97,21 @@ public class SubjectService {
                 .collect(Collectors.toMap(SubjectEntity::getId, SubjectEntity::getName));
     }
 
-    public List<SubjectEntity> getListByUser(Long userId) {
+    public List<SubjectEntity> getListByUserId(Long userId) {
         if (userId == 1) {
             return subjectRepository.findByIsDeletedFalse();
         }
         UserEntity userEntity = userService.getDetail(userId);
-        if (userEntity == null || userEntity.getTeachSubjectId() == null) {
+        if (userEntity == null) {
             return null;
         }
-        SubjectEntity subjectEntity = subjectRepository.findByIdAndIsDeletedFalse(userEntity.getTeachSubjectId());
-        List<SubjectEntity> result = new ArrayList<>(1);
-        result.add(subjectEntity);
-        return result;
+        System.out.println("id: " + userId);
+        List<SubjectEntity> listSubject = subjectRepository.getListSubjectByTeacherId(userId);
+        return listSubject;
     }
 
     public String getNameSubjectById(Long teachSubjectId) {
         return subjectRepository.getNameSubjectById(teachSubjectId);
     }
+
 }
