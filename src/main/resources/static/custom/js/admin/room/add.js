@@ -176,7 +176,6 @@ $(document).ready(function () {
                 });
 
                 this.files[0] = null; // to the next import: file changed
-                console.log(this.files[0]);
             })
         },
     })
