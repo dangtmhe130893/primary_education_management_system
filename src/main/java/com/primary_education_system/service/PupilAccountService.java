@@ -146,6 +146,7 @@ public class PupilAccountService {
     }
 
     public int countNumberPupilInClass(Long classId) {
+        System.out.println("sĩ số: " + repository.countNumberPupilInClass(classId));
         return (int) repository.countNumberPupilInClass(classId);
     }
 }

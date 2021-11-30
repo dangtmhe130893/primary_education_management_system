@@ -173,7 +173,10 @@ $(document).ready(function () {
                             window.alert.show("error", "Định dạng dữ liệu import không chính xác", 2000);
                         }
                     }
-                })
+                });
+
+                this.files[0] = null; // to the next import: file changed
+                console.log(this.files[0]);
             })
         },
     })
@@ -209,6 +212,7 @@ $(document).ready(function () {
 
     $("#modal_preview_room").on('hidden.bs.modal', function () {
         listRoomAdded = [];
+        $("#input-file-excel").val(null);
     })
 
     $(document).on("click", "#save_list_room", function () {

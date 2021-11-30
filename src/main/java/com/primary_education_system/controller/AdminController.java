@@ -136,6 +136,7 @@ public class AdminController {
             model.addAttribute("numberPupil", numberPupilInClass);
         } else {
             model.addAttribute("class", new ClassEntity(""));
+            model.addAttribute("numberPupil", 0);
         }
         return "admin/my_class";
     }

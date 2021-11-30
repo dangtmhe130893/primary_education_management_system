@@ -118,8 +118,12 @@ public class RoomService {
         DataFormatter df = new DataFormatter();
 
         Set<String> setRoom = new HashSet<>();
-        int numberRow = 0;
+        int indexRow = 0;
         for (Row row : sheet) {
+            if (indexRow == 0) {
+                indexRow++;
+                continue;
+            }
             String nameRoom = df.formatCellValue(row.getCell(0)).trim();
             if ("".equals(nameRoom)) continue;
 
@@ -127,10 +131,10 @@ public class RoomService {
                 return new ServerResponseDto(ResponseCase.NAME_ROOM_EXIST);
             }
             setRoom.add(nameRoom);
-            numberRow++;
+            indexRow++;
         }
 
-        if (numberRow > setRoom.size()) {
+        if (indexRow - 1 > setRoom.size()) {
             return new ServerResponseDto(ResponseCase.SAME_NAME_ROOM);
         }
         return new ServerResponseDto(ResponseCase.SUCCESS, setRoom);
