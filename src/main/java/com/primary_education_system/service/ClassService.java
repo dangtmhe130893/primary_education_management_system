@@ -141,7 +141,7 @@ public class ClassService {
 
         /* delete Time schedule */
         timeScheduleService.deleteTimeScheduleByClassId(classId);
-
+        userService.updateStatusHomeroom(classEntity.getHomeroomTeacherId());
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 

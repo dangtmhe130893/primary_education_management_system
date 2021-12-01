@@ -1,13 +1,11 @@
 package com.primary_education_system.service;
 
-import com.google.common.collect.Lists;
 import com.primary_education_system.config.security.CustomUserDetails;
 import com.primary_education_system.dto.EmailTemplate;
 import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
 import com.primary_education_system.dto.account.ChangePasswordRequestDto;
-import com.primary_education_system.entity.SubjectTeacherEntity;
 import com.primary_education_system.entity.token.TokenEntity;
 import com.primary_education_system.entity.user.RoleEntity;
 import com.primary_education_system.entity.user.UserEntity;
@@ -20,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -242,5 +239,13 @@ public class UserService {
 
     public List<UserEntity> getListTeacherForSubject(Long subjectId) {
         return subjectTeacherService.getListTeacherBySubjectId(subjectId);
+    }
+
+    public void updateStatusHomeroom(Long userId) {
+        UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(userId);
+        if (userEntity == null) {
+            return;
+        }
+        userEntity.setHomeroomTeacher(false);
     }
 }
