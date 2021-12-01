@@ -247,5 +247,6 @@ public class UserService {
             return;
         }
         userEntity.setHomeroomTeacher(false);
+        userRepository.save(userEntity);
     }
 }

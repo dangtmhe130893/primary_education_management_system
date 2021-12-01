@@ -5,6 +5,7 @@ import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.room.RoomDto;
 import com.primary_education_system.entity.RoomEntity;
+import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.RoomRepository;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -162,4 +163,14 @@ public class RoomService {
         roomRepository.save(listRoomEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
+
+    public void updateStatusIsSelected(Long roomId) {
+        RoomEntity roomEntity = roomRepository.findByIdAndIsDeletedFalse(roomId);
+        if (roomEntity == null) {
+            return;
+        }
+        roomEntity.setSelected(false);
+        roomRepository.save(roomEntity);
+    }
+
 }
