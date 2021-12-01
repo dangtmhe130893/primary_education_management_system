@@ -78,8 +78,7 @@ $(document).ready(function () {
                             tableClass.ajax.reload();
                             $("#modal_add_class").modal("hide");
                             window.alert.show("success", "Lưu thành công", 2000);
-                            self.loadListHomeroomTeacher();
-                            self.loadListRoom();
+                            window.location.reload();
                         } else if (response.status.code === 1004) {
                             window.alert.show("error", "Tên lớp đã tồn tại", 2000);
                         } else {
@@ -125,7 +124,7 @@ $(document).ready(function () {
                         $("#modal_delete_class").modal("hide");
 
                         if (response.status.code === 1000) {
-                            tableClass.ajax.reload();
+                            window.location.reload();
                             window.alert.show("success", "Xóa thành công", 2000);
                         } else {
                             window.alert.show("error", "Xóa thất bại", 2000);
