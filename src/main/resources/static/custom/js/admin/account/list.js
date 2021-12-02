@@ -30,7 +30,6 @@ $(document).ready(function () {
         {"data": "phone",  "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null,  "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "createdTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
-        {"data": "statusUser", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "id", "orderable": false,  "defaultContent": "", "class": 'text-center'}
     ];
     listAccountTable = $("#account_table").DataTable({
@@ -67,20 +66,10 @@ $(document).ready(function () {
             },
             {
                 "render": function (data) {
-                    if (data === 2) {
-                        return '<button disabled class="btn btn-sm btn-success " >Có hiệu lực</button>';
-                    } else {
-                        return '<button disabled class="btn btn-sm btn-secondary" >Không có hiệu lực</button>';
-                    }
-                },
-                "targets": 5
-            },
-            {
-                "render": function (data) {
                     return '<button type="button" data-toggle="modal" data-target="#modal_add_account" value="' + data + '" class="btn btn-sm btn-primary detail-acount">Chi tiết</button>'
                         + '<button style="margin-left: 10px" data-toggle="modal" data-target="#modal_delete_account" class="btn btn-sm btn-danger delelte-acount" data-id="' + data + '">Xóa</button>';
                 },
-                "targets": 6
+                "targets": 5
             },
         ]
     });
