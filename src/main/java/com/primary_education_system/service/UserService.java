@@ -55,7 +55,7 @@ public class UserService {
         return userRepository.getListAccount(keyword, pageable);
     }
 
-    public ServerResponseDto save(AccountRequestDto saveDto) {
+    public ServerResponseDto save(AccountRequestDto saveDto) throws ParseException {
         boolean isEmailExist = userRepository.countByEmailAndId(saveDto.getEmail(), saveDto.getId()) != 0;
         if (isEmailExist) {
             return new ServerResponseDto(ResponseCase.EMAIL_EXISTED);
@@ -64,7 +64,6 @@ public class UserService {
         if (saveDto.getId() == null) {
             userEntity = new UserEntity();
             userEntity.setCreatedTime(new Date());
-            userEntity.setEmail(saveDto.getEmail());
             userEntity.setPassword(passwordEncoder.encode(saveDto.getPassword()));
             userEntity.setRawPassword(passwordEncoder.encode(saveDto.getPassword()));
             userEntity.setChangePassword(false);
@@ -84,8 +83,12 @@ public class UserService {
         List<RoleEntity> roleEntity = roleService.findByNameIn(listRoleName);
         Set<RoleEntity> roleEntities = new HashSet<>(roleEntity);
         userEntity.setName(saveDto.getName());
+        userEntity.setEmail(saveDto.getEmail());
         userEntity.setUsername(saveDto.getEmail());
         userEntity.setPhone(saveDto.getPhone());
+        userEntity.setGender(saveDto.getSex());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        userEntity.setBirthday(sdf.parse(saveDto.getBirthday()));
         userEntity.setRoles(roleEntities);
         userEntity.setDeleted(false);
         userRepository.save(userEntity);

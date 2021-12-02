@@ -15,8 +15,7 @@ public class PupilAccountDto {
     private String email;
     private String phone;
     private String password;
-    @JsonFormat(pattern = "yyyy/MM/dd")
-    private Date birthday;
+    private String birthday;
     private int sex;
     private String address;
     private String fatherName;

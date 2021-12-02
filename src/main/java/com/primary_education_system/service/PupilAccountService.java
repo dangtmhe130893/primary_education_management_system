@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,7 +65,7 @@ public class PupilAccountService {
         return pageResult;
     }
 
-    public ServerResponseDto save(PupilAccountDto pupilAccountDto) {
+    public ServerResponseDto save(PupilAccountDto pupilAccountDto) throws ParseException {
         Long id = pupilAccountDto.getId();
         boolean isUpdate = id != null;
 
@@ -80,12 +82,14 @@ public class PupilAccountService {
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
-    private void convertDtoToEntity(PupilAccountEntity entity, PupilAccountDto dto) {
+    private void convertDtoToEntity(PupilAccountEntity entity, PupilAccountDto dto) throws ParseException {
         entity.setName(dto.getName());
         entity.setEmail(dto.getEmail());
         entity.setUsername(dto.getUsername());
         entity.setPhone(dto.getPhone());
         entity.setGender(dto.getSex());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        entity.setBirthday(sdf.parse(dto.getBirthday()));
         entity.setAddress(dto.getAddress());
         entity.setFatherName(dto.getFatherName());
         entity.setMotherName(dto.getMotherName());

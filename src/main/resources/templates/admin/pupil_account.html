@@ -13,7 +13,7 @@
             width: 56px;
             height: 28px;
         }
-        .error-message-select {
+        .error-message-select, .error-message-birthday {
             color: red;
             font-size: 12px;
             font-weight: bold;
@@ -163,6 +163,16 @@
                                                    value="9">
                                             <span class="checkmark"></span>
                                         </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày sinh:</label><sup style="color: red"> *</sup>
+                                    <p class="error-message-birthday" v-bind:class="{ hidden : !isShowErrorBirthday}">
+                                        Trường này là bắt buộc</p>
+                                    <div style="position: relative;">
+                                        <input id="birthday" class="form-control"
+                                               v-on:blur="validateBirthday()"
+                                               v-on:keyup="validateBirthday()">
                                     </div>
                                 </div>
                                 <div class="form-group">

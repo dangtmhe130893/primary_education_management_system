@@ -80,6 +80,7 @@ public class SubjectService {
         return new ServerResponseDto(ResponseCase.SUCCESS, subject);
     }
 
+    @Transactional
     public ServerResponseDto delete(Long subjectId) {
         SubjectEntity subject = subjectRepository.findByIdAndIsDeletedFalse(subjectId);
         subject.setDeleted(true);

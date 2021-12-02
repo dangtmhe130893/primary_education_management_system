@@ -31,6 +31,7 @@ public class UserEntity {
     private String phone;
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date birthday;
+    private int gender; //1 male, 2 female, 9 other
     private String address;
     private boolean isDeleted;
     private Date createdTime;

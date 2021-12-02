@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/api/pupil_account")
 public class    PupilAccount_API {
@@ -29,7 +31,7 @@ public class    PupilAccount_API {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ServerResponseDto> save(@RequestBody PupilAccountDto pupilAccountDto) {
+    public ResponseEntity<ServerResponseDto> save(@RequestBody PupilAccountDto pupilAccountDto) throws ParseException {
         return ResponseEntity.ok(pupilAccountService.save(pupilAccountDto));
     }
 

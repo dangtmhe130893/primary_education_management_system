@@ -103,6 +103,39 @@
                                        v-on:keyup="validatePhoneUser(); validatePhoneUserLength();validatePhoneUserType()"/>
                             </div>
                             <div class="form-group">
+                                <label>Giới tính:</label><sup style="color: red"> *</sup>
+                                <div>
+                                    <label class="radio-container">
+                                        <span style="font-size: 13px">Nam</span>
+                                        <input type="radio" name="male" v-model="sex"
+                                               value="1">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="radio-container">
+                                        <span style="font-size: 13px">Nữ</span>
+                                        <input type="radio" name="female" v-model="sex"
+                                               value="2">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="radio-container">
+                                        <span style="font-size: 13px">Khác</span>
+                                        <input type="radio" name="other" v-model="sex"
+                                               value="9">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Ngày sinh:</label><sup style="color: red"> *</sup>
+                                <p class="error-message" v-bind:class="{ hidden : validBirthday}">
+                                    Trường này là bắt buộc</p>
+                                <div style="position: relative;">
+                                    <input id="birthday" class="form-control"
+                                           v-on:blur="validateBirthday()"
+                                           v-on:keyup="validateBirthday()">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label>Mật khẩu:</label><sup style="color: red"> *</sup>
                                 <p class="error-message" v-bind:class="{ hidden : validPassword}">
                                     Trường này là bắt buộc</p>
@@ -123,6 +156,8 @@
                             </div>
                             <div style="display: flex; flex-direction: column" class="form-group">
                                 <label>Chọn Role:</label>
+                                <p class="error-message" v-bind:class="{ hidden : validRole}">
+                                    Trường này là bắt buộc</p>
                                 <select class="form-control" id="select_role" multiple="multiple">
                                     <option value="STAFF">STAFF</option>
                                     <option value="TEACHER">TEACHER</option>

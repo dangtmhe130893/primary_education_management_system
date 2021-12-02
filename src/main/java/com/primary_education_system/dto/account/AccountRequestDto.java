@@ -1,5 +1,6 @@
 package com.primary_education_system.dto.account;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +17,6 @@ public class AccountRequestDto {
     private String listRoleName;
     private String birthday;
     private String address;
+    private int sex;
 
 }

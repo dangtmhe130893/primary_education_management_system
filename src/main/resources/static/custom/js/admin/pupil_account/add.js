@@ -36,6 +36,7 @@ $(document).ready(function () {
         },
         mounted() {
             this.loadListClass();
+
         }
     })
 
@@ -61,6 +62,7 @@ $(document).ready(function () {
 
             isShowErrorGrade: false,
             isShowErrorClass: false,
+            isShowErrorBirthday: false,
         },
         watch: {
             id(value) {
@@ -103,6 +105,7 @@ $(document).ready(function () {
                     motherName: this.motherName,
                     grade: this.grade,
                     classId: this.classId,
+                    birthday: $("#birthday").val(),
                 }
 
                 if (this.id) {
@@ -150,6 +153,9 @@ $(document).ready(function () {
                             self.address = data.address;
                             self.fatherName = data.fatherName;
                             self.motherName = data.motherName;
+                            if (data.birthday) {
+                                $("#birthday").val(moment(data.birthday).format('YYYY/MM/DD'));
+                            }
                         }
                     }
                 })
@@ -177,10 +183,14 @@ $(document).ready(function () {
             validateClass() {
                 this.isShowErrorClass = !this.classId;
             },
+            validateBirthday() {
+                this.isShowErrorBirthday = $("#birthday").val() == "";
+            },
             validateForm() {
                 this.validateGrade();
                 this.validateClass();
-                return !this.isShowErrorGrade && !this.isShowErrorClass;
+                this.validateBirthday();
+                return !this.isShowErrorGrade && !this.isShowErrorClass && !this.isShowErrorBirthday;
             },
             resetPopup() {
                 this.classId = "";
@@ -198,12 +208,18 @@ $(document).ready(function () {
                 this.motherName = "";
                 this.isShowErrorGrade = false;
                 this.isShowErrorClass = false;
+                this.isShowErrorBirthday = false;
+                $("#birthday").val("");
+
 
             }
         },
         mounted() {
 
             let self = this;
+
+            configOneDateNotTime('birthday');
+            $("#birthday").val("");
 
             $('#modal_add_pupil_account').on('hidden.bs.modal', function () {
                 self.resetPopup();

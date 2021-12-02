@@ -15,6 +15,10 @@ $(document).ready(function () {
             validPassword: true,
             validPasswordLength: true,
             validEqualPassword: true,
+            validBirthday: true,
+            validRole: true,
+
+            sex: 1,
 
         },
         methods: {
@@ -37,6 +41,11 @@ $(document).ready(function () {
                 this.validPassword = true;
                 this.validPasswordLength = true;
                 this.validEqualPassword = true;
+                this.validBirthday = true;
+                this.validRole = true;
+
+                this.sex = 1;
+                $("#birthday").val("");
 
                 $("#select_role").val("").trigger("change");
             },
@@ -46,6 +55,10 @@ $(document).ready(function () {
                 $("#account_name").val(data.name);
                 $("#account_email").val(data.email);
                 $("#account_phone").val(data.phone);
+                if (data.birthday) {
+                    $("#birthday").val(moment(data.birthday).format('YYYY/MM/DD'));
+                }
+                this.sex = data.gender;
             },
             validateForm: function () {
                 this.validateNameUser();
@@ -73,9 +86,12 @@ $(document).ready(function () {
                         this.validateEqualPassword();
                     }
                 }
+                this.validateBirthday();
+                this.validateRole();
                 return this.validNameUser && this.validNameUserLength && this.validEmailUserType && this.validEmailUser
                     && this.validEmailUserLength && this.validPassword && this.validPasswordLength
-                    && this.validEqualPassword && this.validPhoneUserType && this.validPhoneUser && this.validPhoneUserLength;
+                    && this.validEqualPassword && this.validPhoneUserType && this.validPhoneUser && this.validPhoneUserLength
+                    && this.validRole && this.validBirthday;
 
             },
             validateNameUser: function () {
@@ -136,6 +152,15 @@ $(document).ready(function () {
                 let confirmPassword = $("#password_confirm").val();
                 this.validEqualPassword = password === confirmPassword;
             },
+
+            validateBirthday() {
+                this.validBirthday = $("#birthday").val() !== "";
+            },
+
+            validateRole() {
+                this.validRole = $("#select_role").val().toString() !== "";
+            },
+
             saveAccount: function (e) {
                 e.preventDefault();
                 if (!this.isUpdateMan) {
@@ -149,6 +174,8 @@ $(document).ready(function () {
                         "password": $("#account_password").val(),
                         "listRoleName": $("#select_role").val().toString(),
                         "id": id_global,
+                        "sex": this.sex,
+                        "birthday": $("#birthday").val(),
                     }
 
                     $.ajax({
@@ -194,6 +221,10 @@ $(document).ready(function () {
                 self.resetForm();
             })
 
+            configOneDateNotTime('birthday');
+            $("#birthday").val("");
+
+
         }
     })
 
@@ -212,5 +243,9 @@ $(document).ready(function () {
             }
         })
     });
+
+    $(document).on("change", "#select_role", function () {
+        accountVue.validateRole();
+    })
 
 })

@@ -34,7 +34,7 @@ public class User_API {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ServerResponseDto> save(@RequestBody AccountRequestDto saveDto) {
+    public ResponseEntity<ServerResponseDto> save(@RequestBody AccountRequestDto saveDto) throws ParseException {
         return ResponseEntity.ok().body(userService.save(saveDto));
     }
 
