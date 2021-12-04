@@ -53,7 +53,7 @@ public class AdminController {
         return "admin/tuition_status";
     }
 
-    @PreAuthorize("@authorizationService.hasPermissionAccess('ACADEMIC_HEAD')")
+    @PreAuthorize("@authorizationService.hasPermissionAccess('SYSTEM_ADMIN')")
     @GetMapping("/pupil_account")
     public String getPupilAccount() {
         return "admin/pupil_account";
