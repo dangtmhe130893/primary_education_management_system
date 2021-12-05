@@ -7,6 +7,7 @@ import com.primary_education_system.dto.pupil_account.ClassIdAndNumberPupil;
 import com.primary_education_system.dto.pupil_account.PupilAccountDto;
 import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.pupil.PupilAccountEntity;
+import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.PupilAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -153,4 +154,9 @@ public class PupilAccountService {
         System.out.println("sĩ số: " + repository.countNumberPupilInClass(classId));
         return (int) repository.countNumberPupilInClass(classId);
     }
+
+    public PupilAccountEntity findByEmail(String email) {
+        return repository.findByEmailAndIsDeletedFalse(email);
+    }
+
 }

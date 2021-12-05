@@ -27,4 +27,6 @@ public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity
     @Query(value = "select count(p.id) from PupilAccountEntity p " +
             "where p.classId = ?1 and p.isDeleted = false")
     long countNumberPupilInClass(Long classId);
+
+    PupilAccountEntity findByEmailAndIsDeletedFalse(String email);
 }

@@ -1,7 +1,9 @@
 package com.primary_education_system.config.security;
 
+import com.primary_education_system.entity.pupil.PupilAccountEntity;
 import com.primary_education_system.entity.user.RoleEntity;
 import com.primary_education_system.entity.user.UserEntity;
+import com.primary_education_system.service.PupilAccountService;
 import com.primary_education_system.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private UserService userService;
 
     @Autowired
+    private PupilAccountService pupilAccountService;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
@@ -36,18 +41,28 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         LOGGER.info("Validate web user with email:  {}", email);
         UserEntity userEntity = userService.findByEmail(email);
-        if (userEntity == null) {
-            throw new BadCredentialsException("Username or password is incorrect!");
+        if (userEntity != null) {
+            if (!passwordEncoder.matches(password, userEntity.getPassword())) {
+                throw new BadCredentialsException("Username or password is incorrect!");
+            }
+            Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
+            for (RoleEntity role : userEntity.getRoles()) {
+                authorities.add(new SimpleGrantedAuthority(role.getName()));
+            }
+            UserDetails userDetails = new CustomUserDetails(email, password, userEntity.getId(), authorities);
+            return new UsernamePasswordAuthenticationToken(userDetails, password, authorities);
         }
-        if (!passwordEncoder.matches(password, userEntity.getPassword())) {
+        // login pupil
+        PupilAccountEntity pupil = pupilAccountService.findByEmail(email);
+        if (pupil == null || !passwordEncoder.matches(password, pupil.getPassword())) {
             throw new BadCredentialsException("Username or password is incorrect!");
         }
         Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
-        for (RoleEntity role : userEntity.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-        }
-        UserDetails userDetails = new CustomUserDetails(email, password, userEntity.getId(), authorities);
+        authorities.add(new SimpleGrantedAuthority("PUPIL_PARENT"));
+        UserDetails userDetails = new CustomUserDetails(email, password, pupil.getId(), authorities);
         return new UsernamePasswordAuthenticationToken(userDetails, password, authorities);
+
+
     }
 
     public boolean supports(Class<?> authentication) {

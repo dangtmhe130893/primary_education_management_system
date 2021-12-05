@@ -1,20 +1,15 @@
 package com.primary_education_system.service;
 
+import com.google.common.base.Objects;
 import com.primary_education_system.config.security.CustomUserDetails;
-import com.primary_education_system.entity.user.RoleEntity;
-import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.enum_type.Roles;
-import com.primary_education_system.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.Collection;
 
 @Service
 public class RedirectService {
-
-    @Autowired
-    private UserRepository userRepository;
 
     public String getDefaultRedirectUri(CustomUserDetails currentUser) {
         boolean isSystem = false;
@@ -22,28 +17,27 @@ public class RedirectService {
         boolean isTeacher = false;
         boolean isAcademicHead = false;
         boolean isHeadMaster = false;
-        boolean isPupilParent = false;
-        UserEntity userEntity = userRepository.findOne(currentUser.getUserId());
-        Set<RoleEntity> roles = userEntity.getRoles();
-        for (RoleEntity role : roles) {
-            String roleName = role.getName();
-            if (Roles.SYSTEM_ADMIN.name().equals(roleName)) {
+        boolean isPupil = false;
+
+        Collection<GrantedAuthority> auths = currentUser.getAuthorities();
+        for (GrantedAuthority auth : auths) {
+            if (Objects.equal(auth.getAuthority(), Roles.SYSTEM_ADMIN.name())) {
                 isSystem = true;
             }
-            if (Roles.STAFF.name().equals(roleName)) {
+            if (Objects.equal(auth.getAuthority(), Roles.STAFF.name())) {
                 isStaff = true;
             }
-            if (Roles.TEACHER.name().equals(roleName)) {
+            if (Objects.equal(auth.getAuthority(), Roles.TEACHER.name())) {
                 isTeacher = true;
             }
-            if (Roles.ACADEMIC_HEAD.name().equals(roleName)) {
+            if (Objects.equal(auth.getAuthority(), Roles.ACADEMIC_HEAD.name())) {
                 isAcademicHead = true;
             }
-            if (Roles.HEAD_MASTER.name().equals(roleName)) {
+            if (Objects.equal(auth.getAuthority(), Roles.HEAD_MASTER.name())) {
                 isHeadMaster = true;
             }
-            if (Roles.PUPIL_PARENT.name().equals(roleName)) {
-                isPupilParent = true;
+            if (Objects.equal(auth.getAuthority(), Roles.PUPIL_PARENT.name())) {
+                isPupil = true;
             }
         }
         if (isSystem) {
@@ -61,8 +55,8 @@ public class RedirectService {
         if (isHeadMaster) {
             return "/admin/tuition";
         }
-        if (isPupilParent) {
-            return "/home";
+        if (isPupil) {
+            return "/pupil/home";
         }
         return "/home";
     }
