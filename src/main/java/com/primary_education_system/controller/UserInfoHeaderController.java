@@ -3,8 +3,6 @@ package com.primary_education_system.controller;
 import com.google.common.base.Objects;
 import com.primary_education_system.config.security.CustomUserDetails;
 import com.primary_education_system.enum_type.Roles;
-import com.primary_education_system.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -16,8 +14,6 @@ import java.util.Collection;
 
 @ControllerAdvice
 public class UserInfoHeaderController {
-    @Autowired
-    private UserRepository userRepository;
 
     @ModelAttribute()
     public void getCurrentUser(@AuthenticationPrincipal CustomUserDetails currentUser,
@@ -56,7 +52,6 @@ public class UserInfoHeaderController {
                 isCanShowPupilMenu = true;
             }
         }
-
 
         model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("year", currentUser.getYear());
