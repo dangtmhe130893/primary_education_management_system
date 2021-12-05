@@ -32,4 +32,6 @@ public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity
     @Query(value = "select p.email from PupilAccountEntity p " +
             "where p.isDeleted = false")
     Set<String> getSetEmailExist();
+
+    PupilAccountEntity findByEmailAndIsDeletedFalse(String email);
 }

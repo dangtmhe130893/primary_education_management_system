@@ -8,6 +8,7 @@ import com.primary_education_system.dto.pupil_account.PupilAccountDto;
 import com.primary_education_system.dto.pupil_account.PupilAccountImportDto;
 import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.pupil.PupilAccountEntity;
+import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.PupilAccountRepository;
 import com.primary_education_system.util.Constant;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -355,4 +356,9 @@ public class PupilAccountService {
         repository.save(listPupilAccount);
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
+
+    public PupilAccountEntity findByEmail(String email) {
+        return repository.findByEmailAndIsDeletedFalse(email);
+    }
+
 }
