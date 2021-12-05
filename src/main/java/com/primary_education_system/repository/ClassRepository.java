@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ClassRepository extends JpaRepository<ClassEntity, Long> {
     @Query(value = "select c from ClassEntity c where " +
@@ -28,4 +29,12 @@ public interface ClassRepository extends JpaRepository<ClassEntity, Long> {
     List<ClassEntity> findByListGrade(List<String> listGrade);
 
     ClassEntity findByHomeroomTeacherIdAndIsDeletedFalse(Long homeroomTeacherId);
+
+    @Query(value = "select c.name from ClassEntity c " +
+            "where c.grade = ?1 and c.isDeleted = false")
+    Set<String> getSetClassNameByGrade(String grade);
+
+    @Query(value = "select c from ClassEntity c " +
+            "where c.name in ?1 and c.isDeleted = false")
+    List<ClassEntity> findByListNameClass(List<String> listNameClass);
 }

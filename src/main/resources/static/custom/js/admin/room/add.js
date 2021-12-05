@@ -175,7 +175,7 @@ $(document).ready(function () {
                     }
                 });
 
-                this.files[0] = null; // to the next import: file changed
+                $("#input-file-excel").val(null); // to the next import: file changed
             })
         },
     })

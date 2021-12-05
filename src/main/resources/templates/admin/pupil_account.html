@@ -69,6 +69,7 @@
     
         
         <div class="table-content" style="margin-top: 20px">
+            <input hidden type="file" id="input-file-excel" accept=".xsl,.xlsx">
             <div style="float: right">
                 <a href="/sample_file/pupil_account_template.xlsx" class="btn btn-sm btn-success" id="btn_download_excel">Tải file mẫu</a>
                 <button class="btn btn-primary btn-sm" id="btn_import">Import excel
@@ -201,6 +202,27 @@
                         </button>
                     </div>
             
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_preview_pupil_account" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="lineModalLabel">Xem trước</h3>
+                    </div>
+                
+                    <div class="modal-body">
+                        <div id="preview">
+                    
+                        </div>
+                    </div>
+                
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-warning btn-sm" data-dismiss="modal">Hủy bỏ</button>
+                        <button style="background-color: blue; color: white" class="btn btn-orange btn-sm" id="save_list_pupil_account">Lưu</button>
+                    </div>
                 </div>
             </div>
         </div>

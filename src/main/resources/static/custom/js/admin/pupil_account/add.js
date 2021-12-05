@@ -1,6 +1,7 @@
 let popupPupilAccountVue;
 let filterVue;
 $(document).ready(function () {
+    let listAccountImport = [];
 
     filterVue = new Vue({
         el: "#filter",
@@ -210,9 +211,52 @@ $(document).ready(function () {
                 this.isShowErrorClass = false;
                 this.isShowErrorBirthday = false;
                 $("#birthday").val("");
+            },
 
+            previewListAccount() {
+                let previewTable = '            <table class="table responsive display nowrap" id="preview_room_table">' +
+                    '                                <thead>' +
+                    '                                <tr>' +
+                    '                                    <th style="width: 100%" class="text-center">Họ tên</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Khối</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Lớp</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Email</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Mật khẩu</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Số điện thoại</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Ngày sinh</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Giới tính</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Địa chỉ</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Họ tên bố</th>' +
+                    '                                    <th style="width: 100%" class="text-center">Họ tên mẹ</th>' +
+                    '                                </tr>' +
+                    '                                </thead>' +
+                    '                                <tbody>' +
+                    '                                </tbody>' +
+                    '                            </table>';
 
-            }
+                $('#preview').html(previewTable);
+                $('#preview_room_table').DataTable({
+                    searching: false,
+                    "ordering": false,
+                    language: {
+                        "url": "/libs/new_data_table/js/vie.json"
+                    },
+                    data: listAccountImport,
+                    columns: [
+                        {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "grade", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "className", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "email", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "password", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "phone", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "birthday", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "gender", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "address", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "fatherName", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                        {"data": "motherName", "orderable": false, "defaultContent": "", "class": 'text-center'},
+                    ]
+                })
+            },
         },
         mounted() {
 
@@ -223,6 +267,55 @@ $(document).ready(function () {
 
             $('#modal_add_pupil_account').on('hidden.bs.modal', function () {
                 self.resetPopup();
+            })
+
+            $(document).on("change", "#input-file-excel", function () {
+                console.log("file change")
+                if (this.files[0] == undefined) {
+                    console.log("file undefined")
+                    return;
+                }
+                let formData = new FormData();
+                formData.append("file", this.files[0]);
+                $.ajax({
+                    type: "POST",
+                    url: "/api/pupil_account/importExcel",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        window.loader.show();
+                    },
+                    success: function (response) {
+                        window.loader.hide();
+                        let code = response.status.code;
+                        if (code === 1000) {
+                            listAccountImport = response.data;
+                            console.log(listAccountImport);
+                            self.previewListAccount();
+
+                            $("#modal_preview_pupil_account").modal("show");
+                        } else if (code === 1008) {
+                            window.alert.show("error", "Danh sách email import đã bị trùng", 5000);
+                        } else {
+                            let rowAndColError = response.data;
+                            let rowError = rowAndColError[0];
+                            let colError = rowAndColError[1];
+                            if (code === 1007) {
+                                window.alert.show("error", "Email import đã tồn tại tại hàng: " + rowError + ", cột: " + colError, 5000);
+                            } else if (code === 1009) {
+                                window.alert.show("error", "Dữ liệu hàng: " + rowError + ", cột: " + colError + " đang bị trống", 5000);
+                            } else if (code === 1010) {
+                                window.alert.show("error", "Định dạng dữ liệu import không chính xác tại hàng: " + rowError + ", cột: " + colError, 5000);
+                            } else if (code === 1011) {
+                                window.alert.show("error", "Tên lớp không tồn tại tại hàng: " + rowError + ", cột: " + colError, 5000);
+                            }
+                        }
+
+                    }
+                });
+
+                $("#input-file-excel").val(null); // to the next import: file changed
             })
 
             $("#form-pupil-account").validate({
@@ -299,6 +392,40 @@ $(document).ready(function () {
                 return regex.test(value);
             }, "Định dạng không chính xác");
         }
+    })
+
+    $("#btn_import").click(function () {
+        $("#input-file-excel").trigger("click");
+    })
+
+    $("#modal_preview_pupil_account").on('hidden.bs.modal', function () {
+        listAccountImport = [];
+        $("#input-file-excel").val(null);
+    })
+
+    $(document).on("click", "#save_list_pupil_account", function () {
+        if (listAccountImport.length === 0) {
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/api/pupil_account/saveList",
+            data: JSON.stringify(listAccountImport),
+            contentType: "application/json",
+            beforeSend: function () {
+                window.loader.show();
+            },
+            success: function (response) {
+                window.loader.hide();
+                if (response.status.code === 1000) {
+                    $("#modal_preview_pupil_account").modal("hide");
+                    listAccountTable.ajax.reload();
+                    window.alert.show("success", "Import danh sách học sinh thành công", 2000);
+                } else {
+                    window.alert.show("error", "Đã có lỗi xảy ra", 2000);
+                }
+            }
+        })
     })
 
     $(document).on("click", ".detail-pupil", function () {

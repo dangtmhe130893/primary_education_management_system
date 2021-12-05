@@ -14,10 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -232,5 +229,16 @@ public class ClassService {
 
     public ClassEntity findByHomeroomTeacherId(Long homeroomTeacherId) {
         return classRepository.findByHomeroomTeacherIdAndIsDeletedFalse(homeroomTeacherId);
+    }
+
+    public Set<String> getSetClassNameByGrade(String grade) {
+        return classRepository.getSetClassNameByGrade(grade);
+    }
+
+    public Map<String, Long> getMapClassIdByClassName(List<String> listNameClass) {
+        List<ClassEntity> listClass = classRepository.findByListNameClass(listNameClass);
+        return listClass
+                .stream()
+                .collect(Collectors.toMap(ClassEntity::getName, ClassEntity::getId));
     }
 }

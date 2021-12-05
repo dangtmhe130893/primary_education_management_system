@@ -15,6 +15,16 @@ public interface ResponseCase {
 
     ResponseStatus SAME_NAME_ROOM = new ResponseStatus(1006, "Same name room");
 
+    ResponseStatus EMAIL_EXIST = new ResponseStatus(1007, "Same email");
+
+    ResponseStatus SAME_EMAIL = new ResponseStatus(1008, "Same email");
+
+    ResponseStatus DATA_IMPORT_EMPTY = new ResponseStatus(1009, "Data import empty");
+
+    ResponseStatus DATA_IMPORT_ERROR_FORMAT = new ResponseStatus(1010, "Data import error format");
+
+    ResponseStatus NAME_CLASS_NOT_FOUND = new ResponseStatus(1011, "Name class not found");
+
     ResponseStatus ERROR = new ResponseStatus(4, "ERROR");
 
 }

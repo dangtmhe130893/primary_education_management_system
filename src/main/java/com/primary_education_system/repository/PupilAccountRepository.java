@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity, Long> {
 
@@ -27,4 +28,8 @@ public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity
     @Query(value = "select count(p.id) from PupilAccountEntity p " +
             "where p.classId = ?1 and p.isDeleted = false")
     long countNumberPupilInClass(Long classId);
+
+    @Query(value = "select p.email from PupilAccountEntity p " +
+            "where p.isDeleted = false")
+    Set<String> getSetEmailExist();
 }
