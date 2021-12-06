@@ -8,7 +8,6 @@ import com.primary_education_system.dto.pupil_account.PupilAccountDto;
 import com.primary_education_system.dto.pupil_account.PupilAccountImportDto;
 import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.pupil.PupilAccountEntity;
-import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.PupilAccountRepository;
 import com.primary_education_system.util.Constant;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -39,7 +38,6 @@ public class PupilAccountService {
     @Autowired
     private ClassService classService;
 
-
     public Page<PupilAccountEntity> getPagePupilAccount(Pageable pageable, String keyword, String grade, Long classId) {
         List<String> listGradeFilter = Lists.newArrayListWithExpectedSize(5);
         List<Long> listClassIdFilter = new ArrayList<>();
@@ -59,7 +57,6 @@ public class PupilAccountService {
         } else {
             listClassIdFilter.add(classId);
         }
-
 
         Page<PupilAccountEntity> pageResult = repository.getPagePupilAccount(keyword, listGradeFilter, listClassIdFilter, pageable);
         List<Long> listClassId = pageResult.getContent()
@@ -142,12 +139,12 @@ public class PupilAccountService {
 
     public Map<Long, Integer> getMapNumberPupilByClassId(List<Long> listClassId) {
         if (listClassId.isEmpty()) {
-            return Collections.EMPTY_MAP;
+            return Collections.emptyMap();
         }
 
         List<ClassIdAndNumberPupil> listClassIdAndNumberPupil = repository.getClassIdAndNumberPupil(listClassId);
         if (listClassIdAndNumberPupil.isEmpty()) {
-            return Collections.EMPTY_MAP;
+            return Collections.emptyMap();
         }
 
         Map<Long, Integer> mapNumberPupilByClassId = new HashMap<>();

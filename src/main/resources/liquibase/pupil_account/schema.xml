@@ -40,4 +40,19 @@
         <addUniqueConstraint columnNames="code" tableName="pupil_account"/>
     </changeSet>
 
+    <changeSet id="create_table_history_pay_tuition" author="dangtm">
+        <createTable tableName="history_pay_tuition">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="pupil_id" type="int(11)"/>
+            <column name="quantity" type="int(11)"/>
+            <column name="created_time" type="DATETIME"/>
+        </createTable>
+        <modifySql dbms="mysql">
+            <append
+                    value="ENGINE=INNODB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_520_ci"/>
+        </modifySql>
+    </changeSet>
+
 </databaseChangeLog>
