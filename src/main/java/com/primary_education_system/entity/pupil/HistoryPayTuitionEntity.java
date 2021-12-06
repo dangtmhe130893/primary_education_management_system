@@ -1,5 +1,6 @@
 package com.primary_education_system.entity.pupil;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,8 @@ public class HistoryPayTuitionEntity {
 
     private Long pupilId;
     private Long quantity;
+
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm")
     private Date createdTime;
 
 }

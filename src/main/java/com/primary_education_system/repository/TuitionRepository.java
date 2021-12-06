@@ -15,4 +15,6 @@ public interface TuitionRepository extends JpaRepository<TuitionEntity, Long> {
 
     TuitionEntity findByIdAndIsDeletedFalse(Long tuitionId);
 
+    TuitionEntity findTop1ByGradeAndIsDeletedFalse(String grade);
+
 }
