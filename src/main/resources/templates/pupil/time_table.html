@@ -1,0 +1,93 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/pupil_template}"
+      th:with="currentPage='pupil_time_table'">
+<head>
+    <title>Thời khóa biếu</title>
+    <link th:href="@{/custom/css/time_schedule.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" src="/custom/js/pupil/time_table.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div id="time_schedule">
+        <h4>Giáo viên chủ nhiệm: {{homeroomTeacher}}</h4>
+        <h4>Phòng học mặc định: {{roomNameDefault}}</h4>
+
+        <h2 style="text-align: center; margin-bottom: 16px;">
+            Thời khóa biểu lớp {{className}}
+        </h2>
+        <div style="display: flex">
+            <div class="list_col_time">
+                <div class="col_time"></div>
+                <div class="col_time" th:each="frame : ${listFrame}" th:text="${frame.name}"></div>
+            </div>
+
+            <div class="list-subject">
+                <div class="subject-item-title">Thứ hai</div>
+                <div v-for="timeSchedule in listTimeScheduleMonday"
+                     :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                    <div>{{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}</div>
+                    <div v-if="timeSchedule.showRoomName">{{timeSchedule.roomName}}</div>
+                </div>
+            </div>
+
+            <div class="list-subject">
+                <div class="subject-item-title">Thứ ba</div>
+                <div v-for="timeSchedule in listTimeScheduleTuesday"
+                     :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                    <div>{{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}</div>
+                    <div v-if="timeSchedule.showRoomName">{{timeSchedule.roomName}}</div>
+                </div>
+            </div>
+            <div class="list-subject">
+                <div class="subject-item-title">Thứ tư</div>
+                <div v-for="timeSchedule in listTimeScheduleWednesday"
+                     :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                    <div>{{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}</div>
+                    <div v-if="timeSchedule.showRoomName">{{timeSchedule.roomName}}</div>
+                </div>
+            </div>
+
+            <div class="list-subject">
+                <div class="subject-item-title">Thứ năm</div>
+                <div v-for="timeSchedule in listTimeScheduleThursday"
+                     :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                    <div>{{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}</div>
+                    <div v-if="timeSchedule.showRoomName">{{timeSchedule.roomName}}</div>
+                </div>
+            </div>
+
+            <div class="list-subject">
+                <div class="subject-item-title">Thứ sáu</div>
+                <div v-for="timeSchedule in listTimeScheduleFriday"
+                     :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                    <div>{{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}</div>
+                    <div v-if="timeSchedule.showRoomName">{{timeSchedule.roomName}}</div>
+                </div>
+            </div>
+
+            <div class="list-subject">
+                <div class="subject-item-title">Thứ bảy</div>
+                <div v-for="timeSchedule in listTimeScheduleSaturday"
+                     :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                    <div>{{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}</div>
+                    <div v-if="timeSchedule.showRoomName">{{timeSchedule.roomName}}</div>
+                </div>
+            </div>
+
+            <div class="list-subject">
+                <div class="subject-item-title">Chủ nhật</div>
+                <div v-for="timeSchedule in listTimeScheduleSunday"
+                     :id="'time-schedule-' + timeSchedule.id" class="time-schedule-cell">
+                    <div>{{timeSchedule.nameSubject}} - {{timeSchedule.nameTeacher}}</div>
+                    <div v-if="timeSchedule.showRoomName">{{timeSchedule.roomName}}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
