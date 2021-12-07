@@ -1,0 +1,79 @@
+<div th:fragment="lookfor">
+    
+    <div style="float: right; display: flex; width: 70%; justify-content: flex-end;">
+        <div class="input-group" style="width: 40%; float: right">
+            <input class="form-control" type="text" id="input-search_pupil"
+                   placeholder="Tìm kiếm theo tên học sinh" autocomplete="off">
+            <div class="input-group-append" id="btn_search_pupil">
+                    <span class="input-group-text amber lighten-3">
+                        <i style="font-size: 14px; cursor: pointer" class="fa fa-search text-grey"
+                           aria-hidden="true"></i>
+                    </span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="table-content" style="margin-top: 20px">
+        <table class="table responsive" id="look_for_tuition_pupil">
+            <thead>
+            <th style="width: 20% !important" scope="col" class="text-center">Học sinh</th>
+            <th style="width: 20% !important" scope="col" class="text-center">Học phí cần thu</th>
+            <th style="width: 20% !important" scope="col" class="text-center">Học phí đã thu</th>
+            <th style="width: 20% !important" scope="col" class="text-center">Trạng thái</th>
+            <th style="width: 20% !important" scope="col" class="text-center">Cập nhật học phí</th>
+            </thead>
+        </table>
+    </div>
+    
+    <div class="modal fade bd-example-modal-lg" id="modal_update_tuition" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật học phí</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <div class="form-group">
+                                <label>Học sinh:</label>
+                                <input disabled v-model="pupilName" class="form-control"/>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Học phí:</label>
+                                <input disabled v-model="tuitionTotal" class="form-control"/>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Học phí còn phải đóng:</label>
+                                <input disabled v-model="tuitionRemain" class="form-control"/>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Cập nhật học phí:</label>
+                                <p class="error-message" :class="{ hidden : !isShowErrorRequireTuitionAdd}">
+                                    Trường này là bắt buộc</p>
+                                <p class="error-message" :class="{ hidden : !isShowErrorTuitionAdd}">
+                                    Vượt quá số tiền cần phải đóng</p>
+                                <input type="number" v-model="tuitionAdd" class="form-control"
+                                       @blur="validateTuitionAdd(); validateTuitionAddRequire()"
+                                       @keyup="validateTuitionAdd(); validateTuitionAddRequire()"/>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary btn-sm" @click="updateTuition">
+                        Cập nhật
+                    </button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>

@@ -241,4 +241,11 @@ public class ClassService {
                 .stream()
                 .collect(Collectors.toMap(ClassEntity::getName, ClassEntity::getId));
     }
+
+    public Map<Long, String> getMapGradeByClassId(List<Long> listClassId) {
+        List<ClassEntity> listClass = classRepository.findByIdInAndIsDeletedFalse(listClassId);
+        return listClass
+                .stream()
+                .collect(Collectors.toMap(ClassEntity::getId, ClassEntity::getGrade));
+    }
 }

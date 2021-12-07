@@ -1,0 +1,57 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/admin_template}"
+      th:with="currentPage='tuition_status'">
+<head>
+    <title>Quản lý tình trạng học phí</title>
+    <script type="text/javascript" src="/custom/js/admin/tuition_status/tab_control.js"></script>
+    <script type="text/javascript" src="/custom/js/admin/tuition_status/list_revenue.js"></script>
+    <script type="text/javascript" src="/custom/js/admin/tuition_status/list_look_for.js"></script>
+    
+    <style>
+        .btn-tap {
+            width: 90px;
+        }
+        .btn-tap:focus {
+            box-shadow: none;
+        }
+        
+        .btn-tap.active {
+            background-color: #3B4350;
+            color: white;
+        }
+        
+        .btn-sub-tap {
+            width: 90px;
+        }
+        .btn-sub-tap:focus {
+            box-shadow: none;
+        }
+        .btn-sub-tap.active {
+            background-color: #3B4350;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    <div th:fragment="table-admin">
+        <div style="border-bottom: solid 1px #ccc; padding: 1px; margin-top: 20px; ">
+            <button id="btn_show_revenue" class="btn btn-sm btn-tap active">Thống kê</button>
+            <button id="btn_show_look_for" class="btn btn-sm btn-tap">Tìm kiếm</button>
+        </div>
+        
+        <div class="div_tuition_status" id="div_tuition_revenue" style="margin-top: 20px">
+            <div th:replace="admin/tuition_status/revenue :: revenue"></div>
+        </div>
+        <div class="div_tuition_status hidden" id="div_tuition_look_for" style="margin-top: 20px">
+            <div th:replace="admin/tuition_status/lookfor :: lookfor"></div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

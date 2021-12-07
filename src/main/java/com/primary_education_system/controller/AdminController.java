@@ -50,7 +50,7 @@ public class AdminController {
     @PreAuthorize("@authorizationService.hasPermissionAccess('STAFF')")
     @GetMapping("/tuition_status")
     public String getTuitionStatus() {
-        return "admin/tuition_status";
+        return "admin/tuition_status/tuition_status";
     }
 
     @PreAuthorize("@authorizationService.hasPermissionAccess('SYSTEM_ADMIN')")

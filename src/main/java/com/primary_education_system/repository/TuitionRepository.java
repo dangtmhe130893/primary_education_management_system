@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TuitionRepository extends JpaRepository<TuitionEntity, Long> {
 
@@ -15,4 +17,7 @@ public interface TuitionRepository extends JpaRepository<TuitionEntity, Long> {
 
     TuitionEntity findByIdAndIsDeletedFalse(Long tuitionId);
 
+    List<TuitionEntity> findByIsDeletedFalse();
+
+    TuitionEntity findByGradeAndIsDeletedFalse(String grade);
 }

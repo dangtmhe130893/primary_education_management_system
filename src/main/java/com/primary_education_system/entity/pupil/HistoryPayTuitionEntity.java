@@ -20,4 +20,12 @@ public class HistoryPayTuitionEntity {
     private Long quantity;
     private Date createdTime;
 
+    public HistoryPayTuitionEntity() {
+    }
+
+    public HistoryPayTuitionEntity(Long pupilId, Long quantity, Date createdTime) {
+        this.pupilId = pupilId;
+        this.quantity = quantity;
+        this.createdTime = createdTime;
+    }
 }

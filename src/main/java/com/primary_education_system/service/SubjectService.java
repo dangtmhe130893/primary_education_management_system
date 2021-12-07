@@ -106,7 +106,6 @@ public class SubjectService {
         if (userEntity == null) {
             return null;
         }
-        System.out.println("id: " + userId);
         List<SubjectEntity> listSubject = subjectRepository.getListSubjectByTeacherId(userId);
         return listSubject;
     }

@@ -358,4 +358,44 @@ public class PupilAccountService {
         return repository.findByEmailAndIsDeletedFalse(email);
     }
 
+    public int countTotalPupil() {
+        return (int) repository.countTotalPupil();
+    }
+
+    public Map<String, Integer> getMapNumberPupilByGrade() {
+        List<Object[]> listObjectGradeAndNumberPupil = repository.getObjectGradeAndNumberPupil();
+        Map<String, Integer> result = new HashMap<>();
+        listObjectGradeAndNumberPupil.forEach(object -> {
+            result.put((String) object[0], ((Long) object[1]).intValue());
+        });
+        return result;
+    }
+
+    public Map<String, List<Long>> getMapListPupilIdByGrade(Set<Long> listTuitionId) {
+        List<PupilAccountEntity> listPupil = repository.findByIdInAndIsDeletedFalse(listTuitionId);
+        return listPupil
+                .stream()
+                .collect(Collectors.groupingBy(PupilAccountEntity::getGrade,
+                        Collectors.mapping(PupilAccountEntity::getId, Collectors.toList())));
+    }
+
+    public Map<Long, List<Long>> getMapListPupilIdByClassId(Set<Long> listTuitionId) {
+        List<PupilAccountEntity> listPupil = repository.findByIdInAndIsDeletedFalse(listTuitionId);
+        return listPupil
+                .stream()
+                .collect(Collectors.groupingBy(PupilAccountEntity::getClassId,
+                        Collectors.mapping(PupilAccountEntity::getId, Collectors.toList())));
+    }
+
+    public List<PupilAccountEntity> getByClassId(Long classId) {
+        return repository.findByClassIdAndIsDeletedFalse(classId);
+    }
+
+    public List<PupilAccountEntity> findByKeywordAndByIsDeletedFalse(String keyword) {
+        return repository.findByKeywordAndIsDeletedFalse(keyword);
+    }
+
+    public PupilAccountEntity findById(Long pupilId) {
+        return repository.findByIdAndIsDeletedFalse(pupilId);
+    }
 }

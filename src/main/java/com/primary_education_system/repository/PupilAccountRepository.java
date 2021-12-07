@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,4 +35,20 @@ public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity
     Set<String> getSetEmailExist();
 
     PupilAccountEntity findByEmailAndIsDeletedFalse(String email);
+
+    @Query(value = "select count(p.id) from PupilAccountEntity p " +
+            "where p.isDeleted = false")
+    long countTotalPupil();
+
+    @Query(value = "select p.grade, count(p.id) from PupilAccountEntity p " +
+            "where p.isDeleted = false group by p.grade")
+    List<Object[]> getObjectGradeAndNumberPupil();
+
+    List<PupilAccountEntity> findByIdInAndIsDeletedFalse(Collection<Long> listTuitionId);
+
+    List<PupilAccountEntity> findByClassIdAndIsDeletedFalse(Long classId);
+
+    @Query(value = "select p from PupilAccountEntity p " +
+            "where p.name like concat('%', ?1, '%') and p.isDeleted = false")
+    List<PupilAccountEntity> findByKeywordAndIsDeletedFalse(String keyword);
 }

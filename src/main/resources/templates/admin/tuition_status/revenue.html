@@ -1,0 +1,67 @@
+<div th:fragment="revenue">
+    <div style="border-bottom: solid 1px #ccc; padding: 1px; margin-top: 20px; ">
+        <button id="btn_show_all_school" class="btn btn-sm btn-sub-tap active">Toàn trường</button>
+        <button id="btn_show_group_by_grade" class="btn btn-sm btn-sub-tap">Theo khối</button>
+        <button id="btn_show_group_by_class" class="btn btn-sm btn-sub-tap">Theo lớp</button>
+        <button id="btn_show_all_pupil" class="btn btn-sm btn-sub-tap">Tất cả</button>
+    </div>
+    
+    
+    <div class="div_revenue" id="div_show_all_school" style="margin-top: 20px">
+        <div class="table-content" style="margin-top: 20px">
+            <table class="table responsive" id="tuition_all_school_table">
+                <thead>
+                <th style="width: 25% !important" scope="col" class="text-center">Tổng số học sinh</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Học phí cần thu</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Học phí đã thu</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Trạng thái</th>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="div_revenue hidden" id="div_show_group_by_grade" style="margin-top: 20px">
+        <div class="table-content" style="margin-top: 20px">
+            <table class="table responsive" id="tuition_group_by_grade">
+                <thead>
+                <th style="width: 25% !important" scope="col" class="text-center">Khối</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Tổng số học sinh</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Học phí cần thu</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Học phí đã thu</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Trạng thái</th>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="div_revenue hidden" id="div_show_group_by_class" style="margin-top: 20px">
+        <div class="table-content" style="margin-top: 20px">
+            <table class="table responsive" id="tuition_group_by_class">
+                <thead>
+                <th style="width: 25% !important" scope="col" class="text-center">Lớp</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Tổng số học sinh</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Học phí cần thu</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Học phí đã thu</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Trạng thái</th>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="div_revenue hidden" id="div_show_all_pupil" style="margin-top: 20px">
+        <div id="div-select-class">
+            <label style="margin-bottom: 0">Chọn lớp: </label>
+            <select id="select-class" style="width: 160px; border-radius: 4px; margin-left: 16px; padding-left: 4px; height: 30px" v-model="classId">
+                <option :value="classs.id" v-for="classs in listClass">{{classs.name}}</option>
+            </select>
+        </div>
+        
+        <div class="table-content" style="margin-top: 20px">
+            <table class="table responsive" id="tuition_all_pupil">
+                <thead>
+                <th style="width: 25% !important" scope="col" class="text-center">Học sinh</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Học phí cần thu</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Học phí đã thu</th>
+                <th style="width: 25% !important" scope="col" class="text-center">Trạng thái</th>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
