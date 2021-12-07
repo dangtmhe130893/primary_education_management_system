@@ -12,13 +12,17 @@ public class TimeScheduleResponseDto {
     private String homeroomTeacher;
     private String roomNameDefault;
     private List<TimeScheduleEntity> listTimeSchedule;
+    private String className;
 
     public TimeScheduleResponseDto() {
     }
 
-    public TimeScheduleResponseDto(String homeroomTeacher, String roomNameDefault, List<TimeScheduleEntity> listTimeSchedule) {
+    public TimeScheduleResponseDto(String homeroomTeacher, String roomNameDefault,
+                                   String className,
+                                   List<TimeScheduleEntity> listTimeSchedule) {
         this.homeroomTeacher = homeroomTeacher;
         this.roomNameDefault = roomNameDefault;
         this.listTimeSchedule = listTimeSchedule;
+        this.className = className;
     }
 }

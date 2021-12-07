@@ -40,4 +40,12 @@ public class PreAuthorizeService {
         return canAccess;
     }
 
+    public boolean isPupil() {
+        CustomUserDetails userDetails = userInfoHolder.getUserDetails();
+        if (userDetails == null) {
+            return false;
+        }
+        return "PUPIL".equals(userDetails.getUserType());
+    }
+
 }

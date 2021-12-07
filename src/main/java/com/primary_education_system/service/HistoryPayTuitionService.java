@@ -7,10 +7,12 @@ import com.primary_education_system.dto.history_pay_tuition.PupilIdAndTuitionSub
 import com.primary_education_system.dto.history_pay_tuition.PupilTuitionDto;
 import com.primary_education_system.dto.history_pay_tuition.RevenueTuitionDto;
 import com.primary_education_system.dto.history_pay_tuition.UpdateTuitionRequestDto;
+
 import com.primary_education_system.entity.pupil.HistoryPayTuitionEntity;
 import com.primary_education_system.entity.pupil.PupilAccountEntity;
 import com.primary_education_system.repository.HistoryPayTuitionRepository;
 import com.primary_education_system.util.Constant;
+import com.primary_education_system.repository.TuitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,10 +37,7 @@ public class HistoryPayTuitionService {
 
     @Autowired
     private ClassService classService;
-
-    public List<HistoryPayTuitionEntity> findByPupilId(Long pupilId) {
-        return historyPayTuitionRepository.findByPupilId(pupilId);
-    }
+    
 
     public Page<RevenueTuitionDto> getPage(String type, Long classIdRequest, String keyword, Pageable pageable) {
         Page<RevenueTuitionDto> result = null;

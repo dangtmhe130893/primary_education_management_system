@@ -1,10 +1,7 @@
 package com.primary_education_system.dto.pupil_account;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Setter
 @Getter

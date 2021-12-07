@@ -38,6 +38,10 @@ public class PupilAccountService {
     @Autowired
     private ClassService classService;
 
+    public PupilAccountEntity findById(Long id) {
+        return repository.findByIdAndIsDeletedFalse(id);
+    }
+
     public Page<PupilAccountEntity> getPagePupilAccount(Pageable pageable, String keyword, String grade, Long classId) {
         List<String> listGradeFilter = Lists.newArrayListWithExpectedSize(5);
         List<Long> listClassIdFilter = new ArrayList<>();

@@ -8,6 +8,7 @@ import com.primary_education_system.dto.time_schedule.TimeScheduleResponseDto;
 import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.FrameTimeScheduleEntity;
 import com.primary_education_system.entity.TimeScheduleEntity;
+import com.primary_education_system.entity.pupil.PupilAccountEntity;
 import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.enum_type.DayOfWeek;
 import com.primary_education_system.repository.TimeScheduleRepository;
@@ -45,6 +46,14 @@ public class TimeScheduleService {
     @Autowired
     private SubjectTeacherService subjectTeacherService;
 
+    public ServerResponseDto findByPupilId(Long pupilId) {
+        PupilAccountEntity pupil = pupilAccountService.findById(pupilId);
+        if (pupil == null) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
+        return getTimeSchedule(pupil.getClassId());
+    }
+
     public ServerResponseDto getTimeSchedule(Long classId) {
         ClassEntity classEntity = classService.findById(classId);
         String roomNameDefault = classService.getRoomNameByClassId(classEntity.getId());
@@ -73,7 +82,8 @@ public class TimeScheduleService {
         });
         setRoomNameForTimeSchedule(listTimeSchedule);
 
-        return new ServerResponseDto(ResponseCase.SUCCESS, new TimeScheduleResponseDto(homeRoomTeacher, roomNameDefault, listTimeSchedule));
+        TimeScheduleResponseDto result = new TimeScheduleResponseDto(homeRoomTeacher, roomNameDefault, classEntity.getName(), listTimeSchedule);
+        return new ServerResponseDto(ResponseCase.SUCCESS, result);
     }
 
     public ServerResponseDto getTimeScheduleForTeacher(Long teacherId) {

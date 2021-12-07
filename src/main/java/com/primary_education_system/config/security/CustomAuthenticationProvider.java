@@ -49,7 +49,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             for (RoleEntity role : userEntity.getRoles()) {
                 authorities.add(new SimpleGrantedAuthority(role.getName()));
             }
-            UserDetails userDetails = new CustomUserDetails(email, password, userEntity.getId(), authorities);
+            UserDetails userDetails = new CustomUserDetails(email, password, userEntity.getId(), "ADMIN", authorities);
             return new UsernamePasswordAuthenticationToken(userDetails, password, authorities);
         }
         // login pupil
@@ -59,7 +59,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
         Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("PUPIL_PARENT"));
-        UserDetails userDetails = new CustomUserDetails(email, password, pupil.getId(), authorities);
+        UserDetails userDetails = new CustomUserDetails(email, password, pupil.getId(), "PUPIL", authorities);
         return new UsernamePasswordAuthenticationToken(userDetails, password, authorities);
 
 

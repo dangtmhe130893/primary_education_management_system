@@ -1,0 +1,25 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/pupil_template}"
+      th:with="currentPage='pupil_tuition'">
+<head>
+    <title>Tình trạng học phí</title>
+    <script type="text/javascript" src="/custom/js/pupil/tuition.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <label>Học phí cần nộp: <span id="total"></span> VND</label>
+    <br>
+    <label>Học phí đã nộp: <span id="payed"></span> VND</label>
+    <br>
+    <label>Trạng thái: <span id="status"></span> </label>
+    <br>
+    <label>Lịch sử nộp học phí:</label>
+    <div id="history_pay_tuition">
+
+    </div>
+
+</div>
+</body>
+</html>
