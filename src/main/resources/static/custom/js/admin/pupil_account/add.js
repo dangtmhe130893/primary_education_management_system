@@ -64,6 +64,7 @@ $(document).ready(function () {
             isShowErrorGrade: false,
             isShowErrorClass: false,
             isShowErrorBirthday: false,
+            isShowErrorFormatBirthday: false,
         },
         watch: {
             id(value) {
@@ -129,7 +130,10 @@ $(document).ready(function () {
                             listAccountTable.ajax.reload();
                             $('#modal_add_pupil_account').modal("hide");
                             window.alert.show("success", "Lưu thành công", 2000);
-                        } else {
+                        } else if (response.status.code === 1001) {
+                            window.alert.show("error", "Email đã tồn tại", 2000);
+                        }
+                        else {
                             window.alert.show("error", "Đã có lỗi xảy ra", 2000);
                         }
                     }
@@ -187,11 +191,15 @@ $(document).ready(function () {
             validateBirthday() {
                 this.isShowErrorBirthday = $("#birthday").val() == "";
             },
+            validateFormatBirthday() {
+                this.isShowErrorFormatBirthday = moment($("#birthday").val()) > moment(new Date());
+            },
             validateForm() {
                 this.validateGrade();
                 this.validateClass();
                 this.validateBirthday();
-                return !this.isShowErrorGrade && !this.isShowErrorClass && !this.isShowErrorBirthday;
+                this.validateFormatBirthday();
+                return !this.isShowErrorGrade && !this.isShowErrorClass && !this.isShowErrorBirthday && !this.isShowErrorFormatBirthday;
             },
             resetPopup() {
                 this.classId = "";
@@ -210,6 +218,7 @@ $(document).ready(function () {
                 this.isShowErrorGrade = false;
                 this.isShowErrorClass = false;
                 this.isShowErrorBirthday = false;
+                this.isShowErrorFormatBirthday = false;
                 $("#birthday").val("");
             },
 

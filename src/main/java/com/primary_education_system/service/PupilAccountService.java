@@ -73,6 +73,16 @@ public class PupilAccountService {
 
     public ServerResponseDto save(PupilAccountDto pupilAccountDto) throws ParseException {
         Long id = pupilAccountDto.getId();
+        boolean isEmailExist;
+        if (id == null) {
+            isEmailExist = repository.countByEmail(pupilAccountDto.getEmail()) != 0;
+        } else {
+            isEmailExist = repository.countByEmailAndId(pupilAccountDto.getEmail(), id) != 0;
+        }
+        if (isEmailExist) {
+            return new ServerResponseDto(ResponseCase.EMAIL_EXISTED);
+        }
+
         boolean isUpdate = id != null;
 
         PupilAccountEntity pupilAccountEntity;

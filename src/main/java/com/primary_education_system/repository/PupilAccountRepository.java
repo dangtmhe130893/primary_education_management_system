@@ -51,4 +51,12 @@ public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity
     @Query(value = "select p from PupilAccountEntity p " +
             "where p.name like concat('%', ?1, '%') and p.isDeleted = false")
     List<PupilAccountEntity> findByKeywordAndIsDeletedFalse(String keyword);
+
+    @Query(value = "select count(p.id) from PupilAccountEntity p " +
+            "where p.isDeleted = false and p.email = ?1")
+    int countByEmail(String email);
+
+    @Query(value = "select count(p.id) from PupilAccountEntity p " +
+            "where p.isDeleted = false and p.email = ?1 and p.id <> ?2")
+    int countByEmailAndId(String email, Long id);
 }

@@ -17,9 +17,13 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "where u.isDeleted = false and u.id <> 1 and (u.name like %?1% or u.email like %?1%)")
     Page<UserEntity> getListAccount(String keyword, Pageable pageable);
 
-    @Query(value = "select count(u) from UserEntity u " +
+    @Query(value = "select count(u.id) from UserEntity u " +
             "where u.email = ?1 and u.id <> ?2 and u.isDeleted = false ")
     int countByEmailAndId(String email, Long id);
+
+    @Query(value = "select count(u.id) from UserEntity u " +
+            "where u.email = ?1 and u.isDeleted = false ")
+    int countByEmail(String email);
 
     @Query(value = "select u.* from user as u " +
             "inner join subject_teacher as sb on u.id = sb.teacher_id " +
@@ -64,4 +68,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     List<UserEntity> getListHomeroomTeacher();
 
     List<UserEntity> findByIdInAndIsDeletedFalse(List<Long> listTeacherId);
+
+    @Query(value = "select u.email from UserEntity u " +
+            "where u.isDeleted = false")
+    List<String> getListEmail();
+
 }

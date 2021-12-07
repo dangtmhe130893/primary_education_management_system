@@ -128,10 +128,12 @@
                                 <label>Ngày sinh:</label><sup style="color: red"> *</sup>
                                 <p class="error-message" v-bind:class="{ hidden : validBirthday}">
                                     Trường này là bắt buộc</p>
+                                <p class="error-message" v-bind:class="{ hidden : validFormatBirthday}">
+                                    Ngày sinh không được lớn hơn ngày hiện tại</p>
                                 <div style="position: relative;">
                                     <input id="birthday" class="form-control"
-                                           v-on:blur="validateBirthday()"
-                                           v-on:keyup="validateBirthday()">
+                                           v-on:blur="validateBirthday(); validateFormatBirthday()"
+                                           v-on:keyup="validateBirthday(); validateFormatBirthday()">
                                 </div>
                             </div>
                             <div class="form-group">

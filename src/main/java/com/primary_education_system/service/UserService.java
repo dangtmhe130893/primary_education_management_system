@@ -56,10 +56,16 @@ public class UserService {
     }
 
     public ServerResponseDto save(AccountRequestDto saveDto) throws ParseException {
-        boolean isEmailExist = userRepository.countByEmailAndId(saveDto.getEmail(), saveDto.getId()) != 0;
+        boolean isEmailExist;
+        if (saveDto.getId() == null) {
+            isEmailExist = userRepository.countByEmail(saveDto.getEmail()) != 0;
+        } else {
+            isEmailExist = userRepository.countByEmailAndId(saveDto.getEmail(), saveDto.getId()) != 0;
+        }
         if (isEmailExist) {
             return new ServerResponseDto(ResponseCase.EMAIL_EXISTED);
         }
+
         UserEntity userEntity;
         if (saveDto.getId() == null) {
             userEntity = new UserEntity();
@@ -251,5 +257,9 @@ public class UserService {
         }
         userEntity.setHomeroomTeacher(false);
         userRepository.save(userEntity);
+    }
+
+    public ServerResponseDto getListEmail() {
+        return new ServerResponseDto(ResponseCase.SUCCESS, userRepository.getListEmail());
     }
 }

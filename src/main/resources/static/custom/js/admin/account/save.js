@@ -16,6 +16,7 @@ $(document).ready(function () {
             validPasswordLength: true,
             validEqualPassword: true,
             validBirthday: true,
+            validFormatBirthday: true,
             validRole: true,
 
             sex: 1,
@@ -42,6 +43,7 @@ $(document).ready(function () {
                 this.validPasswordLength = true;
                 this.validEqualPassword = true;
                 this.validBirthday = true;
+                this.validFormatBirthday = true;
                 this.validRole = true;
 
                 this.sex = 1;
@@ -87,11 +89,16 @@ $(document).ready(function () {
                     }
                 }
                 this.validateBirthday();
+                if (this.validBirthday) {
+                    this.validateFormatBirthday();
+                }
+
                 this.validateRole();
+
                 return this.validNameUser && this.validNameUserLength && this.validEmailUserType && this.validEmailUser
                     && this.validEmailUserLength && this.validPassword && this.validPasswordLength
                     && this.validEqualPassword && this.validPhoneUserType && this.validPhoneUser && this.validPhoneUserLength
-                    && this.validRole && this.validBirthday;
+                    && this.validRole && this.validBirthday && this.validFormatBirthday;
 
             },
             validateNameUser: function () {
@@ -157,6 +164,10 @@ $(document).ready(function () {
                 this.validBirthday = $("#birthday").val() !== "";
             },
 
+            validateFormatBirthday() {
+                this.validFormatBirthday = moment($("#birthday").val()) <= moment(new Date());
+            },
+
             validateRole() {
                 this.validRole = $("#select_role").val().toString() !== "";
             },
@@ -198,7 +209,6 @@ $(document).ready(function () {
                                 }, 1000);
                             } else if (response.status.code === 1001) {
                                 window.alert.show("error", "Email đã tồn tại", 2000);
-
                             } else {
                                 window.alert.show("error", "Đã có lỗi xảy ra", 2000);
                             }

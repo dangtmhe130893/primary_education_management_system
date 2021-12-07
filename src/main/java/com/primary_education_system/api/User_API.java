@@ -90,4 +90,9 @@ public class User_API {
     public ResponseEntity<ServerResponseDto> getListHomeroomTeacher() {
         return ResponseEntity.ok(new ServerResponseDto(ResponseCase.SUCCESS, userService.getListHomeroomTeacher()));
     }
+
+    @GetMapping("/getListEmail")
+    public ResponseEntity<ServerResponseDto> getListEmail() {
+        return ResponseEntity.ok(new ServerResponseDto(ResponseCase.SUCCESS, userService.getListEmail()));
+    }
 }
