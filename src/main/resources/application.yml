@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/primary_education_system?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Ho_Chi_Minh
-    username: rabiloo
-    password: rabiloo
+    username: admin
+    password: 123455
     tomcat:
       max-wait: 20000
       max-active: 150
