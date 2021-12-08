@@ -212,10 +212,10 @@ public class HistoryPayTuitionService {
 
     public ServerResponseDto detail(Long pupilId) {
         PupilAccountEntity pupilAccountEntity = pupilAccountService.findById(pupilId);
-        String pupilName = pupilAccountEntity.getName();
         if (pupilAccountEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
+        String pupilName = pupilAccountEntity.getName();
         int tuitionRequire = tuitionService.getTuitionByGrade(pupilAccountEntity.getGrade());
         Long tuitionSubmittedLong = historyPayTuitionRepository.getTuitionSubmittedByPupilId(pupilId);
         int tuitionSubmitted = tuitionSubmittedLong != null ? tuitionSubmittedLong.intValue() : 0;
