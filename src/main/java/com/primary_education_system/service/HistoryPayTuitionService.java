@@ -86,7 +86,7 @@ public class HistoryPayTuitionService {
             listClassId.forEach(classId -> {
                 RevenueTuitionDto revenueTuitionDto = new RevenueTuitionDto();
                 revenueTuitionDto.setClassName(mapClassNameByClassId.get(classId));
-                revenueTuitionDto.setNumberPupil(mapNumberPupilByClassId.get(classId));
+                revenueTuitionDto.setNumberPupil(mapNumberPupilByClassId.getOrDefault(classId, 0));
                 revenueTuitionDto.setTuitionRequire(mapTuitionByClassId.getOrDefault(classId, 0) * revenueTuitionDto.getNumberPupil());
                 revenueTuitionDto.setTuitionReceived(mapTotalTuitionReceivedByClassId.getOrDefault(classId, 0));
                 revenueTuitionDto.setDoneTuition(revenueTuitionDto.getTuitionRequire().equals(revenueTuitionDto.getTuitionReceived()));
@@ -131,10 +131,13 @@ public class HistoryPayTuitionService {
     }
 
     private Map<Long, Integer> getMapTuitionSubmittedByClassId(List<Long> listPupilId) {
+        if (listPupilId.isEmpty()) {
+            return Collections.emptyMap();
+        }
         List<PupilIdAndTuitionSubmitted> listObjectPupilIdAndTuitionSubmitted = historyPayTuitionRepository
                 .getListObjectTuitionIdAndTotalTuitionSubmitted(listPupilId);
 
-        Map<Long, Integer> mapResult = new HashMap<>(listPupilId.size());
+        Map<Long, Integer> mapResult = new HashMap<>(listObjectPupilIdAndTuitionSubmitted.size());
         listObjectPupilIdAndTuitionSubmitted.forEach(object -> {
             mapResult.put(object.getPupilId(), object.getTuitionSubmitted());
         });
