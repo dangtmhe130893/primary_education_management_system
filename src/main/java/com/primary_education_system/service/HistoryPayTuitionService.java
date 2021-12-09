@@ -55,7 +55,7 @@ public class HistoryPayTuitionService {
     }
 
     public Page<RevenueTuitionDto> getPage(String type, Long classIdRequest, String keyword, Pageable pageable) {
-        Page<RevenueTuitionDto> result = null;
+        Page<RevenueTuitionDto> result;
         if ("all_school".equals(type)) {
             result = new PageImpl<>(Arrays.asList(getRevenueForAllSchool()), pageable, 1);
         } else if ("group_by_grade".equals(type)) {
@@ -126,6 +126,8 @@ public class HistoryPayTuitionService {
                 listRevenueTuition.add(revenueTuitionDto);
             });
             result = new PageImpl<>(listRevenueTuition, pageable, listPupilId.size());
+        } else {
+            result = new PageImpl<>(Collections.emptyList());
         }
         return result;
     }

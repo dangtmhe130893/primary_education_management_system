@@ -66,4 +66,9 @@ public class ClassMaterialService {
     public void deleteByListClassId(List<Long> listClassIdRemoved) {
         classMaterialRepository.deleteByListClassId(listClassIdRemoved);
     }
+
+    @Transactional
+    public void deleteMaterialRelatedClass(Long classId) {
+        classMaterialRepository.deleteByClassId(classId);
+    }
 }

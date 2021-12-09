@@ -8,6 +8,7 @@ import com.primary_education_system.entity.ClassEntity;
 import com.primary_education_system.entity.RoomEntity;
 import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.repository.ClassRepository;
+import com.primary_education_system.service.material.ClassMaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,12 @@ public class ClassService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PupilAccountService pupilAccountService;
+
+    @Autowired
+    private ClassMaterialService classMaterialService;
 
     public Page<ClassEntity> getPage(Pageable pageable, String keyword) {
         Page<ClassEntity> pageResult = classRepository.getPage(keyword, pageable);
@@ -138,8 +145,19 @@ public class ClassService {
 
         /* delete Time schedule */
         timeScheduleService.deleteTimeScheduleByClassId(classId);
+
+        /* update status homeroom */
         userService.updateStatusHomeroom(classEntity.getHomeroomTeacherId());
+
+        /* update status room */
         roomService.updateStatusIsSelected(classEntity.getRoomId());
+
+        /* delete all pupil in class */
+        pupilAccountService.deleteAllPupilInClass(classId);
+
+        /* delete Material related to class */
+        classMaterialService.deleteMaterialRelatedClass(classId);
+
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
@@ -247,5 +265,13 @@ public class ClassService {
         return listClass
                 .stream()
                 .collect(Collectors.toMap(ClassEntity::getId, ClassEntity::getGrade));
+    }
+
+    public String getClassNameByClassId(Long classId) {
+        ClassEntity classEntity = classRepository.findByIdAndIsDeletedFalse(classId);
+        if (classEntity == null) {
+            return "";
+        }
+        return classEntity.getName();
     }
 }

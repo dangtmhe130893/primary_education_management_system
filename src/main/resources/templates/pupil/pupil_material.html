@@ -1,0 +1,68 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/pupil_template}"
+      th:with="currentPage='pupil_material'">
+<head>
+    <title>Tài liệu</title>
+    <script type="text/javascript" src="/custom/js/pupil/pupil_material.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:replace="layouts/import :: import_lib_datatable"></div>
+    <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
+    
+    <h4 th:text="'Tài liệu lớp: ' + ${className}"></h4>
+    
+    <div style="float: right; display: flex; width: 70%; justify-content: flex-end;">
+        <div class="input-group" style="width: 40%; float: right">
+            <input class="form-control" type="text" id="search_pupil_material"
+                   placeholder="Tìm kiếm theo tên tài liệu" autocomplete="off">
+            <div class="input-group-append" id="btn_search_pupil_material">
+                    <span class="input-group-text amber lighten-3">
+                        <i style="font-size: 14px; cursor: pointer" class="fa fa-search text-grey"
+                           aria-hidden="true"></i>
+                    </span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="table-content">
+        <table class="table responsive" id="material_table">
+            <thead>
+            <th style="width: 5% !important" scope="col" class="text-center">Mã tài liệu</th>
+            <th style="width: 10% !important" scope="col" class="text-center">Tên tài liệu</th>
+            <th style="width: 5% !important" scope="col" class="text-center">Môn</th>
+            <th style="width: 5% !important" scope="col" class="text-center">Thể loại</th>
+            <th style="width: 10% !important" scope="col" class="text-center">Nội dung</th>
+            <th style="width: 10% !important" scope="col" class="text-center">Link</th>
+            <th style="width: 10% !important" scope="col" class="text-center">Người tạo</th>
+            <th style="width: 10% !important" scope="col" class="text-center">Thời gian đăng ký</th>
+            </th>
+            </thead>
+        </table>
+    </div>
+    
+    <div class="modal fade" id="modal_material_content" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nội dung</h5>
+                </div>
+                <div class="modal-body">
+                    <p id="material_name"></p>
+                    <div style="min-height: 200px" class="form-control" id="textarea_material_content"></div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal" role="button">Đóng
+                    </button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    
+    <input id="class_id" hidden type="text" th:value="${classId}">
+</div>
+</body>
+</html>

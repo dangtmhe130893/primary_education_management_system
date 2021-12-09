@@ -409,4 +409,20 @@ public class PupilAccountService {
     public PupilAccountEntity findById(Long pupilId) {
         return repository.findByIdAndIsDeletedFalse(pupilId);
     }
+
+    public PupilAccountEntity findByIdAndIsDeletedFalse(Long pupilId) {
+        return repository.findByIdAndIsDeletedFalse(pupilId);
+    }
+
+    public void deleteAllPupilInClass(Long classId) {
+        List<PupilAccountEntity> listPupil = repository.findByClassIdAndIsDeletedFalse(classId);
+        if (listPupil.isEmpty()) {
+            return;
+        }
+        listPupil.forEach(pupil -> {
+            pupil.setDeleted(true);
+        });
+
+        repository.save(listPupil);
+    }
 }

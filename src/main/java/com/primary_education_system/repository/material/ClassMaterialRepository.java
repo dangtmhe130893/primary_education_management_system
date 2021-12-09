@@ -20,4 +20,9 @@ public interface ClassMaterialRepository extends JpaRepository<ClassMaterialEnti
     @Query(value = "delete from ClassMaterialEntity cm " +
             "where cm.classId in ?1")
     void deleteByListClassId(List<Long> listClassIdRemoved);
+
+    @Modifying
+    @Query(value = "delete from ClassMaterialEntity cm " +
+            "where cm.classId = ?1")
+    void deleteByClassId(Long classId);
 }
