@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Quản lý tài khoản</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="/css/manage_account.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/edit_teacher_profile.css">
+    <link rel="stylesheet" type="text/css" href="css/templatemo-art-factory.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/css/viewprofile_teacher.css">
+    <link rel="stylesheet" type="text/css" href="/css/owl-carousel.css">
+
+</head>
+
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="/html/admin/homepage_admin.html" class="logo">Primary Education</a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="/html/admin/homepage_admin.html">Trang chủ</a></li>
+                        <li class="scroll-to-section"><a href="/html/admin/view_account.html">Quản lý tài khoản</a></li>
+                        <li class="submenu">
+                            <a>Quản lý cá nhân</a>
+                            <ul>
+                                <li><a href="/html/admin/viewprofile_admin.html">Thông tin cá nhân</a></li>
+                                <li><a href="/html/guest/homepage_guest.html">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<body>
+    <div class="container main-background">
+        <div class="cover">
+            <div class="header">
+                <form action="search" method="get">
+                    <div class="search">
+                        <button type="submit" class="search-button">Search</button>
+                        <input name="textSearch" class="search-input" placeholder="What do you search?" />
+                    </div>
+                </form>
+            </div>
+            <div class="main-title">
+                <div class="main-title-left">
+                    Quản lý tài khoản
+                </div>
+                <div class="main-title-right">
+                    <button name="add" type="button" class="add-button"><a href="add_account.html">+ Add New Account
+                            </a></button>
+                </div>
+            </div>
+            <div>
+                <div class="main-content">
+                    <table class="main-table">
+                        <tr>
+                            <th>ID</th>
+                            <th class="username">Username</th>
+                            <th class="password">Password</th>
+                            <th>Date</th>
+                        </tr>
+                        <c:if test="${requestScope.msg != null}">
+                            <tr>
+                                <th colspan="5">${requestScope.msg}</th>
+                            </tr>
+                        </c:if> -->
+                        <c:forEach items="${requestScope.data}" var="item">
+
+                            <tr>
+                                <td>${item.getId()}</td>
+                                <td>${item.getName()}</td>
+                                <td><img src="images/${item.getImage()}" style="width:75px;height:75px;"></td>
+                                <td>${item.getPriceVND()}</td>
+                                <td style="display: flex;">
+                                    <form action="edit_account.html" method="get">
+                                        <input type="hidden" name="id" value="${item.getId()}" />
+                                        <button class="btn-edit" type="submit"><i class="fa fa-edit"></i></button>
+                                    </form>
+                                    <form action="delete" method="get">
+                                        <input type="hidden" name="id" value="${item.getId()}" />
+                                        <button class="btn-dele"
+                                            onclick="return confirm('Are you sure you want to delete this Product?');"><i
+                                                class="fa fa-trash"></i></button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                    <div style="display: inline-block">
+                        <div class="pagination">
+                            <c:if test="${requestScope.totalPage < 1}">
+                                <h3></h3>
+                            </c:if>
+                            <c:forEach begin="1" end="${requestScope.totalPage}" var="i">
+                                <a class="${requestScope.pageIndex==i?" active":""}" href="list?pageIndex=${i}">${i}</a>
+                            </c:forEach>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+</body>
+
+
+
+
+</html>

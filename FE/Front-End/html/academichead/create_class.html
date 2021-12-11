@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/view_class.css">
+
+    <title>Trang tạo lớp học mới</title>
+</head>
+
+<body align="center">
+    <h1>Tạo thông tin lớp học mới</h1>
+    <form>
+        <label for="fname">Mã Lớp Học</label><br>
+        <input type="text" id="fname" name="fname"><br><br>
+        <label for="lname">Tên Lớp Học</label><br>
+        <input type="text" id="lname" name="lname"><br><br>
+        <label for="fname">Giáo Viên Chủ Nhiệm:</label><br>
+        <input type="text" id="fname" name="fname" placeholder="Nhap tên GV Chủ Nhiệm"><br><br>
+        <label for="lname">Ngày bắt đầu</label><br>
+        <input type="number" id="fname" name="fname" placeholder="Nhập ngày bắt đầu"><br><br>
+        <label for="lname">Ngày kết thúc</label><br>
+        <input type="number" id="fname" name="fname" placeholder="Nhập ngày kết thúc"><br><br>
+        
+        <label for="lname">Ngày Tạo</label><br>
+        <p>
+            <script> document.write(new Date().toLocaleDateString());</script>
+        </p>
+        <input type="submit" value="Submit">
+
+    </form>
+</body>
+
+</html>

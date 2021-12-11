@@ -1,0 +1,195 @@
+.main-background{
+    background-color: #eeeeee;
+    margin-top: 5px;
+    height: 99vh;
+}
+
+.cover{
+    margin-left: calc(100% - 99%);
+    width: 98%;
+    background-color: whitesmoke;
+   
+}
+
+.header{
+    background-color: whitesmoke;
+    height: 65px;
+    margin-top: 8%;
+}
+
+.search{
+    float: left;
+    height: 30px;
+    margin: 8px 0px 0px 10px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+ 
+}
+
+.search-button{
+    height: 30px;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.search-input{
+    margin-left: -5px;
+    height: 30px;
+    border: 1px solid white;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 350px;
+}
+
+.back{
+    float: left;
+    margin: 8px 0px 0px 10px;
+}
+
+.log-out{
+    float: right;
+    margin: 8px 10px 0px 0px;
+}
+
+.log-out-a{
+    color: blue;
+}
+
+.main-title{
+    background-color: royalblue;
+    height: 50px;
+}
+
+.main-title-left{
+    float: left;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
+    color: white;
+}
+
+.main-title-right{
+    float: right;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.add-button{
+    height: 30px;
+    background-color: lightgreen;
+    color: white;
+    border: 1px solid lightgreen;
+}
+
+.main-table {
+    font-family: arial, sans-serif;
+    width: 100%;
+}
+.Name{
+    width: 70%;
+}
+th {
+    text-align: left;
+    height: 35px;
+    padding: 10px !important;
+}
+
+td {
+    text-align: left;
+    padding: 10px !important;
+    height: 90px;
+}
+
+tr:nth-child(even) {
+    background-color: whitesmoke !important;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.btn-dele {
+    margin-top: 20px;
+    background-color: none; /* Blue background */
+    border: none; /* Remove borders */
+    color: red; /* White text */
+    padding: 9px 12px; /* Some padding */
+    font-size: 14px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 100%;
+    height: 35px;
+    width: 35px;
+}
+
+/* Darker background on mouse-over */
+.btn-dele:hover {
+    background-color: red;
+    color: white;
+}
+
+.btn-edit {
+    margin-top: 20px;
+    background-color: none; /* Blue background */
+    border: none; /* Remove borders */
+    color: gold; /* White text */
+    padding: 9px 12px; /* Some padding */
+    font-size: 14px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 100%;
+    height: 35px;
+    width: 35px;
+}
+
+/* Darker background on mouse-over */
+.btn-edit:hover {
+    background-color: gold;
+    color: white;
+}
+
+.label-add{
+    margin-top: 20px;
+}
+
+.input-add{
+    width: 300px;
+    border-radius: 10px;
+}
+
+.button-add{
+    width: 150px;
+    border-radius: 10px;
+    margin-top: 20px;
+    background-color: royalblue;
+    border: 1px solid royalblue;
+    color: white;
+}
+
+.pagination {
+    display: inline-block;
+    float : end;
+
+}
+.pagination a {
+    color: black;
+    font-size: 10px;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+
+}
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+
+}
+.main-content{
+    height : calc(99vh-150px);
+    background-color: white;
+}
+
+.viewpage{
+            top:0px;
+            right:0px;
+}

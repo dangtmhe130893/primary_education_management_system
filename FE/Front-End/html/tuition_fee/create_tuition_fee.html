@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/view_tuition_fee.css">
+    <link rel="stylesheet" type="text/css" href="/css/create_tuitionfee.css">
+    <title>Trang tạo học phí mới</title>
+</head>
+
+<body>
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="/html/headmaster/homepage_headmaster.html" class="logo">Primary Education</a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="/html/headmaster/homepage_headmaster.html">Trang
+                                    Chủ</a></li>
+                            <li class="scroll-to-section"><a href="/html/tuition_fee/view_tuition_fee.html">Quản lý học
+                                    phí</a></li>
+                            <li class="scroll-to-section"><a href="#welcome">Quản lý phòng giáo vụ</a></li>
+
+                            <li class="submenu">
+                                <a>Quản lý tài khoản</a>
+                                <ul>
+                                    <li><a href="/html/headmaster/">Thông tin cá nhân</a></li>
+                                    <li><a href="/html/guest/homepage_guest.html">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div align="center">
+        <form class="form_create">
+        <h1>Tạo thông tin học phí mới</h1><br>
+            <label for="fname">Mã Học Phí</label><br>
+            <input type="text" id="fname" name="fname"><br><br>
+            <label for="lname">Mã Môn Học</label><br>
+            <input type="text" id="lname" name="lname"><br><br>
+            <label for="fname">Tên Môn Học:</label><br>
+            <input type="text" id="fname" name="fname" placeholder="Nhap ten mon hoc"><br><br>
+            <label for="lname">Lệ Phí Đóng Học</label><br>
+            <input type="number" id="fname" name="fname" placeholder="Nhap so tien (VNĐ)"><br><br>
+            <label for="lname">Ngày Tạo</label><br>
+            <p>
+                <script> document.write(new Date().toLocaleDateString());</script>
+            </p>
+            <button type="button" class="btn btn-light"><a href="/html/tuition_fee/view_tuition_fee.html" class="btn_cancel">Hủy bỏ</a> </button>
+            <button type="button" class="btn btn-primary">Xác nhận</button>
+
+        </form>
+    </div>
+</body>
+
+</html>
