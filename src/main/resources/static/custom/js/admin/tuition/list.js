@@ -4,7 +4,6 @@ $(document).ready(function (){
     let columnDefinitions = [
         {"data": "grade", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "fee", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "createdTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": "updatedTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'}
     ];
@@ -43,7 +42,7 @@ $(document).ready(function (){
         "searching": false,
         rowId: 'id',
         "ordering": true,
-        "order": [3, "desc"],
+        "order": [2, "desc"],
         "pagingType": "full_numbers",
         "serverSide": true,
         "columns": columnDefinitions,
@@ -55,7 +54,7 @@ $(document).ready(function (){
                 "render": function (data) {
                     return `<button type="button" data-toggle="modal" data-target="#modal_add_tuition" id="btn_detail_${data.id}" class="btn btn-sm btn-primary detail-tuition">Chi tiết</button>`;
                 },
-                "targets": 4
+                "targets": 3
             },
         ]
     });

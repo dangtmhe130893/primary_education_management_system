@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="insert_table_tuition" author="phuongduc">
+        <insert tableName="tuition">
+            <column name="id" value="1"/>
+            <column name="grade" value="Khối 1"/>
+            <column name="fee" value="0"/>
+        </insert>
+        <insert tableName="tuition">
+            <column name="id" value="2"/>
+            <column name="grade" value="Khối 2"/>
+            <column name="fee" value="0"/>
+        </insert>
+        <insert tableName="tuition">
+            <column name="id" value="3"/>
+            <column name="grade" value="Khối 3"/>
+            <column name="fee" value="0"/>
+        </insert>
+        <insert tableName="tuition">
+            <column name="id" value="4"/>
+            <column name="grade" value="Khối 4"/>
+            <column name="fee" value="0"/>
+        </insert>
+        <insert tableName="tuition">
+            <column name="id" value="5"/>
+            <column name="grade" value="Khối 5"/>
+            <column name="fee" value="0"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

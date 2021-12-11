@@ -43,8 +43,7 @@ public class TuitionService {
         if (isUpdate) {
             tuitionEntity = tuitionRepository.findByIdAndIsDeletedFalse(tuitionId);
         } else {
-            tuitionEntity = new TuitionEntity();
-            tuitionEntity.setCreatedTime(new Date());
+            return new ServerResponseDto(ResponseCase.ERROR);
         }
         tuitionEntity.setUpdatedTime(new Date());
         tuitionEntity.setGrade(tuitionEntityRequest.getGrade());

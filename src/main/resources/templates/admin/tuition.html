@@ -16,15 +16,10 @@
     <div th:fragment="table-tuition">
 
         <div class="table-content">
-            <button style="float:right;" data-toggle="modal" data-target="#modal_add_tuition"
-                    class="btn btn-primary btn-sm" id="btn_add_tuition"
-                    >Thêm mới
-            </button>
             <table class="table responsive" id="tuition_table">
                 <thead>
                 <th style="width: 10% !important" scope="col" class="text-center">Tên Khối</th>
                 <th style="width: 10% !important" scope="col" class="text-center">Học phí</th>
-                <th style="width: 10% !important" scope="col" class="text-center">Thời gian tạo</th>
                 <th style="width: 10% !important" scope="col" class="text-center">Thời gian sửa</th>
                 <th style="width: 10% !important" scope="col" class="text-center"></th>
                 </thead>
@@ -45,7 +40,7 @@
 
                             <div class="form-group">
                                 <label>Khối:</label><sup style="color: red"> *</sup>
-                                <select style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="grade">
+                                <select style="display: block; width: 100%; border: 1px solid #ccc; border-radius: 4px; height: 30px" v-model="grade" disabled>
                                     <option value="Khối 1">Khối 1</option>
                                     <option value="Khối 2">Khối 2</option>
                                     <option value="Khối 3">Khối 3</option>
