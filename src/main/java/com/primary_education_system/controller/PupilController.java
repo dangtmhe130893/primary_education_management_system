@@ -41,6 +41,18 @@ public class PupilController {
         return "pupil/tuition";
     }
 
+    @GetMapping("/profile")
+    public String getProfile(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        Long pupilId = customUserDetails.getUserId();
+        PupilAccountEntity pupilEntity = pupilAccountService.findByIdAndIsDeletedFalse(pupilId);
+        Long classId = pupilEntity.getClassId();
+        String className = classService.getClassNameByClassId(classId);
+
+        model.addAttribute("className", className);
+        model.addAttribute("pupil", pupilEntity);
+        return "pupil/profile";
+    }
+
     @GetMapping("/time_table")
     public String getTimeTable(Model model) {
         List<FrameTimeScheduleEntity> listFrame = frameTimeScheduleService.findAll();
@@ -49,8 +61,7 @@ public class PupilController {
     }
 
     @GetMapping("/material")
-    public String getMaterial(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                              Model model) {
+    public String getMaterial(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         Long pupilId = customUserDetails.getUserId();
         PupilAccountEntity pupilEntity = pupilAccountService.findByIdAndIsDeletedFalse(pupilId);
 

@@ -34,7 +34,7 @@ public class UserController {
         if (userDetails == null) {
             return "login";
         }
-        return "profile";
+        return "admin/profile";
     }
 
     @GetMapping("/change-password")

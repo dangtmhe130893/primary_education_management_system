@@ -1,0 +1,21 @@
+<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{layouts/pupil/pupil_template}"
+      th:with="currentPage='pupil_profile'">
+<head>
+    <title>Thông tin cá nhân</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <p>Họ tên: <span th:text="${pupil.name}"></span></p>
+    <p>Khối: <span th:text="${pupil.grade}"></span></p>
+    <p>Lớp: <span th:text="${className}"></span></p>
+    <p>Email: <span th:text="${pupil.email}"></span></p>
+    <p>Mã học sinh: <span th:text="${pupil.code}"></span></p>
+    <p>Số điện thoại: <span th:text="${pupil.phone}"></span></p>
+    <p>Ngày sinh: <span th:text="${#dates.format(pupil.birthday, 'yyyy/MM/dd')}"></span></p>
+
+</div>
+</body>
+</html>
