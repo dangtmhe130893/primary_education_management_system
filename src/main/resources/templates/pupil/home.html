@@ -1,12 +1,220 @@
-<html xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="https://www.thymeleaf.org"
-      layout:decorate="~{layouts/pupil_template}"
-      th:with="currentPage='pupil_home'">
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Home</title>
+    <title>Trang chủ</title>
+    <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link th:href="@{/libs/bootstrap4/css/bootstrap.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/libs/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/home_guest/homepage_guest.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/custom/css/home_guest/owl-carousel.css}" rel="stylesheet" media="screen"/>
+
+    <link rel="stylesheet" href="/libs/reset-css/normalize.css">
+    <link>
+    <script type="text/javascript" src="/libs/jQuery/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="/libs/jQuery/jquery-2.1.0.min.js"></script>
+
+    <script src="/libs/bootstrap4/js/popper.js" type="text/javascript"></script>
+
+    <!-- Plugins -->
+    <script src="/custom/js/libs/owl-carousel.js"></script>
+    <script src="/custom/js/libs/scrollreveal.min.js"></script>
+    <script src="/custom/js/libs/bootstrap.min.js"></script>
+    <script src="/custom/js/libs/waypoints.min.js"></script>
+    <script type="text/javascript" src="/libs/jQuery/counterup.min.js"></script>
+    <script src="/custom/js/libs/imgfix.min.js"></script>
+
+    <script src="/custom/js/home_guest/custom.js"></script>
+
+    <script src="/custom/js/logout.js" type="text/javascript"></script>
+
 </head>
 <body>
-<div layout:fragment="content">
+<div>
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="/pupil/home" class="logo">Primary Education</a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="/pupil/home" class="active">Trang Chủ</a></li>
+                            <li class="scroll-to-section"><a href="/pupil/time_table">Thời khóa biểu</a></li>
+                            <li class="submenu">
+                                <a>Lớp học</a>
+                                <ul>
+                                    <li><a href="/pupil/material">Xem tài liệu</a></li>
+                                    <li><a href="">Bài tập trên lớp</a></li>
+                                    <li><a href="">Bài tập về nhà</a></li>
+                                    <li><a href="">Kiểm tra điểm số</a></li>
+                                </ul>
+                            </li>
+                            <li class="scroll-to-section"><a href="/pupil/tuition">Tình trạng Học phí</a></li>
+
+                            <li class="submenu">
+                                <a>Quản lý tài khoản</a>
+                                <ul>
+                                    <li><a href="/pupil/profile">Thông tin cá nhân</a></li>
+                                    <li><a href="/logout" id="logoutLink" >Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+
+    <!-- ***** Welcome Area Start ***** -->
+    <div class="welcome-area" id="welcome" th:style="'background-image: url(/custom/image/banner-bg.png)'">
+
+        <!-- ***** Header Text Start ***** -->
+        <div class="header-text">
+            <div class="container">
+                <div class="row">
+                    <div class="left-text col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                         data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+
+                        <h2><strong>"Học tập là hạt giống của kiến thức, kiến thức là hạt giống của hạnh phúc"
+                        </strong><br></h2>
+                        <p>- Ngạn ngữ Gruzia</p>
+                        <a href="#about2" class="main-button-slider">Tìm hiểu thêm những tính năng mới</a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                         data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
+                        <img th:src="@{/custom/image/slider-icon.png}" class="rounded img-fluid d-block mx-auto"
+                             alt="First Vector Graphic" width="100%" style="margin-left: 185px!important;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ***** Header Text End ***** -->
+    </div>
+    <!-- ***** Welcome Area End ***** -->
+
+    <!-- ***** Features Big Item Start ***** -->
+    <section class="section" id="about2">
+        <div class="container">
+            <div class="row">
+                <div class="left-text col-lg-5 col-md-12 col-sm-12 mobile-bottom-fix">
+                    <div class="left-heading">
+                        <h5>Tính năng nổi bật trong bản cập nhật sắp tới:</h5>
+                    </div>
+
+                    <ul>
+                        <li>
+                            <img th:src="@{/custom/image/about-icon-01.png}" alt="">
+                            <div class="text">
+                                <h6>Điểm danh</h6>
+                                <p>Học sinh khi được giáo viên điểm danh có thể xem lại lịch sử điểm danh
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <img th:src="@{/custom/image/about-icon-02.png}" alt="">
+                            <div class="text">
+                                <h6>Làm kiểm tra</h6>
+                                <p>Học sinh sẽ có thể làm bài tập ngay trên lớp theo thời gian quy định của giáo viên.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <img th:src="@{/custom/image/about-icon-03.png}" alt="">
+                            <div class="text">
+                                <h6>Updating...</h6>
+                                <p>Updating...</p>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="right-image col-lg-7 col-md-12 col-sm-12 mobile-bottom-fix-big"
+                     data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
+                    <img th:src="@{/custom/image/updating.jpg}" class="rounded img-fluid d-block mx-auto" alt="App">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Features Big Item End ***** -->
+
+
+    <!-- ***** Features Small Start ***** -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="row">
+                <div class="owl-carousel owl-theme">
+                    <div class="item service-item">
+                        <div class="icon">
+                            <i><img th:src="@{/custom/image/teacher_icon.jpg}" alt=""></i>
+                        </div>
+                        <h5 class="service-title">Em Ngọc Minh</h5>
+                        <p>
+                        <li>" Từ khi trang web được đưa vào giảng dạy ở trường em, em có thể xem lại bất kì công thức nào mà em thiếu sót. "<br></li>
+                        </p>
+                    </div>
+                    <div class="item service-item">
+                        <div class="icon">
+                            <i><img th:src="@{/custom/image/teacher_icon.jpg}" alt=""></i>
+                        </div>
+                        <h5 class="service-title">Em Đình La</h5>
+                        <p>
+                        <li>" Việc học tập của em trở nên dễ dàng hơn vì giao diện của trang web rất dễ sử dụng. "</li>
+                        </p>
+                    </div>
+                    <div class="item service-item">
+                        <div class="icon">
+                            <i><img th:src="@{/custom/image/teacher_icon.jpg}" alt=""></i>
+                        </div>
+                        <h5 class="service-title">Phụ Huynh em Toàn Phạm</h5>
+                        <p>
+                        <li>" Tôi có thể kèm cháu học mỗi tối rất dễ dàng vì tôi có thể xem lại bài giảng rất dễ hiểu từ những tài liệu của giáo viên gửi. "</li>
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ***** Footer Start ***** -->
+    <section class="section" id="about3">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-12 col-sm-12">
+                        <p class="copyright">Nền tảng học tập và hỗ trợ trực tuyến<br>
+                            Thông tin liên hệ<br>
+                            0966151021(Miến phí)<br>
+                            Hotline<br>
+                            Địa chỉ<br>
+                            Sản phẩm cung cấp bởi FPT<br>
+                    </div>
+                    <div class="col-lg-5 col-md-12 col-sm-12">
+                        <ul class="social">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
 
 </div>
 </body>
