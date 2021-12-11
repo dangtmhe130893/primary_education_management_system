@@ -1,0 +1,21 @@
+body{
+    background-image: url(/img/bg_create_tuitionfee.webp);
+    background-repeat: no-repeat;
+  background-attachment: fixed;  
+  background-size: cover;
+  padding-bottom: 17%;
+  padding-top: 1%;
+}
+
+
+.form_create{
+    margin-top: 9%;
+  }
+
+.btn_cancel{
+    color: cornflowerblue;
+}
+
+.btn_cancel:hover{
+    color: cornflowerblue;
+}

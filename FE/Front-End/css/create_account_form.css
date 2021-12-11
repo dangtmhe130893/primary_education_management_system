@@ -1,0 +1,34 @@
+.all .title{
+    color: #100078;
+    padding-bottom: 10px;
+    padding-left: 3px;
+}
+
+.inputEmail{
+    margin: 0.2rem 0;
+    padding:  0.2rem 0;
+}
+
+.inputText{
+    background-color: var(--input-color);
+    margin: 0.2rem 0;
+    padding:  0.2rem 0;
+}
+
+.titleUser{
+    padding-right: 50px;
+}
+
+select{
+    margin: 0.2rem 0;
+    padding:  0.2rem 0;
+}
+
+
+.btnRegister{
+    font-size: 16px;
+    color: black;
+    margin-top: 3px;
+    padding: 3px 6px;
+    font-weight: bold;
+}
