@@ -425,4 +425,12 @@ public class PupilAccountService {
 
         repository.save(listPupil);
     }
+
+    public PupilAccountEntity findFirstByEmail(String email) {
+        return repository.findFirstByEmail(email);
+    }
+
+    public void save(PupilAccountEntity pupilAccountEntity) {
+        repository.save(pupilAccountEntity);
+    }
 }

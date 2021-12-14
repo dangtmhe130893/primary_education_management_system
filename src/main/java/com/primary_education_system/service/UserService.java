@@ -6,6 +6,7 @@ import com.primary_education_system.dto.ResponseCase;
 import com.primary_education_system.dto.ServerResponseDto;
 import com.primary_education_system.dto.account.AccountRequestDto;
 import com.primary_education_system.dto.account.ChangePasswordRequestDto;
+import com.primary_education_system.entity.pupil.PupilAccountEntity;
 import com.primary_education_system.entity.token.TokenEntity;
 import com.primary_education_system.entity.user.RoleEntity;
 import com.primary_education_system.entity.user.UserEntity;
@@ -46,6 +47,9 @@ public class UserService {
 
     @Autowired
     private SubjectTeacherService subjectTeacherService;
+
+    @Autowired
+    private PupilAccountService pupilAccountService;
 
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmailAndIsDeletedFalse(email);
@@ -140,14 +144,23 @@ public class UserService {
         if (tokenEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
-        UserEntity userEntity = userRepository.findOne(tokenEntity.getUserId());
-        if (userEntity == null) {
-            return new ServerResponseDto(ResponseCase.ERROR);
+        Long userId = tokenEntity.getUserId();
+        UserEntity userEntity = userRepository.findOne(userId);
+        PupilAccountEntity pupilAccountEntity;
+        if (userEntity != null) {
+            userEntity.setPassword(passwordEncoder.encode(password));
+            userEntity.setRawPassword(passwordEncoder.encode(password));
+            userRepository.save(userEntity);
+        } else {
+            pupilAccountEntity = pupilAccountService.findByIdAndIsDeletedFalse(userId);
+            if (pupilAccountEntity != null) {
+                pupilAccountEntity.setPassword(passwordEncoder.encode(password));
+                pupilAccountEntity.setRawPassword(passwordEncoder.encode(password));
+                pupilAccountService.save(pupilAccountEntity);
+            } else {
+                return new ServerResponseDto(ResponseCase.ERROR);
+            }
         }
-        userEntity.setPassword(passwordEncoder.encode(password));
-        userEntity.setRawPassword(passwordEncoder.encode(password));
-        userRepository.save(userEntity);
-        tokenService.save(tokenEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
@@ -199,16 +212,27 @@ public class UserService {
 
     public ServerResponseDto forgotPassword(String email) {
         UserEntity userEntity = userRepository.findFirstByEmail(email);
-        if (userEntity == null) {
-            return new ServerResponseDto(ResponseCase.ERROR);
+        PupilAccountEntity pupilAccountEntity;
+        Long userId;
+        if (userEntity != null) {
+            userId = userEntity.getId();
+        } else {
+            pupilAccountEntity = pupilAccountService.findFirstByEmail(email);
+
+            if (pupilAccountEntity == null) {
+                return new ServerResponseDto(ResponseCase.ERROR);
+            } else {
+                userId = pupilAccountEntity.getId();
+            }
         }
+
         String tokenString = tokenService.generateToken();
         String confirmationUrl = host + "confirmForgotPassword?token=" + tokenString;
         String subject = "Quên mật khẩu";
         EmailTemplate emailTemplate = new EmailTemplate(email, subject, confirmationUrl);
         emailService.sendMail(emailTemplate);
 
-        TokenEntity tokenEntity = new TokenEntity(userEntity.getId(), tokenString, 4);
+        TokenEntity tokenEntity = new TokenEntity(userId, tokenString, 4);
         tokenService.save(tokenEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }

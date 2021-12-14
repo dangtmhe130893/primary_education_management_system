@@ -56,7 +56,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 
     @Query(value = "select u.* from user as u " +
-            "where u.email = ?1 limit 1", nativeQuery = true)
+            "where u.email = ?1 and u.is_deleted = false limit 1", nativeQuery = true)
     UserEntity findFirstByEmail(String email);
 
     @Query(value = "select u.* from user as u " +

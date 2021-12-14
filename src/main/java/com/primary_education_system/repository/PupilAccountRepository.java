@@ -60,4 +60,8 @@ public interface PupilAccountRepository extends JpaRepository<PupilAccountEntity
     @Query(value = "select count(p.id) from PupilAccountEntity p " +
             "where p.isDeleted = false and p.email = ?1 and p.id <> ?2")
     int countByEmailAndId(String email, Long id);
+
+    @Query(value = "select p.* from pupil_account as p " +
+            "where p.email = ?1 and p.is_deleted = false limit 1", nativeQuery = true)
+    PupilAccountEntity findFirstByEmail(String email);
 }
