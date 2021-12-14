@@ -75,6 +75,7 @@ $(document).ready(function () {
         "drawCallback": function () {
             $(".btn-show-content").click(function () {
                 $("#material_name").text($(this).attr('data-name'));
+                $("#textarea_material_content").empty();
                 $("#textarea_material_content").append($(this).attr('data-content'))
                 $("#modal_material_content").modal('toggle');
             })
