@@ -2,21 +2,21 @@ let tableClass;
 
 $(document).ready(function (){
     let columnDefinitions = [
-        {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "grade", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "name", "orderable": true, "sort": "name", "defaultContent": "", "class": 'text-center'},
+        {"data": "grade", "orderable": true, "sort": "grade", "defaultContent": "", "class": 'text-center'},
         {"data": "roomName", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "homeroomTeacher", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "createdTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
+        {"data": "createdTime", "orderable": true,  "sort": "createdTime",  "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'}
     ];
 
     let getPageClass = function (requestData, renderFunction, link_api) {
-
+        let sortField = columnDefinitions[requestData.order[0].column].sort;
         let sortDir = requestData.order[0].dir;
         let params = {
             "page": (requestData.start / requestData.length) + 1,
             "size": requestData.length,
-            "sortField": "createdTime",
+            "sortField": sortField,
             "sortDir": sortDir,
             "keyword": $("#search_class_id").val(),
         };
@@ -45,7 +45,7 @@ $(document).ready(function (){
         "searching": false,
         rowId: 'id',
         "ordering": true,
-        "order": [3, "desc"],
+        "order": [4, "desc"],
         "pagingType": "full_numbers",
         "serverSide": true,
         "columns": columnDefinitions,

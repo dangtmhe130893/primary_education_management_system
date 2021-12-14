@@ -2,18 +2,18 @@ let tableRoom;
 
 $(document).ready(function (){
     let columnDefinitions = [
-        {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "createdTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
+        {"data": "name", "orderable": true, "sort": "name", "defaultContent": "", "class": 'text-center'},
+        {"data": "createdTime", "orderable": true, "sort": "createdTime", "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'}
     ];
 
     let getPageRoom = function (requestData, renderFunction, link_api) {
-
+        let sortField = columnDefinitions[requestData.order[0].column].sort;
         let params = {
             "page": (requestData.start / requestData.length) + 1,
             "size": requestData.length,
-            "sortField": "createdTime",
-            "sortDir": "desc",
+            "sortField": sortField,
+            "sortDir": requestData.order[0].dir,
             "keyword": $("#search_room_id").val(),
         };
         window.loader.show();
