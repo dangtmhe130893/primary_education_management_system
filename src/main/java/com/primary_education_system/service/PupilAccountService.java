@@ -173,9 +173,8 @@ public class PupilAccountService {
         Workbook workbook = WorkbookFactory.create(file.getInputStream());
         Sheet sheet = workbook.getSheetAt(0);
         DataFormatter df = new DataFormatter();
-        int[] rowAndColError = new int[2];
 
-        List<PupilAccountImportDto> listPupilAccount = new ArrayList<>();
+        Set<PupilAccountImportDto> setPupilAccount = new HashSet<>();
         int indexRow = 0;
 
         for (Row row : sheet) {
@@ -196,12 +195,12 @@ public class PupilAccountService {
             // grade
             String grade = df.formatCellValue(row.getCell(1)).trim();
             if (isDataImportEmpty(grade)) {
-                return returnErrorWhenDataImportEmpty(indexRow + 1, 2);
+                continue;
             }
             Set<String> setGrade = Stream.of("Khối 1", "Khối 2", "Khối 3", "Khối 4", "Khối 5")
                     .collect(Collectors.toCollection(HashSet::new));
             if (!setGrade.contains(grade)) {
-                return returnErrorWhenDataImportErrorFormat(indexRow + 1, 2);
+                continue;
             }
             pupilAccountImportDto.setGrade(grade);
 
@@ -210,12 +209,10 @@ public class PupilAccountService {
             Set<String> setClassName = classService.getSetClassNameByGrade(grade);
             String className = df.formatCellValue(row.getCell(2)).trim();
             if (isDataImportEmpty(className)) {
-                return returnErrorWhenDataImportEmpty(indexRow + 1, 3);
+                continue;
             }
             if (!setClassName.contains(className)) {
-                rowAndColError[0] = indexRow + 1;
-                rowAndColError[1] = 3;
-                return new ServerResponseDto(ResponseCase.NAME_CLASS_NOT_FOUND, rowAndColError);
+                continue;
             }
             pupilAccountImportDto.setClassName(className);
 
@@ -223,12 +220,10 @@ public class PupilAccountService {
             // email
             String email = df.formatCellValue(row.getCell(3)).trim();
             if (isDataImportEmpty(email)) {
-                return returnErrorWhenDataImportEmpty(indexRow + 1, 4);
+                continue;
             }
             if (isEmailExist(email)) {
-                rowAndColError[0] = indexRow + 1;
-                rowAndColError[1] = 4;
-                return new ServerResponseDto(ResponseCase.EMAIL_EXIST, rowAndColError);
+                continue;
             }
             pupilAccountImportDto.setEmail(email);
 
@@ -236,7 +231,7 @@ public class PupilAccountService {
             // password
             String password = df.formatCellValue(row.getCell(4)).trim();
             if (isDataImportEmpty(password)) {
-                return returnErrorWhenDataImportEmpty(indexRow + 1, 5);
+                continue;
             }
             pupilAccountImportDto.setPassword(password);
 
@@ -244,7 +239,7 @@ public class PupilAccountService {
             // phone
             String phone = df.formatCellValue(row.getCell(5)).trim();
             if (isDataImportEmpty(phone)) {
-                return returnErrorWhenDataImportEmpty(indexRow + 1, 6);
+                continue;
             }
             pupilAccountImportDto.setPhone(phone);
 
@@ -255,25 +250,25 @@ public class PupilAccountService {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
                 pupilAccountImportDto.setBirthday(sdf.parse(birthday));
             } catch (ParseException e) {
-                return returnErrorWhenDataImportErrorFormat(indexRow + 1, 7);
+                continue;
             }
 
             // gender
             String gender = df.formatCellValue(row.getCell(7)).trim();
             if (isDataImportEmpty(gender)) {
-                return returnErrorWhenDataImportEmpty(indexRow + 1, 8);
+                continue;
             }
             Set<String> setGender = Stream.of("Nam", "Nữ", "Khác")
                     .collect(Collectors.toCollection(HashSet::new));
             if (!setGender.contains(gender)) {
-                return returnErrorWhenDataImportErrorFormat(indexRow + 1, 8);
+                continue;
             }
             pupilAccountImportDto.setGender(gender);
 
             // address
             String address = df.formatCellValue(row.getCell(8)).trim();
             if (isDataImportEmpty(address)) {
-                return returnErrorWhenDataImportEmpty(indexRow + 1, 9);
+                continue;
             }
             pupilAccountImportDto.setAddress(address);
 
@@ -287,18 +282,12 @@ public class PupilAccountService {
             String motherName = df.formatCellValue(row.getCell(10)).trim();
             pupilAccountImportDto.setMotherName(motherName);
 
-            listPupilAccount.add(pupilAccountImportDto);
+            System.out.println("hic");
+            setPupilAccount.add(pupilAccountImportDto);
         }
 
-        List<String> listEmailImport = listPupilAccount
-                .stream()
-                .map(PupilAccountImportDto::getEmail)
-                .collect(Collectors.toList());
-        if (isDuplicateEmailImport(listEmailImport)) {
-            return new ServerResponseDto(ResponseCase.SAME_EMAIL);
-        }
 
-        return new ServerResponseDto(ResponseCase.SUCCESS, listPupilAccount);
+        return new ServerResponseDto(ResponseCase.SUCCESS, setPupilAccount);
     }
 
     private boolean isDuplicateEmailImport(List<String> listEmailImport) {
