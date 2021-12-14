@@ -10,6 +10,7 @@ import com.primary_education_system.entity.pupil.PupilAccountEntity;
 import com.primary_education_system.entity.token.TokenEntity;
 import com.primary_education_system.entity.user.RoleEntity;
 import com.primary_education_system.entity.user.UserEntity;
+import com.primary_education_system.enum_type.UserType;
 import com.primary_education_system.repository.UserRepository;
 import com.primary_education_system.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,18 +142,24 @@ public class UserService {
 
     public ServerResponseDto setPassword(String token, String password) {
         TokenEntity tokenEntity = tokenService.validateToken(token, 4);
+        UserType userType = tokenEntity.getUserType();
+
         if (tokenEntity == null) {
             return new ServerResponseDto(ResponseCase.ERROR);
         }
         Long userId = tokenEntity.getUserId();
-        UserEntity userEntity = userRepository.findOne(userId);
-        PupilAccountEntity pupilAccountEntity;
-        if (userEntity != null) {
-            userEntity.setPassword(passwordEncoder.encode(password));
-            userEntity.setRawPassword(passwordEncoder.encode(password));
-            userRepository.save(userEntity);
+
+        if (userType == UserType.ADMIN) {
+            UserEntity userEntity = userRepository.findOne(userId);
+            if (userEntity != null) {
+                userEntity.setPassword(passwordEncoder.encode(password));
+                userEntity.setRawPassword(passwordEncoder.encode(password));
+                userRepository.save(userEntity);
+            } else {
+                return new ServerResponseDto(ResponseCase.ERROR);
+            }
         } else {
-            pupilAccountEntity = pupilAccountService.findByIdAndIsDeletedFalse(userId);
+            PupilAccountEntity pupilAccountEntity = pupilAccountService.findByIdAndIsDeletedFalse(userId);
             if (pupilAccountEntity != null) {
                 pupilAccountEntity.setPassword(passwordEncoder.encode(password));
                 pupilAccountEntity.setRawPassword(passwordEncoder.encode(password));
@@ -161,6 +168,7 @@ public class UserService {
                 return new ServerResponseDto(ResponseCase.ERROR);
             }
         }
+
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
@@ -214,8 +222,11 @@ public class UserService {
         UserEntity userEntity = userRepository.findFirstByEmail(email);
         PupilAccountEntity pupilAccountEntity;
         Long userId;
+        UserType userType;
+
         if (userEntity != null) {
             userId = userEntity.getId();
+            userType = UserType.ADMIN;
         } else {
             pupilAccountEntity = pupilAccountService.findFirstByEmail(email);
 
@@ -223,6 +234,7 @@ public class UserService {
                 return new ServerResponseDto(ResponseCase.ERROR);
             } else {
                 userId = pupilAccountEntity.getId();
+                userType = UserType.PUPIL;
             }
         }
 
@@ -232,7 +244,8 @@ public class UserService {
         EmailTemplate emailTemplate = new EmailTemplate(email, subject, confirmationUrl);
         emailService.sendMail(emailTemplate);
 
-        TokenEntity tokenEntity = new TokenEntity(userId, tokenString, 4);
+        TokenEntity tokenEntity = new TokenEntity(userType, userId, tokenString, 4);
+        tokenEntity.setCreatedTime(new Date());
         tokenService.save(tokenEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }

@@ -13,6 +13,7 @@
 			<column name="token" type="varchar(100)">
 				<constraints nullable="true"/>
 			</column>
+			<column name="user_type" type="varchar(20)"/>
 			<column name="user_id" type="int(11)"/>
 			<column name="token_type" type="int(11)">
 				<constraints nullable="true"/>

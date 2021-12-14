@@ -1,5 +1,6 @@
 package com.primary_education_system.entity.token;
 
+import com.primary_education_system.enum_type.UserType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,11 +17,14 @@ public class TokenEntity {
     private Long id;
     private Long userId;
     private String token;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
     private Integer tokenType; //ACCESS_TOKEN(1), REFRESH_TOKEN(2),REGISTER_TOKEN(3), FORGOT_PASSWORD_TOKEN(4);
     private boolean isDeleted;
     private Date createdTime;
 
-    public TokenEntity(Long userId, String token, Integer tokenType) {
+    public TokenEntity(UserType userType, Long userId, String token, Integer tokenType) {
+        this.userType = userType;
         this.token = token;
         this.userId = userId;
         this.tokenType = tokenType;
