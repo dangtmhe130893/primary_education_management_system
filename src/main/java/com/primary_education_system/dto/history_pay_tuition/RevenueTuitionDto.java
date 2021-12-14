@@ -8,6 +8,7 @@ import lombok.Setter;
 public class RevenueTuitionDto {
     private String grade;
 
+    private String codePupil;
     private String className;
 
     private Long pupilId;

@@ -26,4 +26,12 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Long> {
     @Query(value = "select r from RoomEntity r " +
             "where r.isSelected = false and r.isDeleted = false")
     List<RoomEntity> getListRoomForClass();
+
+    @Query(value = "select count(r.id) from RoomEntity r " +
+            "where r.id <> ?1 and r.name = ?2 and r.isDeleted = false")
+    int countNumberRoomExist(Long roomId, String nameRoom);
+
+    @Query(value = "select count(r.id) from RoomEntity r " +
+            "where r.name = ?1 and r.isDeleted = false")
+    int countNumberRoomExist(String nameRoom);
 }

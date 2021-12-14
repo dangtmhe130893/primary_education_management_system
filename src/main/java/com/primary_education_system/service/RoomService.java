@@ -38,6 +38,10 @@ public class RoomService {
 
     public ServerResponseDto save(RoomDto roomDto) {
         Long roomId = roomDto.getId();
+        if (isRoomExist(roomId, roomDto.getName())) {
+            return new ServerResponseDto(ResponseCase.NAME_ROOM_EXIST);
+        }
+
         boolean isUpdate = roomId != null;
 
         RoomEntity roomEntity;
@@ -52,6 +56,14 @@ public class RoomService {
 
         roomRepository.save(roomEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    private boolean isRoomExist(Long roomId, String nameRoom) {
+        if (roomId != null) {
+            return roomRepository.countNumberRoomExist(roomId, nameRoom) > 0;
+        } else {
+            return roomRepository.countNumberRoomExist(nameRoom) > 0;
+        }
     }
 
     public ServerResponseDto delete(Long id) {
@@ -129,15 +141,12 @@ public class RoomService {
             if ("".equals(nameRoom)) continue;
 
             if (isRoomExist(nameRoom)) {
-                return new ServerResponseDto(ResponseCase.NAME_ROOM_EXIST);
+                continue;
             }
             setRoom.add(nameRoom);
             indexRow++;
         }
 
-        if (indexRow - 1 > setRoom.size()) {
-            return new ServerResponseDto(ResponseCase.SAME_NAME_ROOM);
-        }
         return new ServerResponseDto(ResponseCase.SUCCESS, setRoom);
     }
 

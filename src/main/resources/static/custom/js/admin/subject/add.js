@@ -55,11 +55,14 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         window.loader.hide();
-                        $("#modal_add_subject").modal("hide");
 
-                        if (response.status.code === 1000) {
+                        let code = response.status.code;
+                        if (code === 1000) {
                             tableSubject.ajax.reload();
+                            $("#modal_add_subject").modal("hide");
                             window.alert.show("success", "Lưu thành công", 2000);
+                        } else if (code === 1200) {
+                            window.alert.show("error", "Tên môn học đã tồn tại", 2000);
                         } else {
                             window.alert.show("error", "Đã có lỗi xảy ra", 2000);
                         }
@@ -81,7 +84,6 @@ $(document).ready(function () {
                             self.subject = data.name;
 
                             let listTeacherIdTeaching = data.listTeacherTeaching.map(teacher => teacher.id);
-                            console.log(listTeacherIdTeaching);
 
                             data.listTeacherCanTeach.forEach(function (teacher) {
                                 let html = `<option value="${teacher.id}">${teacher.name}</option>`;

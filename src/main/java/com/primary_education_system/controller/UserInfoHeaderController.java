@@ -2,7 +2,10 @@ package com.primary_education_system.controller;
 
 import com.google.common.base.Objects;
 import com.primary_education_system.config.security.CustomUserDetails;
+import com.primary_education_system.entity.user.UserEntity;
 import com.primary_education_system.enum_type.Roles;
+import com.primary_education_system.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -14,6 +17,9 @@ import java.util.Collection;
 
 @ControllerAdvice
 public class UserInfoHeaderController {
+
+    @Autowired
+    private UserService userService;
 
     @ModelAttribute()
     public void getCurrentUser(@AuthenticationPrincipal CustomUserDetails currentUser,
@@ -27,6 +33,7 @@ public class UserInfoHeaderController {
         boolean isCanShowAcademicHeadMenu = false;
         boolean isCanShowHeadMasterMenu = false;
         boolean isCanShowPupilMenu = false;
+        boolean isCanShowHomeroomTeacher = false;
         Collection<GrantedAuthority> auths = currentUser.getAuthorities();
         for (GrantedAuthority auth : auths) {
             if (Objects.equal(auth.getAuthority(), Roles.SYSTEM_ADMIN.name())) {
@@ -41,6 +48,8 @@ public class UserInfoHeaderController {
             }
             if (Objects.equal(auth.getAuthority(), Roles.TEACHER.name())) {
                 isCanShowTeacherMenu = true;
+                UserEntity teacher = userService.findByIdAndIsDeletedFalse(currentUser.getUserId());
+                isCanShowHomeroomTeacher = teacher.isHomeroomTeacher();
             }
             if (Objects.equal(auth.getAuthority(), Roles.ACADEMIC_HEAD.name())) {
                 isCanShowAcademicHeadMenu = true;
@@ -64,6 +73,6 @@ public class UserInfoHeaderController {
         model.addAttribute("isCanShowAcademicHeadMenu", isCanShowAcademicHeadMenu);
         model.addAttribute("isCanShowHeadMasterMenu", isCanShowHeadMasterMenu);
         model.addAttribute("isCanShowPupilMenu", isCanShowPupilMenu);
-
+        model.addAttribute("isCanShowHomeroomTeacher", isCanShowHomeroomTeacher);
     }
 }

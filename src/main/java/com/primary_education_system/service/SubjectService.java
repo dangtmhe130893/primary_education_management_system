@@ -50,6 +50,10 @@ public class SubjectService {
     @Transactional
     public ServerResponseDto save(SubjectRequestDto subjectRequestDto) {
         Long subjectId = subjectRequestDto.getId();
+        if (isSubjectExist(subjectId, subjectRequestDto.getSubject())) {
+            return new ServerResponseDto(ResponseCase.SUBJECT_EXIST);
+        }
+
         boolean isUpdate = subjectId != null;
 
         SubjectEntity subject;
@@ -67,6 +71,14 @@ public class SubjectService {
             subjectTeacherService.setTeacherForSubject(subject.getId(), subjectRequestDto.getListTeacherIdString());
         }
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    private boolean isSubjectExist(Long subjectId, String nameSubject) {
+        if (subjectId != null) {
+            return subjectRepository.countNumberSubjectExist(subjectId, nameSubject) > 0;
+        } else {
+            return subjectRepository.countNumberSubjectExist(nameSubject) > 0;
+        }
     }
 
     public ServerResponseDto detail(Long id) {

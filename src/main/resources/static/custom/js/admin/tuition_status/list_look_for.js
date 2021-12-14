@@ -1,5 +1,6 @@
 $(document).ready(function () {
     let columnDefinitions = [
+        {"data": "codePupil", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "pupilName", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "tuitionRequire", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "tuitionReceived", "orderable": false, "defaultContent": "", "class": 'text-center'},
@@ -55,13 +56,13 @@ $(document).ready(function () {
                         return '<button disabled class="btn btn-sm btn-secondary" >Chưa thu đủ</button>';
                     }
                 },
-                "targets": 3
+                "targets": 4
             },
             {
                 "render": function (pupilId) {
                     return `<button type="button" data-toggle="modal" data-target="#modal_update_tuition" id="btn_update_${pupilId}" class="btn btn-sm btn-primary detail-pupil">Cập nhật</button>`;
                 },
-                "targets": 4
+                "targets": 5
             },
         ]
     });

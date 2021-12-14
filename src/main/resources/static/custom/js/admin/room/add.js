@@ -38,7 +38,7 @@ $(document).ready(function () {
                             tableRoom.ajax.reload();
                             $("#modal_add_room").modal("hide");
                             window.alert.show("success", "Lưu thành công", 2000);
-                        } else if (response.status.code === 1004) {
+                        } else if (response.status.code === 1005) {
                             window.alert.show("error", "Tên phòng học đã tồn tại", 2000);
                         } else {
                             window.alert.show("error", "Đã có lỗi xảy ra", 2000);
@@ -165,12 +165,8 @@ $(document).ready(function () {
                             self.previewListRoom();
 
                             $("#modal_preview_room").modal("show");
-                        } else if (code === 1005) {
-                            window.alert.show("error", "Tên phòng trong danh sách import đã tồn tại", 2000);
-                        } else if (code === 1006) {
-                            window.alert.show("error", "Danh sách phòng import đã bị trùng", 2000);
                         } else {
-                            window.alert.show("error", "Định dạng dữ liệu import không chính xác", 2000);
+                            window.alert.show("error", "Đã có lỗi xảy ra, vui lòng thử lại sau!", 2000);
                         }
                     }
                 });

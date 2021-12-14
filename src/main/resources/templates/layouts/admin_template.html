@@ -101,7 +101,7 @@
                 <span>Quản lý lịch dạy</span>
             </div>
         </a>
-        <a href="/admin/my_class">
+        <a href="/admin/my_class" th:if="${isCanShowHomeroomTeacher}">
             <div th:class=" ${currentPage} == 'my_class' ?  'menu active-menu' : 'menu not-active-menu' ">
                 <i class="fa fa-info"></i>
                 <span>Thông tin học sinh của lớp</span>

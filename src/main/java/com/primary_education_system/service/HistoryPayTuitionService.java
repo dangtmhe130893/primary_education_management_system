@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -108,9 +109,9 @@ public class HistoryPayTuitionService {
                     .map(PupilAccountEntity::getId)
                     .collect(Collectors.toList());
 
-            Map<Long, String> mapPupilNameByPupilId = listPupil
+            Map<Long, PupilAccountEntity> mapPupilByPupilId = listPupil
                     .stream()
-                    .collect(Collectors.toMap(PupilAccountEntity::getId, PupilAccountEntity::getName));
+                    .collect(Collectors.toMap(PupilAccountEntity::getId, Function.identity()));
             Map<Long, Integer> mapTuitionPupilByPupilId = tuitionService.getMapTuitionPupilByPupilId(listPupil);
             Map<Long, Integer> mapTuitionSubmittedByClassId = getMapTuitionSubmittedByClassId(listPupilId);
 
@@ -118,7 +119,8 @@ public class HistoryPayTuitionService {
             listPupilId.forEach(pupilId -> {
                 RevenueTuitionDto revenueTuitionDto = new RevenueTuitionDto();
                 revenueTuitionDto.setPupilId(pupilId);
-                revenueTuitionDto.setPupilName(mapPupilNameByPupilId.get(pupilId));
+                revenueTuitionDto.setCodePupil(mapPupilByPupilId.get(pupilId).getCode());
+                revenueTuitionDto.setPupilName(mapPupilByPupilId.get(pupilId).getName());
                 revenueTuitionDto.setTuitionRequire(mapTuitionPupilByPupilId.getOrDefault(pupilId, 0));
                 revenueTuitionDto.setTuitionReceived(mapTuitionSubmittedByClassId.getOrDefault(pupilId, 0));
                 revenueTuitionDto.setDoneTuition(revenueTuitionDto.getTuitionRequire().equals(revenueTuitionDto.getTuitionReceived()));

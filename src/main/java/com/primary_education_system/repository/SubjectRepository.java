@@ -28,4 +28,12 @@ public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
             "inner join user as u on u.id = sb.teacher_id " +
             "where u.id = ?1 and u.is_deleted = false and s.is_deleted = false", nativeQuery = true)
     List<SubjectEntity> getListSubjectByTeacherId(Long userId);
+
+    @Query(value = "select count(s.id) from SubjectEntity s " +
+            "where s.id <> ?1 and s.name = ?2 and s.isDeleted = false")
+    int countNumberSubjectExist(Long subjectId, String nameSubject);
+
+    @Query(value = "select count(s.id) from SubjectEntity s " +
+            "where s.name = ?1 and s.isDeleted = false")
+    int countNumberSubjectExist(String nameSubject);
 }
