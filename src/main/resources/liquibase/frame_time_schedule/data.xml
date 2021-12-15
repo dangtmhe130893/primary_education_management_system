@@ -8,39 +8,43 @@
     <changeSet id="insert_table_frame_time_schedule" author="dangtm">
         <insert tableName="frame_time_schedule">
             <column name="id" value="1"/>
-            <column name="name" value="07:15 - 08:00"/>
+            <column name="name" value="Tiết 1 (07:00 - 07:40)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="2"/>
-            <column name="name" value="08:05 – 08:50"/>
+            <column name="name" value="Tiết 2 (07:45 - 08:25)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="3"/>
-            <column name="name" value="08:55 - 09:40"/>
+            <column name="name" value="Tiết 3 (08:40 - 09:20)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="4"/>
-            <column name="name" value="09:45 - 10:30"/>
+            <column name="name" value="Tiết 4 (09:25 - 10:05)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="5"/>
-            <column name="name" value="10:35 – 11:20"/>
+            <column name="name" value="Tiết 5 (10:10 - 10:50)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="6"/>
-            <column name="name" value="13:30 – 14:15"/>
+            <column name="name" value="Tiết 6 (13:30 - 14:10)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="7"/>
-            <column name="name" value="14:20 – 15:05"/>
+            <column name="name" value="Tiết 7 (14:15 - 14:55)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="8"/>
-            <column name="name" value="15:10 – 15:55"/>
+            <column name="name" value="Tiết 8 (15:10 - 15:50)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="9"/>
-            <column name="name" value="16:00 – 16:45"/>
+            <column name="name" value="Tiết 9 (15:55 - 16:35)"/>
+        </insert>
+        <insert tableName="frame_time_schedule">
+            <column name="id" value="10"/>
+            <column name="name" value="Tiết 10 (16:40 - 17:20)"/>
         </insert>
     </changeSet>
 

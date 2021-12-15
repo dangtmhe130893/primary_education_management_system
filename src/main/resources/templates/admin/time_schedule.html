@@ -36,9 +36,15 @@
                 Thời khóa biểu lớp {{className}}
             </h2>
             <div style="display: flex">
+                <div class="list-session">
+                    <div class="col_time"></div>
+                    <div class="session">Buổi sáng</div>
+                    <div class="session">Buổi chiều</div>
+                </div>
+                
                 <div class="list_col_time">
                     <div class="col_time"></div>
-                    <div class="col_time" th:each="frame : ${listFrame}" th:text="${frame.name}"></div>
+                    <div style="font-size: 14px" class="col_time" th:each="frame : ${listFrame}" th:text="${frame.name}"></div>
                 </div>
         
                 <div class="list-subject">

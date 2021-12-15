@@ -1,7 +1,10 @@
+#time_schedule {
+	margin-bottom: 16px;
+}
 .list_col_time{
 	display: flex;
 	flex-direction: column;
-	width: 12.5%;
+	width: 11.5%;
 }
 .col_time{
 	height: 50px;
@@ -10,13 +13,25 @@
 	text-align: center;
 	line-height: 50px;
 }
+.list-session {
+	display: flex;
+	flex-direction: column;
+	width: 8%;
+}
+.session {
+	height: calc(50px * 5);
+	line-height: calc(50px * 5);
+	border: 1px solid #ccc;
+	border-right: none;
+	text-align: center;
+}
 .col_time:first-child {
 	border: none;
 }
 .list-subject {
 	display: flex;
 	flex-direction: column;
-	width: 12.5%;
+	width: 11.5%;
 }
 
 .subject-item, .subject-item-title, .time-schedule-cell, .time-schedule-teacher-cell{
