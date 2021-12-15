@@ -6,6 +6,12 @@
     <title>Thời khóa biếu</title>
     <link th:href="@{/custom/css/time_schedule.css}" rel="stylesheet" media="screen"/>
     <script type="text/javascript" src="/custom/js/pupil/time_table.js"></script>
+    
+    <style>
+        #time_schedule {
+            margin-bottom: 16px;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
@@ -18,9 +24,15 @@
             Thời khóa biểu lớp {{className}}
         </h2>
         <div style="display: flex">
+            <div class="list-session">
+                <div class="col_time"></div>
+                <div class="session">Buổi sáng</div>
+                <div class="session">Buổi chiều</div>
+            </div>
+            
             <div class="list_col_time">
                 <div class="col_time"></div>
-                <div class="col_time" th:each="frame : ${listFrame}" th:text="${frame.name}"></div>
+                <div style="font-size: 14px" class="col_time" th:each="frame : ${listFrame}" th:text="${frame.name}"></div>
             </div>
 
             <div class="list-subject">
