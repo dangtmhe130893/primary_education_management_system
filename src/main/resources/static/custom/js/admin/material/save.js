@@ -28,7 +28,6 @@ $(document).ready(function () {
                 this.type = "Bài giảng";
                 this.grade = "Khối 1";
                 this.name = "";
-                this.subjectId = "";
                 this.isShowBtnUploadFile = true;
                 CKEDITOR.instances['content'].setData("");
                 $("#select-class").val("").trigger("change");
@@ -89,6 +88,9 @@ $(document).ready(function () {
                         }
                     }
                 })
+            },
+            validateForm() {
+
             },
             saveMaterial() {
                 let vm = this;
