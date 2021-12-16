@@ -28,7 +28,6 @@ $(document).ready(function () {
                 this.type = "Bài giảng";
                 this.grade = "Khối 1";
                 this.name = "";
-                this.subjectId = "";
                 this.isShowBtnUploadFile = true;
                 CKEDITOR.instances['content'].setData("");
                 $("#select-class").val("").trigger("change");
@@ -90,6 +89,9 @@ $(document).ready(function () {
                     }
                 })
             },
+            validateForm() {
+
+            },
             saveMaterial() {
                 let vm = this;
                 let formData = new FormData();
@@ -145,7 +147,7 @@ $(document).ready(function () {
                 self.resetPopup();
             })
 
-            $("#form-pupil-account").validate({
+            $("#form_material").validate({
                 errorElement: "p",
                 errorClass: "error-message",
                 errorPlacement: function (error, element) {

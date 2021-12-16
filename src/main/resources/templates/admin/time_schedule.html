@@ -18,7 +18,9 @@
     <div th:replace="layouts/import :: import_lib_datatable"></div>
     <div th:replace="layouts/import :: import_lib_bootstrap_time"></div>
     <div th:fragment="table-admin">
-        
+
+        <a href="/sample_file/time_table_template.docx" class="btn btn-sm btn-success">Tải file mẫu</a>
+
         <div id="time_schedule">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
                 <div style="display: flex; align-items: center">
@@ -39,7 +41,8 @@
                 <div class="list-session">
                     <div class="col_time"></div>
                     <div class="session">Buổi sáng</div>
-                    <div class="session">Buổi chiều</div>
+                    <div class="session" style="height: 100px; line-height: 103px;">
+                        Buổi chiều</div>
                 </div>
                 
                 <div class="list_col_time">

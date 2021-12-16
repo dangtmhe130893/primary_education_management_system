@@ -115,7 +115,7 @@
                         <form id="form_material" class="col-md-12">
 
                             <div class="form-group">
-                                <label>Môn</label>
+                                <label>Môn</label><sup style="color: red"> *</sup>
                                 <select class="form-control" id="modal_select_subject" v-model="subjectId">
                                     <option th:each="subject : ${listSubject}" th:value="${subject.id}" th:text="${subject.name}"></option>
                                 </select>
@@ -148,7 +148,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Nội dụng</label>
+                                <label>Nội dung</label>
                                 <textarea class="form-control" id="content" name="content"></textarea>
                             </div>
 

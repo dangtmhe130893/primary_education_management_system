@@ -134,6 +134,9 @@ $(document).ready(function () {
             },
             {
                 "render": function (data) {
+                    if (data.fileName == null || data.fileName === '') {
+                        return ''
+                    }
                     return '<a class="download_material" target="_blank" href="' + "/api/material/download/" + data.code  + '" >Tải xuống</a>'
                 },
                 "targets": 7,

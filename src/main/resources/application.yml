@@ -43,7 +43,7 @@ spring:
 liquibase:
   enabled: true
   change-log: classpath:/liquibase/db-changelog-master.xml
-  drop-first: false
+  drop-first: true
 server:
   port: 8080
 isOnSendMailError: false
@@ -53,5 +53,5 @@ application:
 folderStorageFile: D:/
 host: http://localhost:8080/
 mail:
-  username:
-  password:
+  username: minhdang.271199@gmail.com
+  password: hip123456

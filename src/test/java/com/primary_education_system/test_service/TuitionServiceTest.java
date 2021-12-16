@@ -17,7 +17,7 @@ public class TuitionServiceTest {
 
     @Test
     public void testRepo() {
-        Assert.assertNull(tuitionService.detail(1L));
+        Assert.assertEquals(2000000, tuitionService.getTuitionByGrade("Khối 1"));
     }
 
 }
