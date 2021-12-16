@@ -214,6 +214,7 @@ $(document).ready(function () {
                             self.subjectId = data.subjectId;
                             self.listTeacher = data.listTeacher;
                             self.teacherId = data.teacherId;
+                            self.roomId = data.roomId ? data.roomId : 0;
                         } else {
                             window.alert.show("error", "Lỗi", 2000);
                         }
@@ -265,7 +266,7 @@ $(document).ready(function () {
                     timeScheduleId: self.timeScheduleId,
                     subjectId: self.subjectId,
                     teacherId: self.teacherId,
-                    roomId: self.roomId ? self.roomId : null,
+                    roomId: self.roomId == 0 ? null : self.roomId,
                 }
 
                 $.ajax({
@@ -284,6 +285,8 @@ $(document).ready(function () {
                             window.alert.show("success", "Lưu thành công", 2000);
                         } else if (response.status.code === 1003){
                             window.alert.show("error", response.data + " đã có lịch dạy vào thời điểm này", 2000);
+                        } else if (response.status.code === 1006) {
+                            window.alert.show("error", "Phòng học " + response.data + " đã có lớp khác học vào thời điểm này", 2000);
                         } else {
                             window.alert.show("error", "Đã có lỗi xảy ra", 2000);
                         }

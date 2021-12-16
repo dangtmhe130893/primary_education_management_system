@@ -164,6 +164,9 @@ public class TimeScheduleService {
         TimeScheduleEntity timeScheduleEntity = timeScheduleRepository
                 .findByIdAndIsDeletedFalse(timeScheduleRequestDto.getTimeScheduleId());
 
+        if (timeScheduleEntity == null) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
 
         /*
          * trùng lịch nếu: + khác classId
@@ -181,15 +184,49 @@ public class TimeScheduleService {
             return new ServerResponseDto(ResponseCase.SAME_TIME_SCHEDULE, teacherDuplicate.getName());
         }
 
-        if (timeScheduleEntity == null) {
-            return new ServerResponseDto(ResponseCase.ERROR);
+        /* check trùng phòng học */
+        Long roomId = timeScheduleRequestDto.getRoomId();
+        if (checkSameRoom(classId, dayOfWeek, frameTimeId, roomId)) {
+            if (roomId == null) {
+                roomId = classService.getRoomIdByClassId(classId);
+            }
+            String nameRoomSame = roomService.getNameById(roomId);
+            return new ServerResponseDto(ResponseCase.SAME_NAME_ROOM, nameRoomSame);
         }
+
+
         timeScheduleEntity.setSubjectId(timeScheduleRequestDto.getSubjectId());
-        timeScheduleEntity.setTeacherId(timeScheduleRequestDto.getTeacherId());
-        timeScheduleEntity.setRoomId(timeScheduleRequestDto.getRoomId());
+        timeScheduleEntity.setTeacherId(teacherId);
+        timeScheduleEntity.setRoomId(roomId);
 
         timeScheduleRepository.save(timeScheduleEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
+    private boolean checkSameRoom(Long classId, DayOfWeek dayOfWeek, Long frameTimeId, Long roomId) {
+        if (roomId == null) {
+            roomId = classService.getRoomIdByClassId(classId);
+        }
+        List<TimeScheduleEntity> listTimeScheduleToCheck = timeScheduleRepository.findToCheckSameRoom(classId, dayOfWeek, frameTimeId);
+
+        Set<Long> listRoomId = listTimeScheduleToCheck
+                .stream()
+                .map(TimeScheduleEntity::getRoomId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        List<Long> listClassId = listTimeScheduleToCheck
+                .stream()
+                .filter(t -> t.getRoomId() == null)
+                .map(TimeScheduleEntity::getClassId)
+                .collect(Collectors.toList());
+
+        Map<Long, Long> mapRoomIdByClassId = classService.getMapRoomIdByClassId(listClassId);
+        listClassId.forEach(classsId -> {
+            listRoomId.add(mapRoomIdByClassId.get(classsId));
+        });
+
+        return listRoomId.contains(roomId);
     }
 
     private boolean checkSameTimeSchedule(Long classId, DayOfWeek dayOfWeek, Long frameTimeId, Long teacherId) {

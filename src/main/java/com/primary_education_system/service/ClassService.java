@@ -274,4 +274,16 @@ public class ClassService {
         }
         return classEntity.getName();
     }
+
+    public Long getRoomIdByClassId(Long classId) {
+        ClassEntity classEntity = classRepository.findByIdAndIsDeletedFalse(classId);
+        return classEntity.getRoomId();
+    }
+
+    public Map<Long, Long> getMapRoomIdByClassId(List<Long> listClassId) {
+        List<ClassEntity> listClass = classRepository.findByIdInAndIsDeletedFalse(listClassId);
+        return listClass
+                .stream()
+                .collect(Collectors.toMap(ClassEntity::getId, ClassEntity::getRoomId));
+    }
 }

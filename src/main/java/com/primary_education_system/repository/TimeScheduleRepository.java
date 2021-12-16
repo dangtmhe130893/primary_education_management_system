@@ -31,4 +31,9 @@ public interface TimeScheduleRepository extends JpaRepository<TimeScheduleEntity
             "from TimeScheduleEntity t " +
             "where t.teacherId = ?1 and t.isDeleted = false group by t.classId")
     Page<InfoTimeScheduleTeacherDto> getInfoTimeScheduleTeacher(Long teacherId, Pageable pageable);
+
+    @Query(value = "select t from TimeScheduleEntity t " +
+            "where t.classId <> ?1 and t.dayOfWeek = ?2 and t.frameTimeId = ?3 " +
+            "and t.isDeleted = false ")
+    List<TimeScheduleEntity> findToCheckSameRoom(Long classId, DayOfWeek dayOfWeek, Long frameTimeId);
 }
