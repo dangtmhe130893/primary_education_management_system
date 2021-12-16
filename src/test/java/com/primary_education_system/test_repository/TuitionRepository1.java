@@ -18,6 +18,6 @@ public class TuitionRepository1 {
     @Test
     public void testRepo() {
         Assert.assertEquals(5, tuitionRepository.findAll().size());
-    }
+    } //test số bản ghi học phí
 
 }

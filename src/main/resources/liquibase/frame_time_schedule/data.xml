@@ -12,39 +12,27 @@
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="2"/>
-            <column name="name" value="Tiết 2 (07:45 - 08:25)"/>
+            <column name="name" value="Tiết 2 (07:40 - 08:20)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="3"/>
-            <column name="name" value="Tiết 3 (08:40 - 09:20)"/>
+            <column name="name" value="Tiết 3 (08:20 - 09:00)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="4"/>
-            <column name="name" value="Tiết 4 (09:25 - 10:05)"/>
+            <column name="name" value="Tiết 4 (09:20 - 10:00)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="5"/>
-            <column name="name" value="Tiết 5 (10:10 - 10:50)"/>
+            <column name="name" value="Tiết 5 (10:00 - 10:40)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="6"/>
-            <column name="name" value="Tiết 6 (13:30 - 14:10)"/>
+            <column name="name" value="Tiết 6 (14:00 - 14:40)"/>
         </insert>
         <insert tableName="frame_time_schedule">
             <column name="id" value="7"/>
-            <column name="name" value="Tiết 7 (14:15 - 14:55)"/>
-        </insert>
-        <insert tableName="frame_time_schedule">
-            <column name="id" value="8"/>
-            <column name="name" value="Tiết 8 (15:10 - 15:50)"/>
-        </insert>
-        <insert tableName="frame_time_schedule">
-            <column name="id" value="9"/>
-            <column name="name" value="Tiết 9 (15:55 - 16:35)"/>
-        </insert>
-        <insert tableName="frame_time_schedule">
-            <column name="id" value="10"/>
-            <column name="name" value="Tiết 10 (16:40 - 17:20)"/>
+            <column name="name" value="Tiết 7 (15:10 - 15:50)"/>
         </insert>
     </changeSet>
 
