@@ -32,7 +32,7 @@ $(document).ready(function () {
                     "name": vm.name,
                     "email": vm.email,
                     "phone": vm.phone,
-                    "birthday": $("#birthday").val(),
+                    "birthday": $("#birthday").val() === '' ? null : $("#birthday").val(),
                     "address": vm.address,
                 }
                 $.ajax({

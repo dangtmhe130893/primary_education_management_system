@@ -133,8 +133,10 @@ public class UserService {
         userEntity.setName(saveDto.getName());
         userEntity.setEmail(saveDto.getEmail());
         userEntity.setPhone(saveDto.getPhone());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        userEntity.setBirthday(sdf.parse(saveDto.getBirthday()));
+        if (saveDto.getBirthday() != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            userEntity.setBirthday(sdf.parse(saveDto.getBirthday()));
+        }
         userEntity.setAddress(saveDto.getAddress());
         userRepository.save(userEntity);
         return new ServerResponseDto(ResponseCase.SUCCESS);

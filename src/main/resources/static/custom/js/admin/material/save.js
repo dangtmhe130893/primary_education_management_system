@@ -145,7 +145,7 @@ $(document).ready(function () {
                 self.resetPopup();
             })
 
-            $("#form-pupil-account").validate({
+            $("#form_material").validate({
                 errorElement: "p",
                 errorClass: "error-message",
                 errorPlacement: function (error, element) {
