@@ -186,10 +186,10 @@ public class TimeScheduleService {
 
         /* check trùng phòng học */
         Long roomId = timeScheduleRequestDto.getRoomId();
+        if (roomId == null) {
+            roomId = classService.getRoomIdByClassId(classId);
+        }
         if (checkSameRoom(classId, dayOfWeek, frameTimeId, roomId)) {
-            if (roomId == null) {
-                roomId = classService.getRoomIdByClassId(classId);
-            }
             String nameRoomSame = roomService.getNameById(roomId);
             return new ServerResponseDto(ResponseCase.SAME_NAME_ROOM, nameRoomSame);
         }
@@ -204,9 +204,6 @@ public class TimeScheduleService {
     }
 
     private boolean checkSameRoom(Long classId, DayOfWeek dayOfWeek, Long frameTimeId, Long roomId) {
-        if (roomId == null) {
-            roomId = classService.getRoomIdByClassId(classId);
-        }
         List<TimeScheduleEntity> listTimeScheduleToCheck = timeScheduleRepository.findToCheckSameRoom(classId, dayOfWeek, frameTimeId);
 
         Set<Long> listRoomId = listTimeScheduleToCheck
