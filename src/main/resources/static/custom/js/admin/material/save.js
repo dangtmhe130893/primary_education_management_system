@@ -13,6 +13,7 @@ $(document).ready(function () {
             subjectId: '',
             isUpdate: false,
             isShowBtnUploadFile: true,
+            isValidName: true,
         },
         watch: {
             id(value) {
@@ -90,10 +91,17 @@ $(document).ready(function () {
                 })
             },
             validateForm() {
-
+                this.validateName();
+                return this.isValidName;
+            },
+            validateName() {
+                this.isValidName = this.name !== '' && this.name.length <= 200
             },
             saveMaterial() {
                 let vm = this;
+                if (!vm.validateForm()) {
+                    return;
+                }
                 let formData = new FormData();
                 formData.append("id", vm.id);
                 formData.append("grade", vm.grade);
