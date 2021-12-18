@@ -219,9 +219,7 @@ public class TimeScheduleService {
                 .collect(Collectors.toList());
 
         Map<Long, Long> mapRoomIdByClassId = classService.getMapRoomIdByClassId(listClassId);
-        listClassId.forEach(classsId -> {
-            listRoomId.add(mapRoomIdByClassId.get(classsId));
-        });
+        listClassId.forEach(classsId -> listRoomId.add(mapRoomIdByClassId.get(classsId)));
 
         return listRoomId.contains(roomId);
     }
@@ -248,9 +246,7 @@ public class TimeScheduleService {
 
     public void deleteTimeScheduleByClassId(Long classId) {
         List<TimeScheduleEntity> listTimeSchedule = timeScheduleRepository.findByClassIdAndIsDeletedFalse(classId);
-        listTimeSchedule.forEach(timeSchedule -> {
-            timeSchedule.setDeleted(true);
-        });
+        listTimeSchedule.forEach(timeSchedule -> timeSchedule.setDeleted(true));
         timeScheduleRepository.save(listTimeSchedule);
     }
 
