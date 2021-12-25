@@ -70,89 +70,89 @@
             </div>
         </a>
     </div>
-<!--    <div class="block-menu" th:if="${isCanShowStaffMenu}">-->
-<!--        <div class="control-block-menu">-->
-<!--            <i class="fa fa-server icon-active"></i>-->
-<!--            <span style="font-size: 12px">STAFF MENU</span>-->
-<!--            <i class="fa fa-angle-double-right block-icon"></i>-->
-<!--        </div>-->
-<!--        <a href="/admin/tuition_status">-->
-<!--            <div th:class=" ${currentPage} == 'tuition_status' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info"></i>-->
-<!--                <span>Quản lý tình trạng học phí</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-<!--    <div class="block-menu" th:if="${isCanShowTeacherMenu}">-->
-<!--        <div class="control-block-menu">-->
-<!--            <i class="fa fa-server icon-active"></i>-->
-<!--            <span style="font-size: 12px">TEACHER MENU</span>-->
-<!--            <i class="fa fa-angle-double-right block-icon"></i>-->
-<!--        </div>-->
-<!--        <a href="/admin/material">-->
-<!--            <div th:class=" ${currentPage} == 'material' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info"></i>-->
-<!--                <span>Quản lý tài liệu</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--        <a href="/admin/time_schedule_teacher">-->
-<!--            <div th:class=" ${currentPage} == 'time_schedule_teacher' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info"></i>-->
-<!--                <span>Quản lý lịch dạy</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--        <a href="/admin/my_class" th:if="${isCanShowHomeroomTeacher}">-->
-<!--            <div th:class=" ${currentPage} == 'my_class' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info"></i>-->
-<!--                <span>Thông tin học sinh của lớp</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-<!--    <div class="block-menu" th:if="${isCanShowAcademicHeadMenu}">-->
-<!--        <div class="control-block-menu">-->
-<!--            <i class="fa fa-server icon-active"></i>-->
-<!--            <span style="font-size: 12px">ACADEMIC HEAD MENU</span>-->
-<!--            <i class="fa fa-angle-double-right block-icon"></i>-->
-<!--        </div>-->
-<!--        <a href="/admin/time_schedule">-->
-<!--            <div th:class=" ${currentPage} == 'time_schedule' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info"></i>-->
-<!--                <span>Quản lý thời khóa biếu</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--        <a href="/admin/class">-->
-<!--            <div th:class=" ${currentPage} == 'list_class' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info"></i>-->
-<!--                <span>Quản lý danh sách lớp học</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--        <a href="/admin/subject">-->
-<!--            <div th:class=" ${currentPage} == 'list_subject' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info">-->
+    <div class="block-menu" th:if="${isCanShowStaffMenu}">
+        <div class="control-block-menu">
+            <i class="fa fa-server icon-active"></i>
+            <span style="font-size: 12px">STAFF MENU</span>
+            <i class="fa fa-angle-double-right block-icon"></i>
+        </div>
+        <a href="/admin/tuition_status">
+            <div th:class=" ${currentPage} == 'tuition_status' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý tình trạng học phí</span>
+            </div>
+        </a>
+    </div>
+    <div class="block-menu" th:if="${isCanShowTeacherMenu}">
+        <div class="control-block-menu">
+            <i class="fa fa-server icon-active"></i>
+            <span style="font-size: 12px">TEACHER MENU</span>
+            <i class="fa fa-angle-double-right block-icon"></i>
+        </div>
+        <a href="/admin/material">
+            <div th:class=" ${currentPage} == 'material' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý tài liệu</span>
+            </div>
+        </a>
+        <a href="/admin/time_schedule_teacher">
+            <div th:class=" ${currentPage} == 'time_schedule_teacher' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý lịch dạy</span>
+            </div>
+        </a>
+        <a href="/admin/my_class" th:if="${isCanShowHomeroomTeacher}">
+            <div th:class=" ${currentPage} == 'my_class' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Thông tin học sinh của lớp</span>
+            </div>
+        </a>
+    </div>
+    <div class="block-menu" th:if="${isCanShowAcademicHeadMenu}">
+        <div class="control-block-menu">
+            <i class="fa fa-server icon-active"></i>
+            <span style="font-size: 12px">ACADEMIC HEAD MENU</span>
+            <i class="fa fa-angle-double-right block-icon"></i>
+        </div>
+        <a href="/admin/time_schedule">
+            <div th:class=" ${currentPage} == 'time_schedule' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý thời khóa biếu</span>
+            </div>
+        </a>
+        <a href="/admin/class">
+            <div th:class=" ${currentPage} == 'list_class' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý danh sách lớp học</span>
+            </div>
+        </a>
+        <a href="/admin/subject">
+            <div th:class=" ${currentPage} == 'list_subject' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info">
 
-<!--                </i><span>Quản lý môn học</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--        <a href="/admin/room">-->
-<!--            <div th:class=" ${currentPage} == 'list_room' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info"></i>-->
-<!--                <span>Quản lý danh sách phòng học</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-<!--    <div class="block-menu" th:if="${isCanShowHeadMasterMenu}">-->
-<!--        <div class="control-block-menu">-->
-<!--            <i class="fa fa-server icon-active"></i>-->
-<!--            <span style="font-size: 12px">HEAD MASTER MENU</span>-->
-<!--            <i class="fa fa-angle-double-right block-icon"></i>-->
-<!--        </div>-->
-<!--        <a href="/admin/tuition">-->
-<!--            <div th:class=" ${currentPage} == 'tuition' ?  'menu active-menu' : 'menu not-active-menu' ">-->
-<!--                <i class="fa fa-info"></i>-->
-<!--                <span>Quản lý học phí</span>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
+                </i><span>Quản lý môn học</span>
+            </div>
+        </a>
+        <a href="/admin/room">
+            <div th:class=" ${currentPage} == 'list_room' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý danh sách phòng học</span>
+            </div>
+        </a>
+    </div>
+    <div class="block-menu" th:if="${isCanShowHeadMasterMenu}">
+        <div class="control-block-menu">
+            <i class="fa fa-server icon-active"></i>
+            <span style="font-size: 12px">HEAD MASTER MENU</span>
+            <i class="fa fa-angle-double-right block-icon"></i>
+        </div>
+        <a href="/admin/tuition">
+            <div th:class=" ${currentPage} == 'tuition' ?  'menu active-menu' : 'menu not-active-menu' ">
+                <i class="fa fa-info"></i>
+                <span>Quản lý học phí</span>
+            </div>
+        </a>
+    </div>
 </div>
 
 <section class="page-content" layout:fragment="content">
