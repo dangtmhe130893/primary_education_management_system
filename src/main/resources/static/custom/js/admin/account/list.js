@@ -44,7 +44,7 @@ $(document).ready(function () {
         "searching": false,
         rowId: 'id',
         "ordering": true,
-        "order": [3, "desc"],
+        "order": [4, "desc"],
         "pagingType": "full_numbers",
         "serverSide": true,
         "columns": columnDefinitions,
