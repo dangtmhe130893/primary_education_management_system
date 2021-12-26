@@ -134,7 +134,7 @@ $(document).ready(function () {
             },
             validatePhoneUserLength: function () {
                 let note = $("#account_phone").val();
-                this.validPhoneUserLength = note.length < 20;
+                this.validPhoneUserLength = note.length === 10;
             },
             validatePassword: function () {
                 let note = $("#account_password").val();
