@@ -2,18 +2,19 @@ let tableSubject;
 
 $(document).ready(function () {
     let columnDefinitions = [
-        {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "name", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null, "orderable": false, "defaultContent": "", "class": 'text-center'}
     ];
 
     let getPageSubject = function (requestData, renderFunction, link_api) {
 
+        let sortDir = requestData.order[0].dir;
         let params = {
             "page": (requestData.start / requestData.length) + 1,
             "size": requestData.length,
-            "sortField": "createdTime",
-            "sortDir": "desc",
+            "sortField": "name",
+            "sortDir": sortDir,
             "keyword": $("#input-search_subject").val(),
         };
         window.loader.show();

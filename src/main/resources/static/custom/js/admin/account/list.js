@@ -25,7 +25,7 @@ $(document).ready(function () {
     };
 
     let columnDefinitions = [
-        {"data": "name", "orderable": false, "defaultContent": "", "class": 'text-center'},
+        {"data": "name", "orderable": true, "defaultContent": "", "class": 'text-center'},
         {"data": "email", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "phone",  "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null,  "orderable": false, "defaultContent": "", "class": 'text-center'},
