@@ -2,12 +2,12 @@ let listAccountTable;
 $(document).ready(function () {
     let deleteId;
     let getAccount = function (requestData, renderFunction, link_api) {
-
+        let sortField = columnDefinitions[requestData.order[0].column].sort;
         let sortDir = requestData.order[0].dir;
         let params = {
             "page": (requestData.start / requestData.length) + 1,
             "size": requestData.length,
-            "sortField": "createdTime",
+            "sortField": sortField,
             "sortDir": sortDir,
             "search": $("#search_account_id").val(),
         };
@@ -25,11 +25,11 @@ $(document).ready(function () {
     };
 
     let columnDefinitions = [
-        {"data": "name", "orderable": true, "defaultContent": "", "class": 'text-center'},
+        {"data": "name", "orderable": true, "sort": "name", "defaultContent": "", "class": 'text-center'},
         {"data": "email", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "phone",  "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null,  "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "createdTime", "orderable": true, "defaultContent": "", "class": 'text-center'},
+        {"data": "createdTime", "orderable": true,  "sort": "createdTime","defaultContent": "", "class": 'text-center'},
         {"data": "id", "orderable": false,  "defaultContent": "", "class": 'text-center'}
     ];
     listAccountTable = $("#account_table").DataTable({
