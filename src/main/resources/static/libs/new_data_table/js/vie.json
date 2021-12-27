@@ -10,7 +10,7 @@
   "sLoadingRecords": "読み込み中...",
   "sProcessing":     "処理中...",
   "sSearch":         "検索:",
-  "sZeroRecords":    "一致するレコードがありません",
+  "sZeroRecords":    "Không có dữ liệu để hiện thị",
   "oPaginate": {
     "sFirst":    "Trang đầu",
     "sLast":     "Trang cuối",

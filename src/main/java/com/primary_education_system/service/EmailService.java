@@ -28,7 +28,7 @@ public class EmailService {
             try {
                 MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                 MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
-                mailMsg.setFrom(new InternetAddress("dangtmhe130893@fpt.edu.vn", "MInh Dang", "utf-8"));
+                mailMsg.setFrom(new InternetAddress("dangtmhe130893@fpt.edu.vn", "Primary Education Management System", "utf-8"));
                 mailMsg.setTo(emailTemplate.getReceiver());
                 mailMsg.setSubject(emailTemplate.getSubject());
                 mailMsg.setText(emailTemplate.getContent(), true);
