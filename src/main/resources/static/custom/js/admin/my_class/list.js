@@ -3,6 +3,7 @@ $(document).ready(function (){
     let classId = $("#class_id").val();
 
     let getAccount = function (requestData, renderFunction, link_api) {
+        let sortField = columnDefinitions[requestData.order[0].column].sort;
 
         if (!classId) {
             let content = {
@@ -18,7 +19,7 @@ $(document).ready(function (){
         let params = {
             "page": (requestData.start / requestData.length) + 1,
             "size": requestData.length,
-            "sortField": "createdTime",
+            "sortField": sortField,
             "sortDir": sortDir,
             "search": $("#input-search_pupil").val(),
             "grade": "All",
@@ -40,10 +41,10 @@ $(document).ready(function (){
 
     let columnDefinitions = [
         {"data": "code", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "name", "orderable": true, "defaultContent": "", "class": 'text-center'},
+        {"data": "name", "orderable": true, "sort": "name","defaultContent": "", "class": 'text-center'},
         {"data": "grade", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "className", "orderable": false, "defaultContent": "", "class": 'text-center'},
-        {"data": "email", "orderable": true, "defaultContent": "", "class": 'text-center'},
+        {"data": "email", "orderable": true, "sort": "email","defaultContent": "", "class": 'text-center'},
         {"data": "phone", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "gender", "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "address", "orderable": false, "defaultContent": "", "class": 'text-center'},
