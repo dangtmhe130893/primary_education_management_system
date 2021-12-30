@@ -121,6 +121,17 @@ public class UserService {
         return new ServerResponseDto(ResponseCase.SUCCESS);
     }
 
+    public ServerResponseDto changStatus(Long id) {
+        UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(id);
+        if (userEntity == null || userEntity.getId() == 1) {
+            return new ServerResponseDto(ResponseCase.ERROR);
+        }
+        userEntity.setStatusUser(userEntity.getStatusUser() == 1 ? 2 : 1);
+        userEntity.setUpdatedTime(new Date());
+        userRepository.save(userEntity);
+        return new ServerResponseDto(ResponseCase.SUCCESS);
+    }
+
     public ServerResponseDto updateProfile(Long id, AccountRequestDto saveDto) throws ParseException {
         UserEntity userEntity = userRepository.findByIdAndIsDeletedFalse(id);
         if (userEntity == null) {

@@ -48,6 +48,11 @@ public class User_API {
         return ResponseEntity.ok().body(userService.delete(userId));
     }
 
+    @GetMapping("/changStatus")
+    public ResponseEntity<ServerResponseDto> changStatus(@RequestParam("userId") Long userId) {
+        return ResponseEntity.ok().body(userService.changStatus(userId));
+    }
+
     @GetMapping("/profile")
     public UserEntity getProfile(@AuthenticationPrincipal CustomUserDetails userDetail) {
         return userService.getDetail(userDetail.getUserId());

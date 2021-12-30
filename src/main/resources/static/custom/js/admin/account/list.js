@@ -30,6 +30,7 @@ $(document).ready(function () {
         {"data": "phone",  "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": null,  "orderable": false, "defaultContent": "", "class": 'text-center'},
         {"data": "createdTime", "orderable": true,  "sort": "createdTime","defaultContent": "", "class": 'text-center'},
+        {"data": null, "orderable": false,  "defaultContent": "", "class": 'text-center'},
         {"data": "id", "orderable": false,  "defaultContent": "", "class": 'text-center'}
     ];
     listAccountTable = $("#account_table").DataTable({
@@ -66,10 +67,24 @@ $(document).ready(function () {
             },
             {
                 "render": function (data) {
+                    if (data.statusUser === 2) {
+                        return '<label class="switch" style="margin-right: 5px;">' +
+                            '<input type="checkbox" checked="checked" /> <span class="slider round" data-id="'+data.id+'"></span></label>' +
+                            '<p>Có hiệu lực</p>'
+                    } else {
+                        return '<label class="switch" style="margin-right: 5px;">' +
+                            '<input type="checkbox" /> <span class="slider round" data-id="'+data.id+'"></span></label>' +
+                            '<p>Không có hiệu lực</p>'
+                    }
+                },
+                "targets": 5
+            },
+            {
+                "render": function (data) {
                     return '<button type="button" data-toggle="modal" data-target="#modal_add_account" value="' + data + '" class="btn btn-sm btn-primary detail-acount">Chi tiết</button>'
                         + '<button style="margin-left: 10px" data-toggle="modal" data-target="#modal_delete_account" class="btn btn-sm btn-danger delelte-acount" data-id="' + data + '">Xóa</button>';
                 },
-                "targets": 5
+                "targets": 6
             },
         ]
     });
@@ -83,6 +98,26 @@ $(document).ready(function () {
     $(document).on('click', ".delelte-acount", function () {
         deleteId = null;
         deleteId = $(this).attr('data-id');
+    });
+
+    $(document).on('click', ".slider", function () {
+        let userId = $(this).attr('data-id');
+        $.ajax({
+            type: "GET",
+            url: "/api/user/changStatus?userId=" + userId,
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            },
+            success: function (response) {
+                if (response.status.code === 1000) {
+                    window.alert.show("success", "Thành công", "2000");
+                    listAccountTable.ajax.reload();
+                } else {
+                    window.alert.show("success", "Đã có lỗi xảy ra, vui lòng thử lại", "2000");
+                }
+            }
+
+        })
     });
 
     $(document).on('click', "#btn_submit_delete", function () {

@@ -45,6 +45,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             if (!passwordEncoder.matches(password, userEntity.getPassword())) {
                 throw new BadCredentialsException("Username or password is incorrect!");
             }
+            if (userEntity.getStatusUser() == 1) {
+                throw new BadCredentialsException("Tài khoản đã bị vô hiệu hóa!");
+            }
             Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
             for (RoleEntity role : userEntity.getRoles()) {
                 authorities.add(new SimpleGrantedAuthority(role.getName()));
